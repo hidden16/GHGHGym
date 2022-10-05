@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using GHGHGym.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GHGHGym.Infrastructure.Data
@@ -9,5 +10,6 @@ namespace GHGHGym.Infrastructure.Data
             : base(options)
         {
         }
+        public DbSet<Trainer> Trainers { get; set; }
     }
 }
