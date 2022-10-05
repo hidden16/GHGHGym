@@ -11,11 +11,11 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("Primary key")]
         public Guid Id { get; set; }
         [Required]
-        [MaxLength(25)]
+        [MaxLength(FirstNameMaxLength)]
         [Comment("First name of the trainer")]
         public string FirstName { get; set; } = null!;
 
-        [MaxLength(25)]
+        [MaxLength(LastNameMaxLength)]
         [Comment("Last name of the trainer")]
         public string LastName { get; set; } = null!;
 
