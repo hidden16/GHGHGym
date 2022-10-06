@@ -44,6 +44,15 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("Is the entity deleted from the database")]
         public bool IsDeleted { get; set; } = false;
 
-        // add comment
+
+        [Required]
+        [Comment("Id of the subscription")]
+        public Guid SubscriptionId { get; set; }
+        public Subscription Subscription { get; set; } = null!;
+
+        [Comment("Collection of trainer programs")]
+        public List<TrainerProgram> TrainerProgram { get; set; } = null!;
+        [Comment("Collection of comments for the trainer")]
+        public List<Comment>? Comments { get; set; }
     }
 }

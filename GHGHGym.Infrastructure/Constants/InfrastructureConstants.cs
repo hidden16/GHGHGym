@@ -8,5 +8,10 @@
             public const int LastNameMaxLength = 25;
             public const int DescriptionMaxLength = 500;
         }
+
+        public static class CommentConstant
+        {
+            public const int TextMaxLength = 500;
+        }
     }
 }
