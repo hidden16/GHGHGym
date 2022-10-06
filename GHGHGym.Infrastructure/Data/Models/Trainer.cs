@@ -51,8 +51,8 @@ namespace GHGHGym.Infrastructure.Data.Models
         public Subscription Subscription { get; set; } = null!;
 
         [Comment("Collection of trainer programs")]
-        public List<TrainerProgram> TrainerProgram { get; set; } = null!;
+        public ICollection<TrainerProgram> TrainerProgram { get; set; } = null!;
         [Comment("Collection of comments for the trainer")]
-        public List<Comment>? Comments { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
     }
 }
