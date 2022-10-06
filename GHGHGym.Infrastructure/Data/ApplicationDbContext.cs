@@ -13,6 +13,6 @@ namespace GHGHGym.Infrastructure.Data
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<TrainerProgram> TrainerPrograms { get; set; }
+        public DbSet<TrainingProgram> TrainerPrograms { get; set; }
     }
 }

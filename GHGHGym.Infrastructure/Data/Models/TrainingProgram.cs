@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class TrainerProgram
+    public class TrainingProgram
     {
         [Key]
         public Guid Id { get; set; }
