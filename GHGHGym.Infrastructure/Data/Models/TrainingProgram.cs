@@ -15,5 +15,14 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Required]
         [Comment("Description of the training program")]
         public string ProgramDescription { get; set; } = null!;
+
+        public ICollection<string>? ImagesUrl { get; set; }
+
+        [Required]
+        public Guid TrainerId { get; set; }
+        public Trainer Trainer { get; set; } = null!;
+
+        [Comment("Is the entity deleted")]
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GHGHGym.Infrastructure.Data.Models.Account;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.CommentConstant;
 
@@ -25,9 +26,16 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("Is the entity deleted from the database")]
         public bool IsDeleted { get; set; } = false;
 
-        [Required]
-        [Comment("Id of the trainer for whom the comment is written")]
-        public Guid TrainerId { get; set; }
-        public Trainer Trainer { get; set; } = null!;
+        [Comment("Id of the user who wrote the comment")]
+        public Guid? ApplicationUserId { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
+
+        [Comment("Id of the trainer for which the comment is related")]
+        public Guid? TrainerId { get; set; }
+        public Trainer? Trainer { get; set; }
+        
+        [Comment("Id of the product for which the comment is related")]
+        public Guid? ProductId { get; set; }
+        public Product? Product { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GHGHGym.Infrastructure.Data.Models.Account;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.TrainerConstant;
 
@@ -44,14 +45,13 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("Is the entity deleted from the database")]
         public bool IsDeleted { get; set; } = false;
 
-        [Required]
-        [Comment("Id of the subscription")]
-        public Guid SubscriptionId { get; set; }
-        public Subscription Subscription { get; set; } = null!;
-
         [Comment("Collection of trainer programs")]
         public ICollection<TrainingProgram> TrainerProgram { get; set; } = null!;
+
         [Comment("Collection of comments for the trainer")]
         public ICollection<Comment>? Comments { get; set; }
+
+        [Comment("Users that are subscribed with trainer")]
+        public ICollection<ApplicationUser>? UsersWithTrainer { get; set; }
     }
 }
