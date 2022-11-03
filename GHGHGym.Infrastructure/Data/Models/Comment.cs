@@ -19,9 +19,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("The date on which the comment was posted")]
         public DateTime PostedOn { get; set; }
 
-        [Comment("The date on which the comment was deleted")]
-        public DateTime? DeletedOn { get; set; }
-
         [Required]
         [Comment("Is the entity deleted from the database")]
         public bool IsDeleted { get; set; } = false;

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GHGHGym.Infrastructure.Data.Models.ImageMapping;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Infrastructure.Data.Models
@@ -16,13 +17,12 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("Description of the training program")]
         public string ProgramDescription { get; set; } = null!;
 
-        public ICollection<string>? ImagesUrl { get; set; }
-
         [Required]
         public Guid TrainerId { get; set; }
         public Trainer Trainer { get; set; } = null!;
 
         [Comment("Is the entity deleted")]
         public bool IsDeleted { get; set; } = false;
+        public List<TrainingProgramImage> TrainingProgramImages { get; set; } = new List<TrainingProgramImage>();
     }
 }

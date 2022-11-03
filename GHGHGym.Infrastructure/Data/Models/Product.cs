@@ -1,4 +1,5 @@
 ﻿using GHGHGym.Infrastructure.Data.Models.Account;
+using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.ProductConstant;
@@ -20,5 +21,6 @@ namespace GHGHGym.Infrastructure.Data.Models
 
         public ICollection<Comment>? Comments { get; set; }
         public ICollection<ApplicationUser>? AppUsersPurchases { get; set; }
+        public List<ProductImage> ProductsImages { get; set; } = new List<ProductImage>();
     }
 }

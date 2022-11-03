@@ -1,4 +1,5 @@
 ﻿using GHGHGym.Infrastructure.Data.Models.Account;
+using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.TrainerConstant;
@@ -34,6 +35,13 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Comment("Trainer description")]
         public string Description { get; set; } = null!;
 
+        [Comment("Link for Instagram profile")]
+        public string? InstagramLink { get; set; }
+        [Comment("Link for Facebook profile")]
+        public string? FacebookLink { get; set; }
+        [Comment("Link for Twitter profile")]
+        public string? TwitterLink { get; set; }
+
         [Required]
         [Comment("Trainer add date")]
         public DateTime AddedOn { get; set; }
@@ -46,12 +54,15 @@ namespace GHGHGym.Infrastructure.Data.Models
         public bool IsDeleted { get; set; } = false;
 
         [Comment("Collection of trainer programs")]
-        public ICollection<TrainingProgram> TrainerProgram { get; set; } = null!;
+        public List<TrainingProgram> TrainerProgram { get; set; } = new List<TrainingProgram>();
 
         [Comment("Collection of comments for the trainer")]
-        public ICollection<Comment>? Comments { get; set; }
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
         [Comment("Users that are subscribed with trainer")]
-        public ICollection<ApplicationUser>? UsersWithTrainer { get; set; }
+        public List<ApplicationUser> UsersWithTrainer { get; set; } = new List<ApplicationUser>();
+
+        [Comment("Images of the trainer")]
+        public List<TrainerImage> TrainersImages { get; set; } = new List<TrainerImage>();
     }
 }

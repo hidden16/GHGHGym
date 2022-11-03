@@ -10,4 +10,8 @@
     <ProjectReference Include="..\GHGHGym.Infrastructure\GHGHGym.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

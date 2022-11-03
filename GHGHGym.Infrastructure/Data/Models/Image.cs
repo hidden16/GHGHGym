@@ -1,4 +1,4 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Account;
+﻿using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Infrastructure.Data.Models
@@ -11,13 +11,9 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Required]
         public string ImageUrl { get; set; } = null!;
 
-        public Guid? ProductId { get; set; }
-        public Product? Product { get; set; }
-
-        public Guid? TrainerId { get; set; }
-        public Trainer? Trainer { get; set; }
-
-        public Guid? ApplicationUserId { get; set; }
-        public ApplicationUser? ApplicationUser { get; set; }
+        public List<UserImage> UsersImages { get; set; } = new List<UserImage>();
+        public List<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
+        public List<TrainerImage> TrainersImages { get; set; } = new List<TrainerImage>();
+        public List<TrainingProgramImage> TrainingProgramImages { get; set; } = new List<TrainingProgramImage>();
     }
 }

@@ -14,7 +14,7 @@ namespace GHGHGym.Infrastructure.Data.Models
 
         [Required]
         [Comment("Type of the subscription")]
-        public SubscriptionType SubscriptionType { get; set; }
+        public SubscriptionType SubscriptionType { get; set; } = null!;
 
         [Required]
         [Column(TypeName = "decimal(7,2)")]
