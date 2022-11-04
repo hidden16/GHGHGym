@@ -24,8 +24,13 @@
         }
         public static class ProductConstant
         {
+            public const int NameMaxLength = 30;
             public const int DescriptionMaxLength = 250;
         }
 
+        public static class SubscriptionType
+        {
+            public const int NameMaxLength = 15;
+        }
     }
 }

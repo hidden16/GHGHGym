@@ -39,12 +39,7 @@ namespace GHGHGym.Infrastructure.Data.Models.Account
         [Required]
         [Comment("Account creation date")]
         public DateTime RegistrationDate { get; set; }
-        /// <summary>
-        /// User's Subscription Id
-        /// </summary>
 
-        public Guid? SubscriptionId { get; set; }
-        public Subscription? Subscription { get; set; }
         /// <summary>
         /// User's Trainer Id
         /// </summary>
@@ -58,8 +53,25 @@ namespace GHGHGym.Infrastructure.Data.Models.Account
         [Required]
         [Comment("Is the account deleted")]
         public bool IsDeleted { get; set; } = false;
+
+        /// <summary>
+        /// List of user's comments
+        /// </summary>
         public List<Comment> Comments { get; set; } = new List<Comment>();
+
+        /// <summary>
+        /// List of user's purchased products
+        /// </summary>
         public List<Product> PurchasedProducts { get; set; } = new List<Product>();
+
+        /// <summary>
+        /// List of user's images
+        /// </summary>
         public List<UserImage> UsersImages { get; set; } = new List<UserImage>();
+
+        /// <summary>
+        /// List of user's subscriptions
+        /// </summary>
+        public List<UserSubscription> UsersSubscriptions { get; set; } = new List<UserSubscription>();
     }
 }

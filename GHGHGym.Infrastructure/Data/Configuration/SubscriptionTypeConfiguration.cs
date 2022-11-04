@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GHGHGym.Infrastructure.Data.Configuration
 {
-    public class SubscriptionTypeConfiguration : IEntityTypeConfiguration<SubscriptionType>
+    internal class SubscriptionTypeConfiguration : IEntityTypeConfiguration<SubscriptionType>
     {
         public void Configure(EntityTypeBuilder<SubscriptionType> builder)
         {
@@ -21,6 +21,18 @@ namespace GHGHGym.Infrastructure.Data.Configuration
                     new SubscriptionType()
                     {
                         Name = "Yearly"
+                    },
+                    new SubscriptionType()
+                    {
+                        Name = "Weekly with trainer"
+                    },
+                    new SubscriptionType()
+                    {
+                        Name = "Monthly with trainer"
+                    },
+                    new SubscriptionType()
+                    {
+                        Name = "Yearly with trainer"
                     }
                 );
         }

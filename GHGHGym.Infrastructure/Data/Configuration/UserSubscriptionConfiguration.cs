@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GHGHGym.Infrastructure.Data.Configuration
 {
-    public class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscription>
+    internal class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscription>
     {
         public void Configure(EntityTypeBuilder<UserSubscription> builder)
         {

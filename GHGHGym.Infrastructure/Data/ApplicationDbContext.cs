@@ -22,6 +22,7 @@ namespace GHGHGym.Infrastructure.Data
             builder.ApplyConfiguration(new UserImageConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new TrainerImageConfiguration());
+            builder.ApplyConfiguration(new SubscripitonConfiguration(SubscriptionTypes));
         }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Comment> Comments { get; set; }

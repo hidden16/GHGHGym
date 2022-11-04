@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GHGHGym.Infrastructure.Data.Configuration.ImagesConfiguration
 {
-    public class TrainerImageConfiguration : IEntityTypeConfiguration<TrainerImage>
+    internal class TrainerImageConfiguration : IEntityTypeConfiguration<TrainerImage>
     {
         public void Configure(EntityTypeBuilder<TrainerImage> builder)
         {

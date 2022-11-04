@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GHGHGym.Infrastructure.Data.Configuration.ImagesConfiguration
 {
-    public class UserImageConfiguration : IEntityTypeConfiguration<UserImage>
+    internal class UserImageConfiguration : IEntityTypeConfiguration<UserImage>
     {
         public void Configure(EntityTypeBuilder<UserImage> builder)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GHGHGym.Infrastructure.Data.Configuration.ImagesConfiguration
 {
-    public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
+    internal class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
     {
         public void Configure(EntityTypeBuilder<ProductImage> builder)
         {
