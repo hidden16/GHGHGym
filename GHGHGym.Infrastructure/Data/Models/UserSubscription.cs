@@ -1,10 +1,5 @@
 ﻿using GHGHGym.Infrastructure.Data.Models.Account;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
@@ -17,11 +12,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         public Guid SubscriptionId { get; set; }
         [Required]
         public Subscription Subscription { get; set; } = null!;
-
-        public Guid SubscriptionTypeId { get; set; }
-        [Required]
-        public SubscriptionType SubscriptionType { get; set; } = null!;
-
         [Required]
         public DateTime SubscriptionStartDate { get; set; }
         [Required]

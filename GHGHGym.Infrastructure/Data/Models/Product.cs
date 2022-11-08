@@ -43,16 +43,21 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// <summary>
         /// Comments for the product
         /// </summary>
-        public ICollection<Comment>? Comments { get; set; }
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
         /// <summary>
         /// Users that purchased a product
         /// </summary>
-        public ICollection<ApplicationUser>? AppUsersPurchases { get; set; }
+        public List<ApplicationUser> AppUsersPurchases { get; set; } = new List<ApplicationUser>();
 
         /// <summary>
         /// List of images for the products
         /// </summary>
         public List<ProductImage> ProductsImages { get; set; } = new List<ProductImage>();
+
+        /// <summary>
+        /// List of product's categories
+        /// </summary>
+        public List<CategoryProduct> CategoryProducts { get; set; } = new List<CategoryProduct>();
     }
 }

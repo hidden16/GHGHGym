@@ -23,7 +23,16 @@ namespace GHGHGym.Infrastructure.Data
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new TrainerImageConfiguration());
             builder.ApplyConfiguration(new SubscripitonConfiguration(SubscriptionTypes));
+            builder.ApplyConfiguration(new CategoryProductConfiguration());
+
+
+            builder.Entity<TrainingProgram>()
+                .HasOne(x => x.Trainer)
+                .WithMany(x => x.TrainerPrograms)
+                .OnDelete(DeleteBehavior.Restrict);
+                
         }
+        public DbSet<CategoryProduct> CategoriesProducts { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }

@@ -77,7 +77,7 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// </summary>
         [Required]
         [Comment("Trainer add date")]
-        public DateTime AddedOn { get; set; }
+        public DateTime AddedOn { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// The date on which the trainer was removed
@@ -97,14 +97,22 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// </summary>
 
         [Comment("Collection of trainer programs")]
-        public List<TrainingProgram> TrainerProgram { get; set; } = new List<TrainingProgram>();
+        public List<TrainingProgram> TrainerPrograms { get; set; } = new List<TrainingProgram>();
 
+        /// <summary>
+        /// List of comments for the trainer
+        /// </summary>
         [Comment("Collection of comments for the trainer")]
         public List<Comment> Comments { get; set; } = new List<Comment>();
-
+        /// <summary>
+        /// List of users with the trainer
+        /// </summary>
         [Comment("Users that are subscribed with trainer")]
         public List<ApplicationUser> UsersWithTrainer { get; set; } = new List<ApplicationUser>();
 
+        /// <summary>
+        /// List of trainer's images
+        /// </summary>
         [Comment("Images of the trainer")]
         public List<TrainerImage> TrainersImages { get; set; } = new List<TrainerImage>();
     }

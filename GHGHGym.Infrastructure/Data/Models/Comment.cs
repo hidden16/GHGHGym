@@ -26,7 +26,10 @@ namespace GHGHGym.Infrastructure.Data.Models
 
         [Required]
         [Comment("The date on which the comment was posted")]
-        public DateTime PostedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
+        [Comment("The date on which the comment was edited")]
+        public DateTime? EditedOn { get; set; }
         /// <summary>
         /// Is the entity deleted from the database
         /// </summary>
@@ -38,9 +41,10 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// Id of the user who wrote the comment
         /// </summary>
 
+        [Required]
         [Comment("Id of the user who wrote the comment")]
-        public Guid? ApplicationUserId { get; set; }
-        public ApplicationUser? ApplicationUser { get; set; }
+        public Guid ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; } = null!;
         /// <summary>
         /// Id of the trainer for which the comment is related
         /// </summary>

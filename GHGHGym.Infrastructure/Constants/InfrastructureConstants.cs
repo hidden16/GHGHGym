@@ -32,5 +32,13 @@
         {
             public const int NameMaxLength = 15;
         }
+
+        public static class Category
+        {
+            public const int NameMaxLength = 20;
+
+            public const string ProteinsCategoryName = "Proteins";
+            public const string WeightLossCategoryName = "Weight loss supplements";
+        }
     }
 }
