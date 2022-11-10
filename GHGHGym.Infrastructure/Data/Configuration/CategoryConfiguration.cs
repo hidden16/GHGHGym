@@ -9,27 +9,23 @@ namespace GHGHGym.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            var parentCategoryOne = new Category()
+            var parentCategory = new Category()
             {
+                Id = Guid.NewGuid(),
                 Name = "Sports Supplements",
                 CategoryType = CategoryType.MainCategory,
             };
             builder
                 .HasData
                 (
-                    parentCategoryOne,
+                    parentCategory,
                     new Category()
                     {
-                        Name = "Healthy Foods",
-                        CategoryType = CategoryType.MainCategory
-                    },
-                    new Category()
-                    {
+                        Id = Guid.NewGuid(),
                         Name = "Proteins",
-                        ParentCategory = parentCategoryOne,
-                        CategoryType = CategoryType.Category,
+                        ParentCategoryId = parentCategory.Id,
+                        CategoryType = CategoryType.Category
                     }
-
                 );
         }
     }

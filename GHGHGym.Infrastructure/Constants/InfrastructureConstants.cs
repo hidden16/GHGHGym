@@ -30,7 +30,7 @@
 
         public static class SubscriptionType
         {
-            public const int NameMaxLength = 15;
+            public const int NameMaxLength = 100;
         }
 
         public static class Category

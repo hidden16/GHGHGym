@@ -22,7 +22,8 @@ namespace GHGHGym.Infrastructure.Data
             builder.ApplyConfiguration(new UserImageConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new TrainerImageConfiguration());
-            builder.ApplyConfiguration(new SubscripitonConfiguration(SubscriptionTypes));
+            builder.ApplyConfiguration(new TrainingProgramImageConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new CategoryProductConfiguration());
 
 
@@ -30,20 +31,22 @@ namespace GHGHGym.Infrastructure.Data
                 .HasOne(x => x.Trainer)
                 .WithMany(x => x.TrainerPrograms)
                 .OnDelete(DeleteBehavior.Restrict);
-                
+
+            base.OnModelCreating(builder);
         }
-        public DbSet<CategoryProduct> CategoriesProducts { get; set; }
-        public DbSet<Trainer> Trainers { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<TrainingProgram> TrainerPrograms { get; set; }
-        public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
-        public DbSet<UserSubscription> UsersSubscriptions { get; set; }
         public DbSet<ProductImage> ProductsImages { get; set; }
-        public DbSet<UserImage> UsersImages { get; set; }
         public DbSet<TrainerImage> TrainersImages { get; set; }
         public DbSet<TrainingProgramImage> TrainingProgramImages { get; set; }
-
-        // TODO: CHECK MODELS AND DO MIGRATION (WRITTEN ON 11/3/2022)
+        public DbSet<UserImage> UsersImages { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryProduct> CategoriesProducts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
+        public DbSet<Trainer> Trainers { get; set; }
+        public DbSet<TrainingProgram> TrainerPrograms { get; set; }
+        public DbSet<UserSubscription> UsersSubscriptions { get; set; }
     }
 }

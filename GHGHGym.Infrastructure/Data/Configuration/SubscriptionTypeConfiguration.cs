@@ -13,25 +13,31 @@ namespace GHGHGym.Infrastructure.Data.Configuration
                 (
                     new SubscriptionType()
                     {
+                        Id = Guid.NewGuid(),
                         Name = "Weekly"
-                    },new SubscriptionType()
+                    }, new SubscriptionType()
                     {
+                        Id = Guid.NewGuid(),
                         Name = "Monthly"
                     },
                     new SubscriptionType()
                     {
+                        Id = Guid.NewGuid(),
                         Name = "Yearly"
                     },
                     new SubscriptionType()
                     {
+                        Id = Guid.NewGuid(),
                         Name = "Weekly with trainer"
                     },
                     new SubscriptionType()
                     {
+                        Id = Guid.NewGuid(),
                         Name = "Monthly with trainer"
                     },
                     new SubscriptionType()
                     {
+                        Id = Guid.NewGuid(),
                         Name = "Yearly with trainer"
                     }
                 );

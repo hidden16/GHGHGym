@@ -19,7 +19,7 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// <summary>
         /// The main category will always be null. Shows the category with higher level of abstraction.
         /// </summary>
-        public Guid ParentCategoryId { get; set; }
+        public Guid? ParentCategoryId { get; set; }
         public Category? ParentCategory { get; set; }
 
         [Required]
