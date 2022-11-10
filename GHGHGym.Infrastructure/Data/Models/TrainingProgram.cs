@@ -1,10 +1,11 @@
-﻿using GHGHGym.Infrastructure.Data.Models.ImageMapping;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class TrainingProgram
+    public class TrainingProgram : BaseDeletableModel
     {
         /// <summary>
         /// Id of the training program
@@ -33,11 +34,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         public Guid TrainerId { get; set; }
         public Trainer Trainer { get; set; } = null!;
 
-        /// <summary>
-        /// Is the program deleted
-        /// </summary>
-        [Comment("Is the entity deleted")]
-        public bool IsDeleted { get; set; } = false;
         /// <summary>
         /// Images of the training program
         /// </summary>

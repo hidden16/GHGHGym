@@ -1,4 +1,5 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Enums;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
 namespace GHGHGym.Infrastructure.Data.Models
@@ -6,7 +7,7 @@ namespace GHGHGym.Infrastructure.Data.Models
     /// <summary>
     /// Categories for the products
     /// </summary>
-    public class Category
+    public class Category : BaseDeletableModel
     {
         [Key]
         public Guid Id { get; set; }
@@ -21,11 +22,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// </summary>
         public Guid? ParentCategoryId { get; set; }
         public Category? ParentCategory { get; set; }
-
-        [Required]
-        public DateTime AddedOn { get; set; } = DateTime.UtcNow;
-        [Required]
-        public bool IsDeleted { get; set; } = false;
         public List<CategoryProduct> CategoryProducts { get; set; } = new List<CategoryProduct>();
     }
 }

@@ -1,11 +1,12 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Account;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.Account;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.CommentConstant;
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class Comment
+    public class Comment : BaseDeletableModel
     {
         /// <summary>
         /// Id of the comment
@@ -20,26 +21,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         [MaxLength(TextMaxLength)]
         [Comment("Text of the comment")]
         public string Text { get; set; } = null!;
-        /// <summary>
-        /// The date on which the comment was posted
-        /// </summary>
-
-        [Required]
-        [Comment("The date on which the comment was posted")]
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-
-        [Comment("The date on which the comment was edited")]
-        public DateTime? EditedOn { get; set; }
-        /// <summary>
-        /// Is the entity deleted from the database
-        /// </summary>
-
-        [Required]
-        [Comment("Is the entity deleted from the database")]
-        public bool IsDeleted { get; set; } = false;
-        /// <summary>
-        /// Id of the user who wrote the comment
-        /// </summary>
 
         [Required]
         [Comment("Id of the user who wrote the comment")]

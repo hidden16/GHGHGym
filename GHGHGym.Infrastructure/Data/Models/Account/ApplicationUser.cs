@@ -1,4 +1,5 @@
-﻿using GHGHGym.Infrastructure.Data.Models.ImageMapping;
+﻿using GHGHGym.Infrastructure.Abstractions.Contracts;
+using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Applicatio
 
 namespace GHGHGym.Infrastructure.Data.Models.Account
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<Guid>, IDeletableEntity
     {
         /// <summary>
         /// User's First Name
@@ -46,13 +47,9 @@ namespace GHGHGym.Infrastructure.Data.Models.Account
 
         public Guid? TrainerId { get; set; }
         public Trainer? Trainer { get; set; }
-        /// <summary>
-        /// Is the User's account deleted or not
-        /// </summary>
 
-        [Required]
-        [Comment("Is the account deleted")]
         public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedOn { get; set; }
 
         /// <summary>
         /// List of user's comments

@@ -1,4 +1,5 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Account;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.ProductCon
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class Product
+    public class Product : BaseDeletableModel
     {
         /// <summary>
         /// Id of the product

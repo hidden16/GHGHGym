@@ -1,10 +1,11 @@
-﻿using GHGHGym.Infrastructure.Data.Models.ImageMapping;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class Image
+    public class Image : BaseDeletableModel
     {
         /// <summary>
         /// Id of the image

@@ -34,7 +34,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("PurchasedProductsId");
 
-                    b.ToTable("ApplicationUserProduct");
+                    b.ToTable("ApplicationUserProduct", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", b =>
@@ -159,7 +159,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -193,7 +193,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CategoriesProducts");
+                    b.ToTable("CategoriesProducts", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Comment", b =>
@@ -241,7 +241,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Image", b =>
@@ -258,7 +258,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.ProductImage", b =>
@@ -273,7 +273,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("ProductsImages");
+                    b.ToTable("ProductsImages", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.TrainerImage", b =>
@@ -288,7 +288,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("TrainersImages");
+                    b.ToTable("TrainersImages", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.TrainingProgramImage", b =>
@@ -303,7 +303,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainingProgramId");
 
-                    b.ToTable("TrainingProgramImages");
+                    b.ToTable("TrainingProgramImages", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.UserImage", b =>
@@ -323,7 +323,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("UsersImages");
+                    b.ToTable("UsersImages", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Product", b =>
@@ -351,7 +351,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Subscription", b =>
@@ -377,7 +377,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("SubscriptionTypeId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.SubscriptionType", b =>
@@ -396,7 +396,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionTypes");
+                    b.ToTable("SubscriptionTypes", (string)null);
 
                     b.HasData(
                         new
@@ -498,7 +498,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers");
+                    b.ToTable("Trainers", (string)null);
 
                     b.HasComment("Trainers in the gym");
                 });
@@ -530,7 +530,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("TrainerPrograms");
+                    b.ToTable("TrainerPrograms", (string)null);
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserSubscription", b =>
@@ -551,7 +551,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersSubscriptions");
+                    b.ToTable("UsersSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

@@ -1,4 +1,5 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Account;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.TrainerCon
 namespace GHGHGym.Infrastructure.Data.Models
 {
     [Comment("Trainers in the gym")]
-    public class Trainer
+    public class Trainer : BaseDeletableModel
     {
         /// <summary>
         /// Id of the trainer
@@ -71,26 +72,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// </summary>
         [Comment("Link for Twitter profile")]
         public string? TwitterLink { get; set; }
-
-        /// <summary>
-        /// The date on which the trainer was added
-        /// </summary>
-        [Required]
-        [Comment("Trainer add date")]
-        public DateTime AddedOn { get; set; } = DateTime.UtcNow;
-
-        /// <summary>
-        /// The date on which the trainer was removed
-        /// </summary>
-        [Comment("Trainer removal date")]
-        public DateTime? RemovedOn { get; set; }
-
-        /// <summary>
-        /// Is the trainer deleted
-        /// </summary>
-        [Required]
-        [Comment("Is the entity deleted from the database")]
-        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// List of the trainer programs

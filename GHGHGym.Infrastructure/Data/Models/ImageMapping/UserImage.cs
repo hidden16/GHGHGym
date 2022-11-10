@@ -1,9 +1,10 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Account;
+﻿using GHGHGym.Infrastructure.Abstractions.Contracts;
+using GHGHGym.Infrastructure.Data.Models.Account;
 using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Infrastructure.Data.Models.ImageMapping
 {
-    public class UserImage
+    public class UserImage : IDeletableEntity 
     {
         public Guid UserId { get; set; }
         [Required]
@@ -12,5 +13,7 @@ namespace GHGHGym.Infrastructure.Data.Models.ImageMapping
         public Guid ImageId { get; set; }
         [Required]
         public Image Image { get; set; } = null!;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedOn { get; set; }
     }
 }

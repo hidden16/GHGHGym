@@ -1,11 +1,11 @@
-﻿using GHGHGym.Infrastructure.Data.Models.Account;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class Subscription
+    public class Subscription : BaseDeletableModel
     {
         /// <summary>
         /// Id of the subscription
@@ -30,13 +30,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Column(TypeName = "decimal(7,2)")]
         [Comment("Price of the subscription")]
         public decimal Price { get; set; }
-
-        /// <summary>
-        /// Is the subscription deleted
-        /// </summary>
-        [Required]
-        [Comment("Is the subscription deleted")]
-        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// List of users that are subscribed

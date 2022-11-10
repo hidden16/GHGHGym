@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.SubscriptionType;
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    public class SubscriptionType
+    public class SubscriptionType : BaseDeletableModel
     {
         /// <summary>
         /// Id ot the subscription type
@@ -16,11 +17,5 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Required]
         [StringLength(NameMaxLength)]
         public string Name { get; set; } = null!;
-
-        /// <summary>
-        /// Is the subscription type deleted
-        /// </summary>
-        [Required]
-        public bool IsDeleted { get; set; } = false;
     }
 }
