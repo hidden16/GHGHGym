@@ -42,9 +42,7 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories
             .AsNoTracking();
 
         public IQueryable<TEntity> AllReadonlyWithDeleted()
-            => DbSet
-            .Where(x => !x.IsDeleted)
-            .AsNoTracking();
+            => DbSet.AsNoTracking();
 
         public IQueryable<TEntity> AllWithDeleted()
             => DbSet.AsQueryable();
@@ -58,7 +56,7 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories
         public async Task<TEntity> GetByIdAsync(object id)
             => await DbSet.FindAsync(id) ?? throw new ArgumentNullException();
 
-        public async Task<TEntity> GetByIdsAsync(object[] id)
+        public async Task<TEntity> GetByIdsAsync(params object[] id)
             => await DbSet.FindAsync(id) ?? throw new ArgumentNullException();
 
         public void HardDelete(TEntity entity)
@@ -96,7 +94,7 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories
             UpdateRange(entities);
         }
 
-        public void SetDeletedRange(Expression<Func<TEntity, bool>> deleteWhereClause)
+        public void SetDeletedRangeExpression(Expression<Func<TEntity, bool>> deleteWhereClause)
         {
             var entities = DbSet.Where(deleteWhereClause);
             foreach (var entity in entities)

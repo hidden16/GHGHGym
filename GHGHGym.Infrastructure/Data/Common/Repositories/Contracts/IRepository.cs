@@ -20,7 +20,7 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories.Contracts
         void SetDeleted(TEntity entity);
         Task SetDeletedByIdAsync(object id);
         void SetDeletedRange(IEnumerable<TEntity> entities);
-        void SetDeletedRange(Expression<Func<TEntity, bool>> deleteWhereClause);
+        void SetDeletedRangeExpression(Expression<Func<TEntity, bool>> deleteWhereClause);
         void Undelete(TEntity entity);
 
         Task AddAsync(TEntity entity);
