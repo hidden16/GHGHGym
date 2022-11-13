@@ -1,4 +1,4 @@
-namespace GHGHGym.Models
+namespace GHGHGym.Core.Models
 {
     public class ErrorViewModel
     {

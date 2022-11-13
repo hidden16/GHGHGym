@@ -4,9 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
 namespace GHGHGym.Infrastructure.Data.Models
 {
-    /// <summary>
-    /// Categories for the products
-    /// </summary>
     public class Category : BaseDeletableModel
     {
         [Key]

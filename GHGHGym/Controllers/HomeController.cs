@@ -1,4 +1,4 @@
-﻿using GHGHGym.Models;
+﻿using GHGHGym.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 namespace GHGHGym.Controllers
