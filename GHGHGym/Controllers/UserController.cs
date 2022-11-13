@@ -1,5 +1,4 @@
 ﻿using GHGHGym.Core.Models.UserViewModels;
-using GHGHGym.Infrastructure.Data.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GHGHGym.Controllers
