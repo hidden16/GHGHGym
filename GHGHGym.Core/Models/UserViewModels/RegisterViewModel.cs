@@ -32,6 +32,7 @@ namespace GHGHGym.Core.Models.UserViewModels
 
         [Required]
         [DataType(DataType.Password)]
+        [MinLength(PasswordMinLength, ErrorMessage = PasswordErrorMessage)]
         public string Password { get; set; } = null!;
         [Required]
         [Compare(nameof(Password))]

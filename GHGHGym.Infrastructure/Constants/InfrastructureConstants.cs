@@ -21,6 +21,8 @@
 
             public const int LastNameMaxLength = 25;
             public const int LastNameMinLength = 2;
+
+            public const int PasswordMinLength = 6;
         }
         public static class ProductConstant
         {

@@ -90,14 +90,15 @@ namespace GHGHGym.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Gender = model.GenderType,
-                BirthDate = model.BirthDate
+                BirthDate = model.BirthDate,
+                UserName = $"{model.FirstName}{model.LastName}"
             };
 
             var createResult = await userManager.CreateAsync(user, model.Password);
             if (createResult.Succeeded)
             {
                 //await SendEmailConfirmation(model);
-                // return RedirectToAction(nameof(Login));
+                return RedirectToAction(nameof(Login));
             }
 
             foreach (var error in createResult.Errors)
@@ -105,6 +106,11 @@ namespace GHGHGym.Controllers
                 ModelState.AddModelError("", error.Description);
             }
             return View(model);
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
         // TODO: At the end make the confirmation token
