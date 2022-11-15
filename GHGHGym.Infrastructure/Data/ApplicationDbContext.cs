@@ -25,7 +25,8 @@ namespace GHGHGym.Infrastructure.Data
             builder.ApplyConfiguration(new TrainingProgramImageConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new CategoryProductConfiguration());
-
+            builder.ApplyConfiguration(new TrainerConfiguration());
+            
 
             builder.Entity<TrainingProgram>()
                 .HasOne(x => x.Trainer)

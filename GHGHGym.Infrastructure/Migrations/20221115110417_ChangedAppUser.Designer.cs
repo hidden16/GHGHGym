@@ -4,6 +4,7 @@ using GHGHGym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GHGHGym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115110417_ChangedAppUser")]
+    partial class ChangedAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,20 +171,20 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("99e3ef20-84b5-4d9c-ad6c-577c759c5cd4"),
+                            Id = new Guid("95b12632-572f-40f8-8a36-54549817ca4c"),
                             CategoryType = 0,
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(8936),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(2197),
                             IsDeleted = false,
                             Name = "Sports Supplements"
                         },
                         new
                         {
-                            Id = new Guid("46ca0c48-f371-4945-8a24-2110def8a14b"),
+                            Id = new Guid("81024304-f142-48a6-b573-ba3252163fcd"),
                             CategoryType = 1,
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(8940),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(2208),
                             IsDeleted = false,
                             Name = "Proteins",
-                            ParentCategoryId = new Guid("99e3ef20-84b5-4d9c-ad6c-577c759c5cd4")
+                            ParentCategoryId = new Guid("95b12632-572f-40f8-8a36-54549817ca4c")
                         });
                 });
 
@@ -463,43 +465,43 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1967accc-e206-496a-9e60-25b666d6ec1d"),
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(6664),
+                            Id = new Guid("b7041124-a7e1-4dff-b6a1-edaf1666bdb3"),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(223),
                             IsDeleted = false,
                             Name = "Weekly"
                         },
                         new
                         {
-                            Id = new Guid("00c9f804-c69a-4836-9533-16c01c6ab9b0"),
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(6743),
+                            Id = new Guid("41edfe77-e89d-462b-a206-d4683b4db075"),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(252),
                             IsDeleted = false,
                             Name = "Monthly"
                         },
                         new
                         {
-                            Id = new Guid("dc73bf36-3f27-4172-9a48-daf11c06000d"),
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(6745),
+                            Id = new Guid("13038120-b205-4e15-96ab-c6bdb3d124b4"),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(263),
                             IsDeleted = false,
                             Name = "Yearly"
                         },
                         new
                         {
-                            Id = new Guid("3580039a-3a75-4d01-96ff-7ed0961b4ba4"),
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(6746),
+                            Id = new Guid("613710f1-6baf-46be-b6f8-35bc0b67e1f8"),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(264),
                             IsDeleted = false,
                             Name = "Weekly with trainer"
                         },
                         new
                         {
-                            Id = new Guid("74c63bbc-0223-49ca-a2c6-dfa776f2d781"),
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(6746),
+                            Id = new Guid("6864ef9c-1c18-4591-9bde-e761cb3e5e56"),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(265),
                             IsDeleted = false,
                             Name = "Monthly with trainer"
                         },
                         new
                         {
-                            Id = new Guid("be7e2eab-60f3-41ef-9ed7-5a84592445cd"),
-                            CreatedOn = new DateTime(2022, 11, 15, 11, 43, 51, 522, DateTimeKind.Utc).AddTicks(6747),
+                            Id = new Guid("537b930c-279f-41cf-afa1-5a3c0942a7ee"),
+                            CreatedOn = new DateTime(2022, 11, 15, 11, 4, 17, 478, DateTimeKind.Utc).AddTicks(266),
                             IsDeleted = false,
                             Name = "Yearly with trainer"
                         });
@@ -509,9 +511,6 @@ namespace GHGHGym.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
@@ -559,10 +558,6 @@ namespace GHGHGym.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId")
-                        .IsUnique()
-                        .HasFilter("[ApplicationUserId] IS NOT NULL");
 
                     b.ToTable("Trainers");
                 });
@@ -776,9 +771,11 @@ namespace GHGHGym.Infrastructure.Migrations
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
-                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Trainer", null)
+                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Trainer", "Trainer")
                         .WithMany("UsersWithTrainer")
                         .HasForeignKey("TrainerId");
+
+                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Category", b =>
@@ -919,15 +916,6 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.Navigation("SubscriptionType");
                 });
 
-            modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Trainer", b =>
-                {
-                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", "ApplicationUser")
-                        .WithOne("Trainer")
-                        .HasForeignKey("GHGHGym.Infrastructure.Data.Models.Trainer", "ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.TrainingProgram", b =>
                 {
                     b.HasOne("GHGHGym.Infrastructure.Data.Models.Trainer", "Trainer")
@@ -1012,8 +1000,6 @@ namespace GHGHGym.Infrastructure.Migrations
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Trainer");
 
                     b.Navigation("UsersImages");
 

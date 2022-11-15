@@ -2,6 +2,7 @@
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.TrainerConstant;
 
 namespace GHGHGym.Infrastructure.Data.Models
@@ -34,6 +35,10 @@ namespace GHGHGym.Infrastructure.Data.Models
         public string? FacebookLink { get; set; }
 
         public string? TwitterLink { get; set; }
+
+        public Guid? ApplicationUserId { get; set; }
+        [ForeignKey(nameof(ApplicationUserId))]
+        public ApplicationUser? ApplicationUser { get; set; }
 
         public List<TrainingProgram> TrainerPrograms { get; set; } = new List<TrainingProgram>();
 

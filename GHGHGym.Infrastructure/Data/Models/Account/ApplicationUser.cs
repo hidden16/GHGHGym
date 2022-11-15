@@ -9,18 +9,15 @@ namespace GHGHGym.Infrastructure.Data.Models.Account
 {
     public class ApplicationUser : IdentityUser<Guid>, IDeletableEntity
     {
-        [Required]
         [PersonalData]
         [MaxLength(FirstNameMaxLength)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; } = null!;
 
-        [Required]
         [PersonalData]
         [MaxLength(LastNameMaxLength)]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; } = null!;
 
-        [Required]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         [Required]
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;

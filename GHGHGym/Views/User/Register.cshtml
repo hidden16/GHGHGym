@@ -56,15 +56,23 @@
                 <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.ConfirmPassword" />
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="text-center">
+            <div class="text-center mb-2">
                 <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
+        <div class="text-center">
+            <form class="input-group-sm" asp-controller="User" asp-action="Login">
+                <p>
+                    <h5>
+                        Already have an account?
+                    </h5>
+                    <input class="fs-6 btn btn-dark  " type="submit" value="Login" />
+                </p>
+            </form>
+        </div>
     </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
-
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-}
+    }

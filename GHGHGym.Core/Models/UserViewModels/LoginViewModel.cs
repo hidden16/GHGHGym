@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GHGHGym.Core.Models.UserViewModels
 {
     public class LoginViewModel
     {
+        [Required]
+        [EmailAddress]
+        public string EmailAddress { get; set; } = null!;
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = null!;
     }
 }

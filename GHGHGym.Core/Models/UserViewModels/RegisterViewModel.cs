@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.ApplicationUserConstant;
+using static GHGHGym.Infrastructure.Constants.ErrorMessageConstants;
 
 namespace GHGHGym.Core.Models.UserViewModels
 {
@@ -9,12 +10,14 @@ namespace GHGHGym.Core.Models.UserViewModels
     {
         [Required]
         [PersonalData]
-        [MaxLength(FirstNameMaxLength)]
+        [Display(Name = "First name")]
+        [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength, ErrorMessage = NameErrorMessage)]
         public string FirstName { get; set; } = null!;
 
         [Required]
         [PersonalData]
-        [MaxLength(LastNameMaxLength)]
+        [Display(Name = "Last name")]
+        [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength, ErrorMessage = NameErrorMessage)]
         public string LastName { get; set; } = null!;
 
         [Required]
@@ -31,6 +34,7 @@ namespace GHGHGym.Core.Models.UserViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; } = null!;
         [Required]
+        [Compare(nameof(Password))]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
     }
