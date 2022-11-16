@@ -1,25 +1,28 @@
 ﻿using GHGHGym.Core.Models.UserViewModels;
 using GHGHGym.Core.Services.EmailSender.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
+using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using System.Text.Encodings.Web;
 
 namespace GHGHGym.Controllers
 {
     [Authorize]
+    
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private IEmailSender emailSender;
-
-        public UserController(IEmailSender emailSender,
+        private IUserService userService;
+        public UserController(IUserService userService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
-            this.emailSender = emailSender;
+            this.userService = userService;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -38,6 +41,7 @@ namespace GHGHGym.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -77,6 +81,7 @@ namespace GHGHGym.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -84,6 +89,15 @@ namespace GHGHGym.Controllers
                 ModelState.AddModelError("", "Invalid info.");
                 return View();
             }
+
+            var emailCheck = await userManager.FindByEmailAsync(model.Email);
+
+            if (emailCheck != null)
+            {
+                ModelState.AddModelError("", "User with that email already exists.");
+                return View(model);
+            }
+
             var user = new ApplicationUser()
             {
                 Email = model.Email,
@@ -97,7 +111,18 @@ namespace GHGHGym.Controllers
             var createResult = await userManager.CreateAsync(user, model.Password);
             if (createResult.Succeeded)
             {
-                //await SendEmailConfirmation(model);
+                // UNCOMMENT CODE WHEN FINISHED WITH PROJECT
+
+                //var generatedToken = GenerateToken(user);
+                //var callbackAction = Url.Action(
+                //    action: "ConfirmEmail",
+                //    controller: "User",
+                //    values: new { userId = user.Id, code = generatedToken.Result },
+                //    protocol: Request.Scheme
+                //    );
+                //await userService.SendEmailConfirmationAsync(user, generatedToken, callbackAction);
+
+                //return RedirectToAction(nameof(PreConfirm));
                 return RedirectToAction(nameof(Login));
             }
 
@@ -107,20 +132,55 @@ namespace GHGHGym.Controllers
             }
             return View(model);
         }
+        [AllowAnonymous]
+        public IActionResult PreConfirm()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            try
+            {
+                if (userId == null || code == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var user = await userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                var result = await userService.ConfirmEmailAsync(user, code);
+                bool success = false;
+                if (result.Contains("Thank"))
+                {
+                    success = true;
+                }
+                ViewBag.Result = result;
+                ViewBag.Success = success;
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+                throw;
+            }
+        }
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-        // TODO: At the end make the confirmation token
-        private async Task SendEmailConfirmation(RegisterViewModel model)
+        private async Task<string> GenerateToken(ApplicationUser user)
         {
-            var html = new StringBuilder();
-            html.AppendLine("<h1>Hello</h1>");
-            html.AppendLine("<h3>This is test</h3>");
-            //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            await emailSender.SendEmailAsync("ghghgym@abv.bg", "Go Hard or Go Home Gym", model.Email, "Email Confirmation", html.ToString());
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            encodedToken = encodedToken.Replace(' ', '+');
+            return encodedToken;
         }
     }
 }
