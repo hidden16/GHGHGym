@@ -166,7 +166,6 @@ namespace GHGHGym.Controllers
             catch (Exception)
             {
                 return RedirectToAction("Index", "Home");
-                throw;
             }
         }
         public async Task<IActionResult> Logout()
