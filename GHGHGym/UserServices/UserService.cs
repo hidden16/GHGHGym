@@ -8,14 +8,14 @@ using static Microsoft.AspNetCore.WebUtilities.WebEncoders;
 
 namespace GHGHGym.UserServices
 {
-    // TODO: Put the service in .core class library services
+    // Cannot put the service in class library GHGHGym.Core because WebUtilities doesn't exist there.
     public class UserService : IUserService
     {
+        private const string from = "ghghgym@abv.bg";
+        private const string fromName = "Go Hard or Go Home Gym";
+        private const string subject = "Email Confirmation";
         private IEmailSender emailSender;
         private readonly UserManager<ApplicationUser> userManager;
-
-        public object WebEncoders { get; private set; }
-
         public UserService(IEmailSender emailSender,
             UserManager<ApplicationUser> userManager)
         {
@@ -26,11 +26,9 @@ namespace GHGHGym.UserServices
         {
             var code = token;
             var html = new StringBuilder();
-            html.AppendLine("<h1>Hello</h1>");
-            html.AppendLine("<h3>This is test</h3>");
-            html.AppendLine($"<a href=\"{HtmlEncoder.Default.Encode(callbackUrl)}\"> Confirm </a>");
-            await emailSender.SendEmailAsync("ghghgym@abv.bg", "Go Hard or Go Home Gym", user.Email, "Email Confirmation", html.ToString());
-
+            html.AppendLine($"<h1>Hello, mr. {user.LastName}</h1>");
+            html.AppendLine($"<h3>To confirm your email click here => <a href=\"{HtmlEncoder.Default.Encode(callbackUrl)}\"> Confirm </a> <=</h3>");
+            await emailSender.SendEmailAsync(from, fromName, user.Email, subject, html.ToString());
         }
 
         public async Task<string> ConfirmEmailAsync(ApplicationUser user, string code)

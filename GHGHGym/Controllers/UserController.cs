@@ -1,5 +1,4 @@
 ﻿using GHGHGym.Core.Models.UserViewModels;
-using GHGHGym.Core.Services.EmailSender.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
-using System.Text.Encodings.Web;
 
 namespace GHGHGym.Controllers
 {
@@ -112,6 +110,7 @@ namespace GHGHGym.Controllers
             if (createResult.Succeeded)
             {
                 // UNCOMMENT CODE WHEN FINISHED WITH PROJECT
+                // WORKING EMAIL SENDER WITH CONFIRMATION
 
                 //var generatedToken = GenerateToken(user);
                 //var callbackAction = Url.Action(

@@ -1,3 +1,5 @@
+using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Services;
 using GHGHGym.Core.Services.EmailSender.Contracts;
 using GHGHGym.Core.Services.EmailSender.Models;
 using GHGHGym.Infrastructure.Data;
@@ -34,6 +36,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IEmailSender>(x => new SendGridEmailSender(builder.Configuration["SendGrid:ApiKey"]));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.ConfigureApplicationCookie(options => 
 {
