@@ -17,7 +17,7 @@ namespace GHGHGym.Controllers
 
         [HttpPost]
         [Authorize(Roles = Administrator)]
-        public async Task<IActionResult> Add(ProductViewModel model)
+        public IActionResult Add(ProductViewModel model)
         {
             return Ok();
         }

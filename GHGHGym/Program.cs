@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Services;
 using GHGHGym.Core.Services.EmailSender.Contracts;
@@ -38,6 +39,16 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
+Account account = new Account()
+{
+    Cloud = builder.Configuration["Cloudinary:CloudName"],
+    ApiKey = builder.Configuration["Cloudinary:ApiKey"],
+    ApiSecret = builder.Configuration["Cloudinary:ApiSecret"]
+};
+
+Cloudinary cloudinary = new Cloudinary(account);
+var test = cloudinary.UploadAsync(null);
+builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IEmailSender>(x => new SendGridEmailSender(builder.Configuration["SendGrid:ApiKey"]));
 builder.Services.AddScoped<IUserService, UserService>();
