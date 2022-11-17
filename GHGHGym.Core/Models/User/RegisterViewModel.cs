@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.ApplicationUserConstant;
 using static GHGHGym.Infrastructure.Constants.ErrorMessageConstants;
 
-namespace GHGHGym.Core.Models.UserViewModels
+namespace GHGHGym.Core.Models.User
 {
     public class RegisterViewModel
     {

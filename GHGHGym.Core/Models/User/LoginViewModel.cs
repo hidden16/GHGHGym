@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GHGHGym.Core.Models.UserViewModels
+namespace GHGHGym.Core.Models.User
 {
     public class LoginViewModel
     {

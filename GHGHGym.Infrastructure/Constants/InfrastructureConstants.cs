@@ -41,6 +41,7 @@
         public static class Category
         {
             public const int NameMaxLength = 20;
+            public const int NameMinLength = 4;
 
             public const string ProteinsCategoryName = "Proteins";
             public const string WeightLossCategoryName = "Weight loss supplements";

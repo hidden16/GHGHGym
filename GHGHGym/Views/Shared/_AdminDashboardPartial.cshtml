@@ -1,0 +1,13 @@
+﻿@if (User.IsInRole("Administrator"))
+{
+    <div class="btn-group-vertical">
+
+        <button class="btn btn-dark">
+            <a asp-action="Create" asp-controller="Category">Create Category</a>
+        </button>
+        <button class="btn btn-dark">
+            <a asp-action="Add" asp-controller="Product">Create Product</a>
+        </button>
+
+    </div>
+}

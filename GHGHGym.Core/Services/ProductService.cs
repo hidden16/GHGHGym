@@ -1,4 +1,5 @@
 ﻿using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Models.Product;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
 
@@ -6,18 +7,23 @@ namespace GHGHGym.Core.Services
 {
     public class ProductService : IProductService
     {
-        private IRepository<Product> repository;
-        public ProductService(IRepository<Product> repository)
+        private IRepository<Product> productRepository;
+        public ProductService(IRepository<Product> productRepository)
         {
-            this.repository = repository;
+            this.productRepository = productRepository;
         }
-        public Task AddProductAsync()
-        {
-            repository.AddAsync(new Product()
-            {
 
+        public async Task AddProductAsync(ProductViewModel model)
+        {
+            await productRepository.AddAsync(new Product()
+            {
+                Name = model.Name,
+                Price = model.Price,
+                Description = model.Description,
+                ProductsImages = model.ProductImages,
+                CategoryProducts = model.ProductCategories
             });
-            return Task.CompletedTask;
+            await productRepository.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using GHGHGym.Core.Models.UserViewModels;
+﻿using GHGHGym.Core.Models.User;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Authorization;

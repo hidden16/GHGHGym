@@ -1,7 +1,9 @@
-﻿namespace GHGHGym.Core.Contracts
+﻿using GHGHGym.Core.Models.Product;
+
+namespace GHGHGym.Core.Contracts
 {
     public interface IProductService
     {
-        public Task AddProductAsync();
+        public Task AddProductAsync(ProductViewModel model);
     }
 }
