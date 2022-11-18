@@ -1,6 +1,8 @@
 using CloudinaryDotNet;
 using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Services;
+using GHGHGym.Core.Services.CloudinaryService.Contracts;
+using GHGHGym.Core.Services.CloudinaryService.Models;
 using GHGHGym.Core.Services.EmailSender.Contracts;
 using GHGHGym.Core.Services.EmailSender.Models;
 using GHGHGym.Infrastructure.Data;
@@ -47,13 +49,15 @@ Account account = new Account()
 };
 
 Cloudinary cloudinary = new Cloudinary(account);
-var test = cloudinary.UploadAsync(null);
+
 builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IEmailSender>(x => new SendGridEmailSender(builder.Configuration["SendGrid:ApiKey"]));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 builder.Services.ConfigureApplicationCookie(options => 
 {

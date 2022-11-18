@@ -1,4 +1,4 @@
-﻿@model ProductViewModel
+﻿@model AddProductViewModel
 @{
     ViewBag.Title = "Add Category";
 }
@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="Create" method="post">
+        <form asp-action="Add" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label asp-for="@Model.Name" class="form-label">Name</label>
                 <input asp-for="@Model.Name" class="form-control" aria-required="true" />
@@ -25,8 +25,10 @@
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                <div class="mb-3">
+                    <label asp-for="@Model.Files" enctype="multipart/form-data" class="form-label">Multiple files input example</label>
+                    <input asp-for="@Model.Files" class="form-control" type="file" multiple>
+                </div>
             </div>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Add" />
