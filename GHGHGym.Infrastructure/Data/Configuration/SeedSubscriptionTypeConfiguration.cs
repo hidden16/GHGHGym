@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GHGHGym.Infrastructure.Data.Configuration
 {
-    internal class SubscriptionTypeConfiguration : IEntityTypeConfiguration<SubscriptionType>
+    internal class SeedSubscriptionTypeConfiguration : IEntityTypeConfiguration<SubscriptionType>
     {
         public void Configure(EntityTypeBuilder<SubscriptionType> builder)
         {

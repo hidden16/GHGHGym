@@ -4,6 +4,7 @@ using GHGHGym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GHGHGym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221120160509_ChangedProductAndCategoryModel")]
+    partial class ChangedProductAndCategoryModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,20 +171,20 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dca51d5a-bb2b-4258-a0e6-b489fd517912"),
+                            Id = new Guid("155481db-99d9-4891-be18-3e6895fbb59c"),
                             CategoryType = 0,
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(2853),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(7254),
                             IsDeleted = false,
                             Name = "Sports Supplements"
                         },
                         new
                         {
-                            Id = new Guid("2dbf0505-bce5-4de4-81c5-f1abcc5eaa65"),
+                            Id = new Guid("393c4db8-ee1a-493f-a42e-cd6ceb66af86"),
                             CategoryType = 1,
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(2867),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(7283),
                             IsDeleted = false,
                             Name = "Proteins",
-                            ParentCategoryId = new Guid("dca51d5a-bb2b-4258-a0e6-b489fd517912")
+                            ParentCategoryId = new Guid("155481db-99d9-4891-be18-3e6895fbb59c")
                         });
                 });
 
@@ -351,7 +353,7 @@ namespace GHGHGym.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
@@ -362,8 +364,8 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -447,43 +449,43 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ae062bf7-0ee2-4642-b1d4-c164f03f4872"),
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(176),
+                            Id = new Guid("eb2f8b64-0012-4a08-b139-1fcf9b062750"),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(4415),
                             IsDeleted = false,
                             Name = "Weekly"
                         },
                         new
                         {
-                            Id = new Guid("8eed35e5-1d2a-4096-b785-d2235c8762d5"),
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(210),
+                            Id = new Guid("7b30dbca-3587-4646-adef-ba0bf1207f06"),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(4453),
                             IsDeleted = false,
                             Name = "Monthly"
                         },
                         new
                         {
-                            Id = new Guid("ab891026-a217-45d3-8b96-92e3899d5925"),
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(211),
+                            Id = new Guid("9396c936-8b07-4cca-b3d1-c2232102c40d"),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(4455),
                             IsDeleted = false,
                             Name = "Yearly"
                         },
                         new
                         {
-                            Id = new Guid("45a8bdf3-d417-4b0e-98d0-ba00d5fab6f5"),
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(212),
+                            Id = new Guid("b0e6fc38-a20c-4c08-a286-42828dc5fafc"),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(4457),
                             IsDeleted = false,
                             Name = "Weekly with trainer"
                         },
                         new
                         {
-                            Id = new Guid("06f25094-a93a-4bb4-aaef-1e1a7ec9a873"),
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(213),
+                            Id = new Guid("f817fe7d-55b8-4007-b24e-1366d0e4181d"),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(4458),
                             IsDeleted = false,
                             Name = "Monthly with trainer"
                         },
                         new
                         {
-                            Id = new Guid("8f7e6013-13c4-461a-85fc-b152286991d7"),
-                            CreatedOn = new DateTime(2022, 11, 20, 21, 34, 53, 382, DateTimeKind.Utc).AddTicks(223),
+                            Id = new Guid("51af037c-0bfe-4d5b-8c44-77aa8079990d"),
+                            CreatedOn = new DateTime(2022, 11, 20, 16, 5, 9, 133, DateTimeKind.Utc).AddTicks(4460),
                             IsDeleted = false,
                             Name = "Yearly with trainer"
                         });
@@ -878,7 +880,8 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.HasOne("GHGHGym.Infrastructure.Data.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

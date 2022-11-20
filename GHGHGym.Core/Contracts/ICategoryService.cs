@@ -5,9 +5,7 @@ namespace GHGHGym.Core.Contracts
 {
     public interface ICategoryService
     {
-        public IEnumerable<Category> AllCategories();
-        public IEnumerable<Task<Category>> AllMainCategoryAsync();
-        public IEnumerable<Task<Category>> AllCategoryAsync();
+        public IEnumerable<CategoryListViewModel> AllCategories();
 
         public Task AddCategoryAsync(CategoryViewModel model);
     }

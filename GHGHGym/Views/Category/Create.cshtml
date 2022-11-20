@@ -28,11 +28,11 @@
             </div>
             <div class="mb-3">
                  <label asp-for="@Model.ParentCategoryId">Parent Category</label>
-                <i class="fa-solid fa-caret-down" data-fa-transform="down-32 right-499"></i>
+                <i class="fa-solid fa-caret-down" data-fa-transform="down-32 right-487"></i>
                 <select asp-for="@Model.ParentCategoryId"  class="form-control">
                     @foreach (var category in @Model.ParentCategories)
                     {
-                        <option value="@category.Id">@category.Name - @category.CategoryType</option>
+                        <option value="@category.Id">@category.Name - @category.Type</option>
                     }
                     <option>None</option>
                 </select>

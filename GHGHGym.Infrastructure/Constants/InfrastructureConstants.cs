@@ -29,7 +29,7 @@
             public const int NameMaxLength = 30;
             public const int NameMinLength = 5;
 
-            public const int DescriptionMaxLength = 250;
+            public const int DescriptionMaxLength = 3000;
             public const int DescriptionMinLength = 10;
         }
 
@@ -40,11 +40,10 @@
 
         public static class Category
         {
-            public const int NameMaxLength = 20;
+            public const int NameMaxLength = 40;
             public const int NameMinLength = 4;
 
-            public const string ProteinsCategoryName = "Proteins";
-            public const string WeightLossCategoryName = "Weight loss supplements";
+            public const string SubCategory = "SubCategory";
         }
     }
 }

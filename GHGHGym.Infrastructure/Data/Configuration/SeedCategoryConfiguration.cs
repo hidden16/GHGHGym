@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GHGHGym.Infrastructure.Data.Configuration
 {
-    internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    internal class SeedCategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {

@@ -19,6 +19,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         /// </summary>
         public Guid? ParentCategoryId { get; set; }
         public Category? ParentCategory { get; set; }
-        public List<CategoryProduct> CategoryProducts { get; set; } = new List<CategoryProduct>();
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

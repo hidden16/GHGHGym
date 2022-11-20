@@ -2,6 +2,8 @@
 using GHGHGym.Core.Models.Categories;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
+using GHGHGym.Infrastructure.Data.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace GHGHGym.Core.Services
 {
@@ -25,19 +27,19 @@ namespace GHGHGym.Core.Services
             await categoryRepo.SaveChangesAsync();
         }
 
-        public IEnumerable<Category> AllCategories()
+        public IEnumerable<CategoryListViewModel> AllCategories()
         {
-            return categoryRepo.All();
-        }
-
-        public IEnumerable<Task<Category>> AllCategoryAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Task<Category>> AllMainCategoryAsync()
-        {
-            throw new NotImplementedException();
+            List<CategoryListViewModel> categoriesModel = new List<CategoryListViewModel>();
+            foreach (var category in categoryRepo.All())
+            {
+                categoriesModel.Add(new CategoryListViewModel()
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    Type = category.CategoryType.ToString()
+                });
+            }
+            return categoriesModel;
         }
     }
 }

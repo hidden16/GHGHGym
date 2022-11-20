@@ -1,6 +1,6 @@
 ﻿using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Categories;
-using GHGHGym.Infrastructure.Data.Models.Enums;
+using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
 using static GHGHGym.Infrastructure.Constants.RoleConstants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +19,11 @@ namespace GHGHGym.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var categoryList = categoryService.AllCategories()
+                .Where(x=>x.Type != SubCategory);
             var model = new CategoryViewModel()
             {
-                ParentCategories = categoryService.AllCategories()
-                .Where(x => x.CategoryType != CategoryType.SubCategory)
+                ParentCategories = categoryList
             };
 
             return View(model);
@@ -31,6 +32,10 @@ namespace GHGHGym.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             await categoryService.AddCategoryAsync(model);
 
             return RedirectToAction("Index", "Home");

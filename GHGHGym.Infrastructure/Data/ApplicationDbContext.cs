@@ -18,15 +18,23 @@ namespace GHGHGym.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserSubscriptionConfiguration());
-            builder.ApplyConfiguration(new SubscriptionTypeConfiguration());
+            /* Already seeded
+             * builder.ApplyConfiguration(new SeedSubscriptionTypeConfiguration());
+             */
             builder.ApplyConfiguration(new UserImageConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new TrainerImageConfiguration());
             builder.ApplyConfiguration(new TrainingProgramImageConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new CategoryProductConfiguration());
+            /* Already seeded
+             * builder.ApplyConfiguration(new SeedCategoryConfiguration());
+             */
+            builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new TrainerConfiguration());
-            
+
+            builder.Entity<Category>()
+                .HasMany(x => x.Products)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<TrainingProgram>()
                 .HasOne(x => x.Trainer)
@@ -40,7 +48,6 @@ namespace GHGHGym.Infrastructure.Data
         public DbSet<TrainingProgramImage> TrainingProgramImages { get; set; }
         public DbSet<UserImage> UsersImages { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CategoryProduct> CategoriesProducts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Product> Products { get; set; }

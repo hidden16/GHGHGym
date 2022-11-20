@@ -4,6 +4,7 @@ using GHGHGym.Infrastructure.Data.Models;
 
 namespace GHGHGym.Core.Services
 {
+    // service is being used in other services not controllers
     public class ImageService : IImageService
     {
         private readonly IRepository<Image> imageRepository;

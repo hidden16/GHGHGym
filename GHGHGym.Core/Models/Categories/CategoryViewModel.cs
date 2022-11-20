@@ -1,8 +1,7 @@
-﻿using GHGHGym.Infrastructure.Data.Models;
-using GHGHGym.Infrastructure.Data.Models.Enums;
-using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
-using static GHGHGym.Infrastructure.Constants.ErrorMessageConstants;
+﻿using GHGHGym.Infrastructure.Data.Models.Enums;
 using System.ComponentModel.DataAnnotations;
+using static GHGHGym.Infrastructure.Constants.ErrorMessageConstants;
+using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
 
 namespace GHGHGym.Core.Models.Categories
 {
@@ -16,8 +15,7 @@ namespace GHGHGym.Core.Models.Categories
         public CategoryType CategoryType { get; set; }
 
         public Guid? ParentCategoryId { get; set; }
-        public Category? ParentCategory { get; set; }
 
-        public IEnumerable<Category> ParentCategories { get; set; } = new List<Category>();
+        public IEnumerable<CategoryListViewModel> ParentCategories { get; set; } = new List<CategoryListViewModel>();
     }
 }

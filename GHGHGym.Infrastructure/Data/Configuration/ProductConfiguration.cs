@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GHGHGym.Infrastructure.Data.Configuration
 {
-    internal class CategoryProductConfiguration : IEntityTypeConfiguration<CategoryProduct>
+    internal class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<CategoryProduct> builder)
+        public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder
-                .HasKey(cp => new { cp.CategoryId, cp.ProductId });
+                .HasOne(x => x.Category)
+                .WithMany(x => x.Products);
         }
     }
 }

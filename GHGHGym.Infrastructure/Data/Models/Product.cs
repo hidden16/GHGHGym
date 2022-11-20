@@ -24,12 +24,14 @@ namespace GHGHGym.Infrastructure.Data.Models
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
+        public Guid? CategoryId { get; set; }
+        [ForeignKey(nameof(CategoryId))]
+        public Category? Category { get; set; } = null!;
+
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
         public List<ApplicationUser> AppUsersPurchases { get; set; } = new List<ApplicationUser>();
 
         public List<ProductImage> ProductsImages { get; set; } = new List<ProductImage>();
-
-        public List<CategoryProduct> CategoryProducts { get; set; } = new List<CategoryProduct>();
     }
 }

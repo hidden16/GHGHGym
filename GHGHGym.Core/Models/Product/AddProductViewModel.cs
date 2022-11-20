@@ -1,4 +1,5 @@
-﻿using GHGHGym.Infrastructure.Data.Models;
+﻿using GHGHGym.Core.Models.Categories;
+using GHGHGym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.ErrorMessageConstants;
@@ -6,7 +7,6 @@ using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.ProductCon
 
 namespace GHGHGym.Core.Models.Product
 {
-    // Think about a variant to add images. Maybe can use cloudinary or local save
     public class AddProductViewModel
     {
         [Required]
@@ -23,7 +23,10 @@ namespace GHGHGym.Core.Models.Product
 
         public List<IFormFile> Files { get; set; } = new List<IFormFile>();
 
+        public Guid CategoryId { get; set; }
+
+        //filled in controller
         public List<string> ImageUrls { get; set; } = new List<string>();
-        public List<CategoryProduct> ProductCategories { get; set; } = new List<CategoryProduct>();
+        public List<CategoryListViewModel> Categories { get; set; } = new List<CategoryListViewModel>();
     }
 }
