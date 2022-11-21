@@ -6,6 +6,7 @@ namespace GHGHGym.Core.Models.User
     {
         [Required]
         [EmailAddress]
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; } = null!;
 
         [Required]
