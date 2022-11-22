@@ -4,6 +4,7 @@ using GHGHGym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GHGHGym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221122112918_ChangedUsersImages")]
+    partial class ChangedUsersImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace GHGHGym.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ApplicationUserProduct", b =>
+                {
+                    b.Property<Guid>("AppUsersPurchasesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PurchasedProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AppUsersPurchasesId", "PurchasedProductsId");
+
+                    b.HasIndex("PurchasedProductsId");
+
+                    b.ToTable("ApplicationUserProduct");
+                });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
@@ -488,41 +505,6 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.ToTable("TrainerPrograms");
                 });
 
-            modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserProduct", b =>
-                {
-                    b.Property<int>("PurchaseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseId"), 1L, 1);
-
-                    b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PurchaseId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("UserProduct");
-                });
-
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserSubscription", b =>
                 {
                     b.Property<Guid>("SubscriptionId")
@@ -679,6 +661,21 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ApplicationUserProduct", b =>
+                {
+                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("AppUsersPurchasesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("PurchasedProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
                     b.HasOne("GHGHGym.Infrastructure.Data.Models.Image", "Image")
@@ -822,25 +819,6 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.Navigation("Trainer");
                 });
 
-            modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserProduct", b =>
-                {
-                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Account.ApplicationUser", "ApplicationUser")
-                        .WithMany("PurchasedProducts")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GHGHGym.Infrastructure.Data.Models.Product", "Product")
-                        .WithMany("UserPurchases")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserSubscription", b =>
                 {
                     b.HasOne("GHGHGym.Infrastructure.Data.Models.Subscription", "Subscription")
@@ -915,8 +893,6 @@ namespace GHGHGym.Infrastructure.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("PurchasedProducts");
-
                     b.Navigation("Trainer");
 
                     b.Navigation("UsersSubscriptions");
@@ -943,8 +919,6 @@ namespace GHGHGym.Infrastructure.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("ProductsImages");
-
-                    b.Navigation("UserPurchases");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Subscription", b =>

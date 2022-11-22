@@ -12,6 +12,7 @@
         public static class CommentConstant
         {
             public const int TextMaxLength = 500;
+            public const int TextMinLength = 1;
         }
 
         public static class ApplicationUserConstant

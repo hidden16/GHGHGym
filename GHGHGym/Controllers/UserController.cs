@@ -101,7 +101,7 @@ namespace GHGHGym.Controllers
                 LastName = model.LastName,
                 Gender = model.GenderType,
                 BirthDate = model.BirthDate,
-                UserName = $"{model.FirstName}{model.LastName}"
+                UserName = $"{model.FirstName}{model.LastName}",
             };
 
             var createResult = await userManager.CreateAsync(user, model.Password);

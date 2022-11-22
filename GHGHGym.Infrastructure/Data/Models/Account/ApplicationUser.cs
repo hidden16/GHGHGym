@@ -34,11 +34,12 @@ namespace GHGHGym.Infrastructure.Data.Models.Account
         public Guid? TrainerId { get; set; }
         public Trainer? Trainer { get; set; }
 
+        public Guid? ImageId { get; set; }
+        public Image? Image { get; set; }
+
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
-        public List<Product> PurchasedProducts { get; set; } = new List<Product>();
-
-        public List<UserImage> UsersImages { get; set; } = new List<UserImage>();
+        public List<UserProduct> PurchasedProducts { get; set; } = new List<UserProduct>();
 
         public List<UserSubscription> UsersSubscriptions { get; set; } = new List<UserSubscription>();
     }

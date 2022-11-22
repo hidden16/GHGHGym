@@ -30,7 +30,7 @@ namespace GHGHGym.Infrastructure.Data.Models
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
-        public List<ApplicationUser> AppUsersPurchases { get; set; } = new List<ApplicationUser>();
+        public List<UserProduct> UserPurchases { get; set; } = new List<UserProduct>();
 
         public List<ProductImage> ProductsImages { get; set; } = new List<ProductImage>();
     }

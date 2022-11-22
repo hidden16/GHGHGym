@@ -19,15 +19,12 @@ namespace GHGHGym.Infrastructure.Data
         {
             builder.ApplyConfiguration(new UserSubscriptionConfiguration());
             /* Already seeded
-             * builder.ApplyConfiguration(new SeedSubscriptionTypeConfiguration());
-             */
-            builder.ApplyConfiguration(new UserImageConfiguration());
+            builder.ApplyConfiguration(new SeedSubscriptionTypeConfiguration());*/
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new TrainerImageConfiguration());
             builder.ApplyConfiguration(new TrainingProgramImageConfiguration());
             /* Already seeded
-             * builder.ApplyConfiguration(new SeedCategoryConfiguration());
-             */
+             builder.ApplyConfiguration(new SeedCategoryConfiguration());*/
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new TrainerConfiguration());
 
@@ -36,6 +33,7 @@ namespace GHGHGym.Infrastructure.Data
                 .WithOne(x => x.Category)
                 .OnDelete(DeleteBehavior.SetNull);
 
+
             builder.Entity<TrainingProgram>()
                 .HasOne(x => x.Trainer)
                 .WithMany(x => x.TrainerPrograms)
@@ -43,10 +41,10 @@ namespace GHGHGym.Infrastructure.Data
 
             base.OnModelCreating(builder);
         }
+        public DbSet<UserProduct> UserProduct { get; set; }
         public DbSet<ProductImage> ProductsImages { get; set; }
         public DbSet<TrainerImage> TrainersImages { get; set; }
         public DbSet<TrainingProgramImage> TrainingProgramImages { get; set; }
-        public DbSet<UserImage> UsersImages { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Image> Images { get; set; }

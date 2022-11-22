@@ -1,4 +1,5 @@
 ﻿using GHGHGym.Infrastructure.Abstractions.Models;
+using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,7 +13,7 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Required]
         public string ImageUrl { get; set; } = null!;
 
-        public List<UserImage> UsersImages { get; set; } = new List<UserImage>();
+        public List<ApplicationUser> UsersImages { get; set; } = new List<ApplicationUser>();
 
         public List<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 
