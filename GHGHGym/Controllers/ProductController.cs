@@ -114,7 +114,7 @@ namespace GHGHGym.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await productService.GetForEdit(id);
+            var model = await productService.GetForEditAsync(id);
             model.Categories = categoryService.AllCategories()
                .Where(x => x.Type == SubCategory)
                .ToList();
@@ -125,7 +125,45 @@ namespace GHGHGym.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(AddProductViewModel model)
         {
+            model.Categories = categoryService.AllCategories()
+               .Where(x => x.Type == SubCategory)
+               .ToList();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            List<string> imageUrls = new List<string>();
+            foreach (var file in model.Files)
+            {
+                if (file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg"))
+                {
+                    var result = await cloudinaryService.UploadPhotoAsync(file, file.FileName.ToString());
+                    imageUrls.Add(result);
+                }
+                else
+                {
+                    ModelState.AddModelError("Files", "Files are invalid");
+                    return View(model);
+                }
+            }
+            model.ImageUrls = imageUrls;
+            await productService.Edit(model);
+            return RedirectToAction(nameof(All));
+        }
 
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await productService.SetDeleted(id);
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Invalid Id");
+                return RedirectToAction(nameof(All));
+            }
         }
     }
 }

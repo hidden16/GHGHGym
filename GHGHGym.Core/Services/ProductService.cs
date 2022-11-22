@@ -48,7 +48,7 @@ namespace GHGHGym.Core.Services
 
         public IEnumerable<ProductViewModel> All()
         {
-            var products = productRepository.All()
+            var products = productRepository.AllReadonly()
                 .Include(x => x.ProductsImages)
                 .ThenInclude(x => x.Image)
                 .ToList();
@@ -58,25 +58,57 @@ namespace GHGHGym.Core.Services
             }
             List<ProductViewModel> productsDto = new List<ProductViewModel>();
             List<string> imageUrls = new List<string>();
-            foreach (var product in products)
+            foreach (var product in products.Where(x=>x.IsDeleted == false))
             {
                 productsDto.Add(new ProductViewModel()
                 {
                     Id = product.Id,
                     Name = product.Name,
                     Price = product.Price,
-                    ImageUrls = product.ProductsImages.Select(x => x.Image.ImageUrl).ToList()
+                    ImageUrls = product.ProductsImages
+                    .Where(x => !x.IsDeleted)
+                    .Select(x => x.Image.ImageUrl)
+                    .ToList()
                 });
             }
             return productsDto;
         }
 
-        public Task Edit(AddProductViewModel model)
+        public async Task Edit(AddProductViewModel model)
         {
-            throw new NotImplementedException();
+            var product = productRepository.AllReadonly()
+                .Where(x => x.Id == model.Id)
+                .Include(x => x.ProductsImages)
+                .ThenInclude(x => x.Image)
+                .FirstOrDefault();
+
+            if (model.ImageUrls.Count() != 0)
+            {
+                await imageService.SetDeletedRangeByUrls(product.ProductsImages.Select(x => x.Image.ImageUrl));
+                List<Image> images = await imageService.AddImages(model.ImageUrls);
+                List<ProductImage> productsImages = new List<ProductImage>();
+                foreach (var image in images)
+                {
+                    productsImages.Add(new ProductImage()
+                    {
+                        Product = product,
+                        Image = image
+                    });
+                }
+                product.ProductsImages = productsImages;
+            }
+
+
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.Description = model.Description;
+            product.CategoryId = model.CategoryId;
+
+            productRepository.Update(product);
+            await productRepository.SaveChangesAsync();
         }
 
-        public async Task<AddProductViewModel> GetForEdit(Guid productId)
+        public async Task<AddProductViewModel> GetForEditAsync(Guid productId)
         {
             try
             {
@@ -84,9 +116,10 @@ namespace GHGHGym.Core.Services
 
                 var productToReturn = new AddProductViewModel()
                 {
+                    Id = product.Id,
                     Name = product.Name,
                     Price = product.Price,
-                    Description = product.Description   
+                    Description = product.Description
                 };
 
                 return productToReturn;
@@ -101,7 +134,11 @@ namespace GHGHGym.Core.Services
         {
             try
             {
-                var product = await productRepository.GetByIdAsync(productId);
+                var product = productRepository.AllReadonly()
+                    .Where(x => x.Id == productId)
+                    .Include(x => x.ProductsImages)
+                    .ThenInclude(x => x.Image)
+                    .FirstOrDefault();
 
                 var productToReturn = new ProductViewModel()
                 {
@@ -109,7 +146,10 @@ namespace GHGHGym.Core.Services
                     Description = product.Description,
                     Name = product.Name,
                     Price = product.Price,
-                    ImageUrls = product.ProductsImages.Select(x => x.Image.ImageUrl).ToList()
+                    ImageUrls = product.ProductsImages
+                    .Where(x => !x.Image.IsDeleted)
+                    .Select(x => x.Image.ImageUrl)
+                    .ToList()
                 };
 
                 var multiModel = new ProductMultiModel()
@@ -138,6 +178,12 @@ namespace GHGHGym.Core.Services
                 });
             }
             await userRepository.SaveChangesAsync();
+        }
+
+        public async Task SetDeleted(Guid productId)
+        {
+            await productRepository.SetDeletedByIdAsync(productId);
+            await productRepository.SaveChangesAsync();
         }
     }
 }

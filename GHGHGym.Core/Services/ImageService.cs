@@ -37,5 +37,21 @@ namespace GHGHGym.Core.Services
             await imageRepository.SaveChangesAsync();
             return imagesToAdd;
         }
+
+        public async Task SetDeletedRangeByUrls(IEnumerable<string> imageUrls)
+        {
+            var images = imageRepository.All();
+            var imagesToDelete = new List<Image>();
+
+            foreach (var image in images)
+            {
+                if (imageUrls.Any(x => x == image.ImageUrl))
+                {
+                    imagesToDelete.Add(image);
+                }
+            }
+            imageRepository.SetDeletedRange(imagesToDelete);
+            await imageRepository.SaveChangesAsync();
+        }
     }
 }

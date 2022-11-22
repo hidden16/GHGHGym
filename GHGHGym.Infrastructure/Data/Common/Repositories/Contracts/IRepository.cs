@@ -17,6 +17,7 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories.Contracts
         Task<TEntity> GetByIdsAsync(object[] id);
 
         void HardDelete(TEntity entity);
+        void HardDeleteRange(IEnumerable<TEntity> entities);
         void SetDeleted(TEntity entity);
         Task SetDeletedByIdAsync(object id);
         void SetDeletedRange(IEnumerable<TEntity> entities);

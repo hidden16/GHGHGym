@@ -62,6 +62,10 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories
         public void HardDelete(TEntity entity)
             => DbSet.Remove(entity);
 
+        public void HardDeleteRange(IEnumerable<TEntity> entities)
+            => DbSet.RemoveRange(entities);
+        
+
         public async Task<int> SaveChangesAsync()
             => await Context.SaveChangesAsync();
 

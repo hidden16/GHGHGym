@@ -9,6 +9,8 @@ namespace GHGHGym.Core.Models.Product
 {
     public class AddProductViewModel
     {
+        public Guid? Id { get; set; }
+
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = NameErrorMessage)]
         public string Name { get; set; } = null!;
@@ -21,7 +23,7 @@ namespace GHGHGym.Core.Models.Product
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        public List<IFormFile> Files { get; set; } = new List<IFormFile>();
+        public List<IFormFile>? Files { get; set; } = new List<IFormFile>();
 
         public Guid CategoryId { get; set; }
 

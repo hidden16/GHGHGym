@@ -6,5 +6,6 @@ namespace GHGHGym.Core.Contracts
     {
         Task<Image> AddImage(string imageUrl);
         Task<List<Image>> AddImages(ICollection<string> imageUrls);
+        Task SetDeletedRangeByUrls(IEnumerable<string> imageUrls);
     }
 }

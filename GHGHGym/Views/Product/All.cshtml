@@ -12,11 +12,17 @@
     {
         <div class="card col-4" style="width: 20rem; ">
             <img class="card-img-top" style="width: 18rem;"
-             src="@product.ImageUrls.First()" alt="Product Image">
+             src="@product.ImageUrls.FirstOrDefault()" alt="Product Image">
             <div class="card-body">
-                <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                }
                 <h5 class="card-title mt-1">@product.Name</h5>
                 <p class="mb-0">Price: €@product.Price</p>
                 <form class="input-group-sm" asp-controller="Product" asp-action="ProductById" asp-route-productId="@product.Id">
