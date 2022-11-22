@@ -99,6 +99,7 @@ namespace GHGHGym.Controllers
             }
         }
 
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ProductById(Guid Id)
         {
