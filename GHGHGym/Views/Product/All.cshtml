@@ -25,7 +25,7 @@
                 }
                 <h5 class="card-title mt-1">@product.Name</h5>
                 <p class="mb-0">Price: €@product.Price</p>
-                <form class="input-group-sm" asp-controller="Product" asp-action="ProductById" asp-route-productId="@product.Id">
+                <form class="input-group-sm" asp-controller="Product" asp-action="ProductById" asp-route-Id="@product.Id">
                     <input type="submit" value="More info" class="fs-6 btn btn-success mb-3 p-2" />
                 </form>
             </div>

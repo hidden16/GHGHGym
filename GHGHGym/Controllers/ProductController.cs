@@ -98,16 +98,23 @@ namespace GHGHGym.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        [HttpPost]
+
         [AllowAnonymous]
-        public async Task<IActionResult> ProductById(Guid productId)
+        public async Task<IActionResult> ProductById(Guid Id)
         {
-            var entity = await productService.GetProductById(productId);
-            if (entity == null)
+            try
             {
-                return RedirectToAction("All", "Product");
+                var entity = await productService.GetProductById(Id);
+                if (entity == null)
+                {
+                    return RedirectToAction("All", "Product");
+                }
+                return View(entity);
             }
-            return View(entity);
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(All));
+            }
         }
 
         [HttpGet]

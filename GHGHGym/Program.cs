@@ -39,7 +39,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-});
+}).AddRazorRuntimeCompilation();
 
 Account account = new Account()
 {
@@ -68,7 +68,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-{
+{   
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
