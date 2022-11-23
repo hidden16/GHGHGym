@@ -7,6 +7,7 @@ using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Services.CloudinaryService.Contracts;
 using System.Security.Claims;
 using GHGHGym.Core.MultiModels;
+using Ganss.Xss;
 
 namespace GHGHGym.Controllers
 {
@@ -41,6 +42,7 @@ namespace GHGHGym.Controllers
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Add(AddProductViewModel model)
         {
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
             model.Categories = categoryService.AllCategories()
                 .Where(x => x.Type == SubCategory)
                 .ToList();
@@ -63,7 +65,6 @@ namespace GHGHGym.Controllers
                 }
             }
             model.ImageUrls = imageUrls;
-
             await productService.AddProductAsync(model);
             return RedirectToAction("Index", "Home");
         }

@@ -51,14 +51,9 @@ Account account = new Account()
 Cloudinary cloudinary = new Cloudinary(account);
 
 builder.Services.AddSingleton(cloudinary);
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IEmailSender>(x => new SendGridEmailSender(builder.Configuration["SendGrid:ApiKey"]));
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
-builder.Services.AddScoped<IImageService, ImageService>();
-builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddApplicationServices();
 
 builder.Services.ConfigureApplicationCookie(options => 
 {
