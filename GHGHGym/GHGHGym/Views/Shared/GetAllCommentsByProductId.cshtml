@@ -1,0 +1,14 @@
+﻿@model IEnumerable<CommentViewModel>
+
+<div id="CommentContainer">
+    @foreach (var comment in @Model)
+    {
+        <div class="media">
+            @*<img class="mr-3" src="..." alt="Generic placeholder image">*@
+            <div class="media-body">
+                <h5 class="mt-0">@comment.UserName</h5>
+                <p>@comment.Text</p>
+            </div>
+        </div>
+    }
+</div>

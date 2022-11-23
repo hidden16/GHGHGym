@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Models.Product;
+﻿using GHGHGym.Core.Models.Comments;
+using GHGHGym.Core.Models.Product;
 
 namespace GHGHGym.Core.MultiModels
 {
@@ -6,5 +7,6 @@ namespace GHGHGym.Core.MultiModels
     {
         public ProductViewModel? ProductDto { get; set; }
         public PurchaseProductViewModel? PurchaseProductDto { get; set; }
+        public IEnumerable<CommentViewModel>? Comments { get; set; }
     }
 }

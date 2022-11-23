@@ -24,12 +24,14 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories.Contracts
         void SetDeletedRangeExpression(Expression<Func<TEntity, bool>> deleteWhereClause);
         void Undelete(TEntity entity);
 
+        void Add(TEntity entity);
         Task AddAsync(TEntity entity);
         Task AddRangeAsync(IEnumerable<TEntity> entities);
 
         void Update(TEntity entity);
         void UpdateRange(IEnumerable<TEntity> entities);
 
+        int SaveChanges();
         Task<int> SaveChangesAsync();
     }
 }

@@ -18,28 +18,32 @@ namespace GHGHGym.Core.Services
             this.commentRepository = commentRepository;
             this.userRepository = userRepository;
         }
-        public async Task AddComment(CommentViewModel model, Guid userId)
+        public void AddComment(string commentText, Guid userId, Guid productId)
         {
-            var user = await userRepository.GetByIdAsync(userId);
-            if (model.ProductId != null)
+            var comment = new Comment()
             {
-                await commentRepository.AddAsync(new Comment()
+                ApplicationUserId = userId,
+                ProductId = productId,
+                Text = sanitizer.Sanitize(commentText)
+            };
+            commentRepository.Add(comment);
+            commentRepository.SaveChanges();
+        }
+
+        public  IEnumerable<CommentViewModel> GetCommentByProductId(Guid productId)
+        {
+            var product = commentRepository.All()
+                .Where(x => x.ProductId == productId)
+                .Select(x => new CommentViewModel()
                 {
-                    Text = sanitizer.Sanitize(model.Text),
-                    ProductId = model.ProductId,
-                    ApplicationUserId = user.Id
-                });
-            }
-            else
-            {
-                await commentRepository.AddAsync(new Comment()
-                {
-                    Text = sanitizer.Sanitize(model.Text),
-                    TrainerId = model.TrainerId,
-                    ApplicationUserId = user.Id
-                });
-            }
-            await commentRepository.SaveChangesAsync();
+                    ProductId = x.ProductId,
+                    Text = x.Text,
+                    UserName = $"{x.ApplicationUser.FirstName} {x.ApplicationUser.LastName}",
+                    CreatedOn = x.CreatedOn
+                })
+                .ToList();
+
+            return product;
         }
     }
 }

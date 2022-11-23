@@ -11,12 +11,12 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IProductService, ProductService>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IImageService, ImageService>();
-            services.AddScoped<ICommentService, CommentService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             return services;
         }

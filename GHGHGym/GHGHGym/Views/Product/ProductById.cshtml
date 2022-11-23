@@ -1,4 +1,5 @@
-﻿@model ProductMultiModel
+﻿@using System.Security.Claims
+@model ProductMultiModel
 
 <!DOCTYPE html>
 <html>
@@ -56,8 +57,22 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                <partial name="_CommentPartial" />
+                <form class="col-md-12" id="CreateCommentForm">
+                    <div class="bg-light p-2">
+                        <h4>Comment</h4>
+                        <div class="d-flex flex-row align-items-start">
+                            @*<img src="" alt="User image" class="rounded-circle" width="40">*@
+                            <textarea class="form-control ml-1 shadow-none textarea" id="CommentText"></textarea>
+                            <input type="hidden" value="@Model.ProductDto.Id" id="ProductId"/>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-success btn-sm shadow-none" type="button" id="SubmitComment">Comment</button>
+                        </div>
+                    </div>
+                </form>
+                <partial name="GetAllCommentsByProductId" model=@Model.Comments/>
             </div>
+
             <div class="col-md-7">
                 <div class="box">
                     <h2>@Model.ProductDto.Name</h2>

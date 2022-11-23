@@ -14,15 +14,9 @@ namespace GHGHGym.Controllers
         {
             this.commentService = commentService;
         }
-        [HttpGet]
-        public IActionResult AddComment()
-        {
-            var model = new CommentViewModel();
-            return View(model);
-        }
 
         [HttpPost]
-        public IActionResult AddComment(CommentViewModel model)
+        public IActionResult AddComment(Guid productId, string commentText)
         {
             var userId = User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
@@ -30,8 +24,15 @@ namespace GHGHGym.Controllers
                 ModelState.AddModelError("", "Something went wrong");
                 return View();
             }
-            commentService.AddComment(model, Guid.Parse(userId));
-            return View();
+            commentService.AddComment(commentText, Guid.Parse(userId), productId);
+            return this.Redirect($"/Comment/GetAllCommentsByProductId?productId={productId}");
         }
+        public IActionResult GetAllCommentsByProductId(Guid productId)
+        {
+            var comments = commentService.GetCommentByProductId(productId);
+            return PartialView(comments);
+        }
+
+        //for trainers GetAllCommentsByTrainerId(Guid trainerId)
     }
 }

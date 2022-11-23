@@ -18,6 +18,9 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories
         protected DbSet<TEntity> DbSet { get; set; }
         protected ApplicationDbContext Context { get; set; }
 
+        public void Add(TEntity entity)
+            => DbSet.Add(entity);
+
         public async Task AddAsync(TEntity entity)
             => await DbSet.AddAsync(entity);
 
@@ -64,7 +67,9 @@ namespace GHGHGym.Infrastructure.Data.Common.Repositories
 
         public void HardDeleteRange(IEnumerable<TEntity> entities)
             => DbSet.RemoveRange(entities);
-        
+
+        public int SaveChanges()
+            => Context.SaveChanges();
 
         public async Task<int> SaveChangesAsync()
             => await Context.SaveChangesAsync();

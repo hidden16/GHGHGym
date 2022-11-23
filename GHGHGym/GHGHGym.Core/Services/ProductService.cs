@@ -1,5 +1,6 @@
 ﻿using Ganss.Xss;
 using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Models.Comments;
 using GHGHGym.Core.Models.Product;
 using GHGHGym.Core.MultiModels;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
@@ -16,13 +17,16 @@ namespace GHGHGym.Core.Services
         private readonly IRepository<Product> productRepository;
         private readonly IRepository<ApplicationUser> userRepository;
         private readonly IImageService imageService;
+        private readonly ICommentService commentService;
         public ProductService(IRepository<Product> productRepository,
             IRepository<ApplicationUser> userRepository,
+            ICommentService commentService,
             IImageService imageService)
         {
             this.productRepository = productRepository;
             this.userRepository = userRepository;
             this.imageService = imageService;
+            this.commentService = commentService;
         }
 
         public async Task AddProductAsync(AddProductViewModel model)
@@ -157,7 +161,8 @@ namespace GHGHGym.Core.Services
                 var multiModel = new ProductMultiModel()
                 {
                     ProductDto = productToReturn,
-                    PurchaseProductDto = new PurchaseProductViewModel()
+                    PurchaseProductDto = new PurchaseProductViewModel(),
+                    Comments = commentService.GetCommentByProductId(product.Id),
                 };
                 return multiModel;
             }

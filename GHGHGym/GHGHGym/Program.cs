@@ -39,7 +39,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews(options =>
 {
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 }).AddRazorRuntimeCompilation()
 .AddMvcOptions(options =>
 {
