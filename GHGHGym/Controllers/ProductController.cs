@@ -7,7 +7,6 @@ using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Services.CloudinaryService.Contracts;
 using System.Security.Claims;
 using GHGHGym.Core.MultiModels;
-using Ganss.Xss;
 
 namespace GHGHGym.Controllers
 {
@@ -42,7 +41,6 @@ namespace GHGHGym.Controllers
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Add(AddProductViewModel model)
         {
-            HtmlSanitizer sanitizer = new HtmlSanitizer();
             model.Categories = categoryService.AllCategories()
                 .Where(x => x.Type == SubCategory)
                 .ToList();
@@ -83,6 +81,10 @@ namespace GHGHGym.Controllers
         [Authorize]
         public async Task<IActionResult> Purchase(ProductMultiModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             try
             {
                 var userId = User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -120,7 +122,7 @@ namespace GHGHGym.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Edit(Guid id)
         {
             var model = await productService.GetForEditAsync(id);
@@ -131,7 +133,7 @@ namespace GHGHGym.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Edit(AddProductViewModel model)
         {
             model.Categories = categoryService.AllCategories()
@@ -160,7 +162,7 @@ namespace GHGHGym.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

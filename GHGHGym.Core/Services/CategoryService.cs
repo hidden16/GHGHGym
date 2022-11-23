@@ -1,14 +1,14 @@
-﻿using GHGHGym.Core.Contracts;
+﻿using Ganss.Xss;
+using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Categories;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
-using GHGHGym.Infrastructure.Data.Models.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace GHGHGym.Core.Services
 {
     public class CategoryService : ICategoryService
     {
+        private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private IRepository<Category> categoryRepo;
 
         public CategoryService(IRepository<Category> categoryRepo)
@@ -20,7 +20,7 @@ namespace GHGHGym.Core.Services
         {
             await categoryRepo.AddAsync(new Category()
             {
-                Name = model.Name,
+                Name = sanitizer.Sanitize(model.Name),
                 ParentCategoryId = model.ParentCategoryId,
                 CategoryType = model.CategoryType
             });

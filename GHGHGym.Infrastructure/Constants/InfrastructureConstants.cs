@@ -32,6 +32,9 @@
 
             public const int DescriptionMaxLength = 3000;
             public const int DescriptionMinLength = 10;
+
+            public const int QuantityMaxLength = 10;
+            public const int QuantityMinLength = 1;
         }
 
         public static class SubscriptionType
