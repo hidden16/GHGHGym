@@ -15,6 +15,13 @@ namespace GHGHGym.Controllers
             this.commentService = commentService;
         }
 
+        /// <summary>
+        /// Adds comment in database
+        /// </summary>
+        /// <param name="productId">Id of the product for which the product is</param>
+        /// <param name="commentText">The comment</param>
+        /// <returns>Returns redirect to the method that gets all comments by id of the product</returns>
+        [IgnoreAntiforgeryToken]
         [HttpPost]
         public IActionResult AddComment(Guid productId, string commentText)
         {
@@ -27,6 +34,8 @@ namespace GHGHGym.Controllers
             commentService.AddComment(commentText, Guid.Parse(userId), productId);
             return this.Redirect($"/Comment/GetAllCommentsByProductId?productId={productId}");
         }
+
+        [IgnoreAntiforgeryToken]
         public IActionResult GetAllCommentsByProductId(Guid productId)
         {
             var comments = commentService.GetCommentByProductId(productId);
