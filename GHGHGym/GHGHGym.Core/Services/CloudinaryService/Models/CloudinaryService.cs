@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Ganss.Xss;
 
 namespace GHGHGym.Core.Services.CloudinaryService.Models
 {
     public class CloudinaryService : ICloudinaryService
     {
+        private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly Cloudinary cloudinary;
         public CloudinaryService(Cloudinary cloudinary)
         {
@@ -28,7 +30,7 @@ namespace GHGHGym.Core.Services.CloudinaryService.Models
             {
                 ImageUploadParams uploadParams = new ImageUploadParams()
                 {
-                    File = new FileDescription(fileName, memoryStream)
+                    File = new FileDescription(sanitizer.Sanitize(fileName), memoryStream)
                 };
 
                 result = await this.cloudinary.UploadAsync(uploadParams);

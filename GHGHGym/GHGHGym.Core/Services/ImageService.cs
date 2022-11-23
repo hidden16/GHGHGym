@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Contracts;
+﻿using Ganss.Xss;
+using GHGHGym.Core.Contracts;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
 
@@ -7,6 +8,7 @@ namespace GHGHGym.Core.Services
     // service is being used in other services not controllers
     public class ImageService : IImageService
     {
+        private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly IRepository<Image> imageRepository;
         public ImageService(IRepository<Image> imageRepository)
         {
@@ -16,7 +18,7 @@ namespace GHGHGym.Core.Services
         {
             Image image = new Image()
             {
-                ImageUrl = imageUrl
+                ImageUrl = sanitizer.Sanitize(imageUrl)
             };
             await imageRepository.AddAsync(image);
             await imageRepository.SaveChangesAsync();
@@ -30,7 +32,7 @@ namespace GHGHGym.Core.Services
             {
                 imagesToAdd.Add(new Image()
                 {
-                    ImageUrl = url
+                    ImageUrl = sanitizer.Sanitize(url)
                 });
             }
             await imageRepository.AddRangeAsync(imagesToAdd);

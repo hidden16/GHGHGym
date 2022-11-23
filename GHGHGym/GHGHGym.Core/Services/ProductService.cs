@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Contracts;
+﻿using Ganss.Xss;
+using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Product;
 using GHGHGym.Core.MultiModels;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
@@ -11,6 +12,7 @@ namespace GHGHGym.Core.Services
 {
     public class ProductService : IProductService
     {
+        private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly IRepository<Product> productRepository;
         private readonly IRepository<ApplicationUser> userRepository;
         private readonly IImageService imageService;
@@ -27,9 +29,9 @@ namespace GHGHGym.Core.Services
         {
             Product product = new Product()
             {
-                Name = model.Name,
+                Name = sanitizer.Sanitize(model.Name),
                 Price = model.Price,
-                Description = model.Description,
+                Description = sanitizer.Sanitize(model.Description),
             };
             List<Image> images = await imageService.AddImages(model.ImageUrls);
             List<ProductImage> productsImages = new List<ProductImage>();
@@ -99,9 +101,9 @@ namespace GHGHGym.Core.Services
             }
 
 
-            product.Name = model.Name;
+            product.Name = sanitizer.Sanitize(model.Name);
             product.Price = model.Price;
-            product.Description = model.Description;
+            product.Description = sanitizer.Sanitize(model.Description);
             product.CategoryId = model.CategoryId;
 
             productRepository.Update(product);

@@ -10,7 +10,6 @@ using System.Text;
 namespace GHGHGym.Controllers
 {
     [Authorize]
-    
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

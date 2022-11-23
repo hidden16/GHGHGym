@@ -9,6 +9,7 @@ using GHGHGym.Infrastructure.Data;
 using GHGHGym.Infrastructure.Data.Common.Repositories;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
+using GHGHGym.ModelBinders;
 using GHGHGym.UserServices;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-}).AddRazorRuntimeCompilation();
+}).AddRazorRuntimeCompilation()
+.AddMvcOptions(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+});
 
 Account account = new Account()
 {
