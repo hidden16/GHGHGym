@@ -42,6 +42,12 @@ namespace GHGHGym.Controllers
             return PartialView(comments);
         }
 
+        public async Task<IActionResult> Delete(Guid commentId, Guid productId)
+        {
+            await commentService.DeleteCommentAsync(commentId);
+            return Redirect($"/Product/ProductById?productId={productId}");
+        }
+
         //for trainers GetAllCommentsByTrainerId(Guid trainerId)
     }
 }

@@ -36,14 +36,22 @@ namespace GHGHGym.Core.Services
                 .Where(x => x.ProductId == productId)
                 .Select(x => new CommentViewModel()
                 {
+                    Id = x.Id,
                     ProductId = x.ProductId,
                     Text = x.Text,
                     UserName = $"{x.ApplicationUser.FirstName} {x.ApplicationUser.LastName}",
-                    CreatedOn = x.CreatedOn
+                    CreatedOn = x.CreatedOn,
+                    UserId = x.ApplicationUserId.ToString()
                 })
                 .ToList();
 
             return product;
+        }
+
+        public async Task DeleteCommentAsync(Guid commentId)
+        {
+            await commentRepository.SetDeletedByIdAsync(commentId);
+            await commentRepository.SaveChangesAsync();
         }
     }
 }

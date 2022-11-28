@@ -5,6 +5,7 @@ namespace GHGHGym.Core.Models.Comments
 {
     public class CommentViewModel
     {
+        public Guid Id { get; set; }
         [Required]
         [StringLength(TextMaxLength, MinimumLength = TextMinLength, ErrorMessage = NameErrorMessage)]
         public string Text { get; set; } = null!;
@@ -14,7 +15,7 @@ namespace GHGHGym.Core.Models.Comments
 
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
-
+        public string? UserId { get; set; }
         public Guid? ProductId { get; set; }
         public Guid? TrainerId { get; set; }
     }   

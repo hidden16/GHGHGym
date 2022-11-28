@@ -6,5 +6,6 @@ namespace GHGHGym.Core.Contracts
     {
         public void AddComment(string commentText, Guid userId, Guid productId);
         public IEnumerable<CommentViewModel> GetCommentByProductId(Guid productId);
+        public Task DeleteCommentAsync(Guid commentId);
     }
 }
