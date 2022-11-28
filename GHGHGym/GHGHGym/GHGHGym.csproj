@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Account\" />
-    <Folder Include="Views\Comment\" />
   </ItemGroup>
 
 </Project>
