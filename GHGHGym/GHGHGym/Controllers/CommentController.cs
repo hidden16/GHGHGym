@@ -45,7 +45,7 @@ namespace GHGHGym.Controllers
         public async Task<IActionResult> Delete(Guid commentId, Guid productId)
         {
             await commentService.DeleteCommentAsync(commentId);
-            return Redirect($"/Product/ProductById?productId={productId}");
+            return RedirectToAction("ProductById", "Product", new {productId = productId});
         }
 
         //for trainers GetAllCommentsByTrainerId(Guid trainerId)

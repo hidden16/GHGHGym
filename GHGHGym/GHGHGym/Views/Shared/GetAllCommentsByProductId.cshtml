@@ -10,16 +10,16 @@
             <div class="media-body">
                 @{
                     var userId = User.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value.ToLower();
-                    if (userId == comment.UserId.ToLower() || User.IsInRole("Administrator"))
+                    if (userId == comment.UserId?.ToLower() || User.IsInRole("Administrator"))
                     {
                         <a asp-controller="Comment" asp-action="Edit">
-                            <i class="fa-solid fa-pen-to-square" data-fa-transform="down-32 right-500"></i>
+                            <i class="fa-solid fa-pen-to-square" data-fa-transform="down-32 right-495"></i>
+                        </a>
+                        <a asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.Id" asp-route-productId="@comment.ProductId">
+                            <i class="fa-solid fa-trash" data-fa-transform="down-32 right-500"></i>
                         </a>
                     }
                 }
-                <a asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.Id" asp-route-productId="@comment.ProductId">
-                    <i class="fa-solid fa-trash" data-fa-transform="down-32 right-500"></i>
-                </a>
                 <h5 class="mt-0">@comment.UserName</h5>
                 <p>@comment.Text</p>
             </div>
