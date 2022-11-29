@@ -1,0 +1,21 @@
+﻿.a-position-one {
+    position: relative;
+    left:460px;
+    top:15px;
+}
+.a-position-two {
+    position: relative;
+    left:490px;
+    bottom:9px;
+}
+.comment-container{
+    height:125px;
+    background-color: rgb(206, 206, 206);
+    border:1px solid rgba(0,0,0,0.2);
+    border-radius:1rem;
+    min-width: 100%;
+}
+.name-position{
+    position:relative;
+    left:10px;
+}

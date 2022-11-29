@@ -104,11 +104,11 @@ namespace GHGHGym.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ProductById(Guid productId)
+        public IActionResult ProductById(Guid productId)
         {
             try
             {
-                var entity = await productService.GetProductById(productId);
+                var entity = productService.GetProductById(productId);
                 if (entity == null)
                 {
                     return RedirectToAction("All", "Product");

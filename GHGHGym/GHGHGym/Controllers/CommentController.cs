@@ -45,7 +45,33 @@ namespace GHGHGym.Controllers
         public async Task<IActionResult> Delete(Guid commentId, Guid productId)
         {
             await commentService.DeleteCommentAsync(commentId);
-            return RedirectToAction("ProductById", "Product", new {productId = productId});
+            return RedirectToAction("ProductById", "Product", new { productId = productId });
+        }
+
+        [HttpGet]
+        public IActionResult EditProductComment(Guid commentId, Guid postId, string text)
+        {
+            var model = new EditCommentViewModel()
+            {
+                Text = text,
+                CommentId = commentId,
+                PostId = postId
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProductComment(EditCommentViewModel model)
+        {
+            try
+            {
+                await commentService.Edit(model);
+                return RedirectToAction("ProductById", "Product", new { productId = model.PostId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("All", "Product");
+            }
         }
 
         //for trainers GetAllCommentsByTrainerId(Guid trainerId)

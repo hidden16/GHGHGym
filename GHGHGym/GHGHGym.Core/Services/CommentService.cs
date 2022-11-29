@@ -30,7 +30,7 @@ namespace GHGHGym.Core.Services
             commentRepository.SaveChanges();
         }
 
-        public  IEnumerable<CommentViewModel> GetCommentByProductId(Guid productId)
+        public IEnumerable<CommentViewModel> GetCommentByProductId(Guid productId)
         {
             var product = commentRepository.All()
                 .Where(x => x.ProductId == productId)
@@ -51,6 +51,15 @@ namespace GHGHGym.Core.Services
         public async Task DeleteCommentAsync(Guid commentId)
         {
             await commentRepository.SetDeletedByIdAsync(commentId);
+            await commentRepository.SaveChangesAsync();
+        }
+
+        public async Task Edit(EditCommentViewModel model)
+        {
+            var comment = await commentRepository.GetByIdAsync(model.CommentId);
+            comment.Text = model.Text;
+            comment.ModifiedOn = DateTime.UtcNow;
+            commentRepository.Update(comment);
             await commentRepository.SaveChangesAsync();
         }
     }

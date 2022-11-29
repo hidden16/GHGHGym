@@ -136,7 +136,7 @@ namespace GHGHGym.Core.Services
             }
         }
 
-        public async Task<ProductMultiModel> GetProductById(Guid productId)
+        public ProductMultiModel GetProductById(Guid productId)
         {
             try
             {

@@ -7,7 +7,7 @@ namespace GHGHGym.Core.Contracts
     {
         public Task AddProductAsync(AddProductViewModel model);
         public IEnumerable<ProductViewModel> All();
-        public Task<ProductMultiModel> GetProductById(Guid productId);
+        public ProductMultiModel GetProductById(Guid productId);
         public Task Purchase(ProductMultiModel model, Guid userId);
         public Task<AddProductViewModel> GetForEditAsync(Guid productId);
         public Task Edit(AddProductViewModel model);
