@@ -1,6 +1,6 @@
 ﻿.a-position-one {
     position: relative;
-    left:460px;
+    left:464px;
     top:15px;
 }
 .a-position-two {
@@ -9,6 +9,7 @@
     bottom:9px;
 }
 .comment-container{
+    margin-top:5px;
     height:125px;
     background-color: rgb(206, 206, 206);
     border:1px solid rgba(0,0,0,0.2);
@@ -17,5 +18,13 @@
 }
 .name-position{
     position:relative;
+    left:10px;
+    bottom:33px;
+    width:300px;
+    box-sizing: border-box;
+}
+.text-position{
+    position:relative;
+    bottom:25px;
     left:10px;
 }

@@ -15,7 +15,7 @@
                         {
                             <div class="a-position-one">
                                 <a asp-controller="Comment" asp-action="EditProductComment" asp-route-commentId="@comment.Id" asp-route-text="@comment.Text" asp-route-postId="@comment.ProductId">
-                                    <i class="fa-solid fa-pen"></i>
+                                   <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </div>
                             <div class="a-position-two">
@@ -28,6 +28,8 @@
                 </div>
                 <div class="name-position">
                     <h5 class="mt-0">@comment.UserName</h5>
+                </div>
+                <div class="text-position">
                     <p>@comment.Text</p>
                 </div>
             </div>
