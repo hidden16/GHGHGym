@@ -57,7 +57,7 @@ namespace GHGHGym.Core.Services
         public async Task Edit(EditCommentViewModel model)
         {
             var comment = await commentRepository.GetByIdAsync(model.CommentId);
-            comment.Text = model.Text;
+            comment.Text = sanitizer.Sanitize(model.Text);
             comment.ModifiedOn = DateTime.UtcNow;
             commentRepository.Update(comment);
             await commentRepository.SaveChangesAsync();

@@ -44,8 +44,15 @@ namespace GHGHGym.Controllers
 
         public async Task<IActionResult> Delete(Guid commentId, Guid productId)
         {
-            await commentService.DeleteCommentAsync(commentId);
-            return RedirectToAction("ProductById", "Product", new { productId = productId });
+            try
+            {
+                await commentService.DeleteCommentAsync(commentId);
+                return RedirectToAction("ProductById", "Product", new { productId = productId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpGet]

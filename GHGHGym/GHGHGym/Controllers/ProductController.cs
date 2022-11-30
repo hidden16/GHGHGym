@@ -1,6 +1,7 @@
 ﻿using GHGHGym.Core.Models.Product;
 using static GHGHGym.Infrastructure.Constants.RoleConstants;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
+using static GHGHGym.Core.Constants.MessageConstant;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using GHGHGym.Core.Contracts;
@@ -89,6 +90,14 @@ namespace GHGHGym.Controllers
             {
                 var userId = User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
                 await productService.Purchase(model, Guid.Parse(userId));
+                if (model?.PurchaseProductDto?.Quantity > 1)
+                {
+                    TempData[SuccessMessage] = "Successfully purchased products!";
+                }
+                else
+                {
+                    TempData[SuccessMessage] = "Successfully purchased product!";
+                }
                 return RedirectToAction(nameof(All));
             }
             catch (ArgumentNullException)

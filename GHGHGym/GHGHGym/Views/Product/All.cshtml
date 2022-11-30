@@ -3,10 +3,13 @@
     ViewBag.Title = "All Products";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+<link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
+<partial name="_UserMessages" />
 <div class="text-center row">
     @foreach (var product in Model)
     {
@@ -34,3 +37,5 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
+

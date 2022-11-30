@@ -63,14 +63,14 @@
                         <div class="d-flex flex-row align-items-start">
                             @*<img src="" alt="User image" class="rounded-circle" width="40">*@
                             <textarea class="form-control ml-1 shadow-none textarea" id="CommentText"></textarea>
-                            <input type="hidden" value="@Model.ProductDto.Id" id="ProductId"/>
+                            <input type="hidden" value="@Model.ProductDto.Id" id="ProductId" />
                         </div>
                         <div class="mt-2">
                             <button class="btn btn-success btn-sm shadow-none" type="button" id="SubmitComment">Comment</button>
                         </div>
                     </div>
                 </form>
-                <partial name="GetAllCommentsByProductId" model=@Model.Comments/>
+                <partial name="GetAllCommentsByProductId" model=@Model.Comments />
             </div>
 
             <div class="col-md-7">
@@ -82,7 +82,7 @@
                         <label asp-for="@Model.PurchaseProductDto.Quantity">Quantity: </label>
                         <input asp-for="@Model.PurchaseProductDto.Quantity" type="number" value="1" max="9" min="1">
                         <input asp-for="@Model.ProductDto.Id" type="hidden">
-                        <button type="submit" class="btn btn-success">Purchase</button>
+                        <button type="submit" class="btn btn-success" id="purchaseProduct">Purchase</button>
                     </form>
                     <h4>Description</h4>
                     <p class="pbox">@Model.ProductDto.Description</p>
