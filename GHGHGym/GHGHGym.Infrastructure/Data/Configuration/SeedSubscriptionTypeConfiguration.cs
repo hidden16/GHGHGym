@@ -15,7 +15,8 @@ namespace GHGHGym.Infrastructure.Data.Configuration
                     {
                         Id = Guid.NewGuid(),
                         Name = "Weekly"
-                    }, new SubscriptionType()
+                    }, 
+                    new SubscriptionType()
                     {
                         Id = Guid.NewGuid(),
                         Name = "Monthly"

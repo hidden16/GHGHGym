@@ -1,4 +1,6 @@
-﻿using GHGHGym.Core.Services.EmailSender.Contracts;
+﻿using GHGHGym.Core.Models.User;
+using GHGHGym.Core.Services.EmailSender.Contracts;
+using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -16,11 +18,14 @@ namespace GHGHGym.UserServices
         private const string subject = "Email Confirmation";
         private IEmailSender emailSender;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IRepository<ApplicationUser> userRepository;
         public UserService(IEmailSender emailSender,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IRepository<ApplicationUser> userRepository)
         {
             this.emailSender = emailSender;
             this.userManager = userManager;
+            this.userRepository = userRepository;
         }
         public async Task SendEmailConfirmationAsync(ApplicationUser user, Task<string> token, string callbackUrl)
         {
@@ -37,6 +42,21 @@ namespace GHGHGym.UserServices
             var result = await userManager.ConfirmEmailAsync(user, code);
             var statusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
             return statusMessage;
+        }
+
+        public async Task<UserViewModel> GetUserInformationAsync(Guid userId)
+        {
+            var user = await userRepository.GetByIdAsync(userId);
+            if (user != null)
+            {
+                return new UserViewModel()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    EmailAddress = user.Email
+                };
+            }
+            return null;
         }
     }
 }

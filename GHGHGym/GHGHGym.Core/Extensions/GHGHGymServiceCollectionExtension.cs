@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddScoped<ITrainerService, TrainerService>();
 
             return services;
         }

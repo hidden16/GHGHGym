@@ -1,0 +1,67 @@
+﻿@model AddTrainerViewModel
+@{
+    ViewBag.Title = "Add Product";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Become" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label asp-for="@Model.FirstName" class="form-label">First Name</label>
+                <input asp-for="@Model.FirstName" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.LastName" type="text" class="form-label">Last Name</label>
+                <input asp-for="@Model.LastName" type="text" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.EmailAddress" type="text" class="form-label">Email Address</label>
+                <input asp-for="@Model.EmailAddress" type="text" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Description" class="form-label">Description</label>
+                <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.PhoneNumber" type="text" class="form-label">Phone Number</label>
+                <input asp-for="@Model.PhoneNumber" type="text" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.FacebookLink" type="text" class="form-label">Facebook Link</label>
+                <input asp-for="@Model.FacebookLink" type="text" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.FacebookLink" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.InstagramLink" type="text" class="form-label">Instagram Link</label>
+                <input asp-for="@Model.InstagramLink" type="text" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.InstagramLink" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.TwitterLink" type="text" class="form-label">Twitter Link</label>
+                <input asp-for="@Model.TwitterLink" type="text" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.TwitterLink" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label asp-for="@Model.Files" enctype="multipart/form-data" class="form-label">Choose images ( .jpg )</label>
+                    <input asp-for="@Model.Files" class="form-control" type="file" multiple>
+                    <span asp-validation-for="@Model.Files" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
