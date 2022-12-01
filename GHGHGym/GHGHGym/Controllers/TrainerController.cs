@@ -1,8 +1,10 @@
 ﻿using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Trainers;
 using GHGHGym.Core.Services.CloudinaryService.Contracts;
+using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static GHGHGym.Core.Constants.MessageConstant;
@@ -15,13 +17,16 @@ namespace GHGHGym.Controllers
         private readonly IUserService userService;
         private readonly ITrainerService trainerService;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly SignInManager<ApplicationUser> signManager;
         public TrainerController(IUserService userService,
             ITrainerService trainerService,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService,
+            SignInManager<ApplicationUser> userManager)
         {
             this.userService = userService;
             this.trainerService = trainerService;
             this.cloudinaryService = cloudinaryService;
+            this.signManager = userManager;
         }
 
         [HttpGet]
@@ -75,8 +80,9 @@ namespace GHGHGym.Controllers
             model.ImageUrls = imageUrls;
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             await trainerService.BecomeTrainerAsync(model, Guid.Parse(userId));
-            TempData[SuccessMessage] = "You are now a Trainer!";
-            return RedirectToAction("Index", "Home");
+            TempData[SuccessMessage] = "You are now a Trainer!\r\nPlease RELOG to apply changes!";
+            await signManager.SignOutAsync();
+            return RedirectToAction("Login", "User");
         }
     }
 }
