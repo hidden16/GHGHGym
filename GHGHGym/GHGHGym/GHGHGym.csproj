@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Account\" />
+    <Folder Include="Views\TrainingProgram\" />
     <Folder Include="wwwroot\lib\toastr\" />
   </ItemGroup>
 
