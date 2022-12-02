@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Contracts;
+﻿using Ganss.Xss;
+using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Trainers;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
@@ -10,6 +11,7 @@ namespace GHGHGym.Core.Services
 {
     public class TrainerService : ITrainerService
     {
+        private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly IRepository<Trainer> trainerRepository;
         private readonly IImageService imageService;
         private readonly IRepository<ApplicationUser> userRepository;
@@ -30,14 +32,14 @@ namespace GHGHGym.Core.Services
             Trainer trainer = new Trainer()
             {
                 ApplicationUserId = userId,
-                Description = model.Description,
-                EmailAddress = model.EmailAddress,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                InstagramLink = model.InstagramLink,
-                FacebookLink = model.FacebookLink,
-                PhoneNumber = model.PhoneNumber,
-                TwitterLink = model.TwitterLink,
+                Description = sanitizer.Sanitize(model.Description),
+                EmailAddress = sanitizer.Sanitize(model.EmailAddress),
+                FirstName = sanitizer.Sanitize(model.FirstName),
+                LastName = sanitizer.Sanitize(model.LastName),
+                InstagramLink = sanitizer.Sanitize(model.InstagramLink ?? ""),
+                FacebookLink = sanitizer.Sanitize(model.FacebookLink ?? ""),
+                PhoneNumber = sanitizer.Sanitize(model.PhoneNumber ?? ""),
+                TwitterLink = sanitizer.Sanitize(model.TwitterLink ?? ""),
             };
 
             List<Image> images = await imageService.AddImages(model.ImageUrls);
@@ -57,6 +59,18 @@ namespace GHGHGym.Core.Services
 
             await trainerRepository.AddAsync(trainer);
             await trainerRepository.SaveChangesAsync();
+        }
+
+        public string GetTrainerIdByUserId(Guid userId)
+        {
+            var trainer = trainerRepository.All()
+                .Where(x=>x.ApplicationUserId == userId)
+                .FirstOrDefault();
+            if (trainer != null)
+            {
+                return trainer.Id.ToString();
+            }
+            return null;
         }
     }
 }

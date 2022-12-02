@@ -84,5 +84,11 @@ namespace GHGHGym.Controllers
             await signManager.SignOutAsync();
             return RedirectToAction("Login", "User");
         }
+
+        [HttpGet]
+        public IActionResult All()
+        {
+            return Ok();
+        }
     }
 }

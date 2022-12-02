@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
 @model IEnumerable<CommentViewModel>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 <link rel="stylesheet" href=~/css/comment.css />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 <div id="CommentContainer">
     @foreach (var comment in Model)
     {
@@ -9,28 +9,24 @@
             @*<img class="mr-3" src="..." alt="Generic placeholder image">*@
             <div class="comment-container">
                 <div class="media-body">
+                    <div class="name-text-position">
+                        <h5 class="mt-0">@comment.UserName</h5>
+                        <p>@comment.Text</p>
+                    </div>
                     @{
                         var userId = User.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value.ToLower();
                         if (userId == comment.UserId?.ToLower() || User.IsInRole("Administrator"))
                         {
-                            <div class="a-position-one">
-                                <a asp-controller="Comment" asp-action="EditProductComment" asp-route-commentId="@comment.Id" asp-route-text="@comment.Text" asp-route-postId="@comment.ProductId">
-                                   <i class="fa-solid fa-pen-to-square"></i>
+                            <div class="a-position">
+                                <a asp-controller="Comment" asp-action="EditProductComment" asp-route-commentId="@comment.Id" asp-route-text="@comment.Text" asp-route-postId="@comment.ProductId" asp-route-userId="@comment.UserId">
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                            </div>
-                            <div class="a-position-two">
                                 <a asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.Id" asp-route-productId="@comment.ProductId">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
                         }
                     }
-                </div>
-                <div class="name-position">
-                    <h5 class="mt-0">@comment.UserName</h5>
-                </div>
-                <div class="text-position">
-                    <p>@comment.Text</p>
                 </div>
             </div>
         </div>

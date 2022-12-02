@@ -3,6 +3,7 @@ using GHGHGym.Core.Models.Comments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static GHGHGym.Core.Constants.MessageConstant;
 
 namespace GHGHGym.Controllers
 {
@@ -56,15 +57,21 @@ namespace GHGHGym.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditProductComment(Guid commentId, Guid postId, string text)
+        public async Task<IActionResult> EditProductComment(Guid commentId, Guid postId, string text, Guid userId)
         {
-            var model = new EditCommentViewModel()
+            if (await commentService.CheckCommentUserBeforeEditAsync(commentId, userId))
             {
-                Text = text,
-                CommentId = commentId,
-                PostId = postId
-            };
-            return View(model);
+
+                var model = new EditCommentViewModel()
+                {
+                    Text = text,
+                    CommentId = commentId,
+                    PostId = postId
+                };
+                return View(model);
+            }
+            TempData[ErrorMessage] = "You do not own this comment!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpPost]

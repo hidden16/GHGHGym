@@ -62,5 +62,15 @@ namespace GHGHGym.Core.Services
             commentRepository.Update(comment);
             await commentRepository.SaveChangesAsync();
         }
+
+        public async Task<bool> CheckCommentUserBeforeEditAsync(Guid commentId, Guid userId)
+        {
+            var comment = await commentRepository.GetByIdAsync(commentId);
+            if (comment.ApplicationUserId == userId)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
