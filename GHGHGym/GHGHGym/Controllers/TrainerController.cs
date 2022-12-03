@@ -90,5 +90,11 @@ namespace GHGHGym.Controllers
         {
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult TrainerById(Guid trainerId)
+        {
+            return Ok();
+        }
     }
 }
