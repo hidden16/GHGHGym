@@ -1,6 +1,4 @@
 ﻿using GHGHGym.Core.Models.Categories;
-using GHGHGym.Infrastructure.Data.Models;
-
 namespace GHGHGym.Core.Contracts
 {
     public interface ICategoryService

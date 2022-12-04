@@ -18,15 +18,18 @@ namespace GHGHGym.Core.Services
         private readonly IRepository<ApplicationUser> userRepository;
         private readonly IImageService imageService;
         private readonly ICommentService commentService;
+        private readonly IRepository<ProductImage> productImageRepository;
         public ProductService(IRepository<Product> productRepository,
             IRepository<ApplicationUser> userRepository,
             ICommentService commentService,
-            IImageService imageService)
+            IImageService imageService,
+            IRepository<ProductImage> productImageRepository)
         {
             this.productRepository = productRepository;
             this.userRepository = userRepository;
             this.imageService = imageService;
             this.commentService = commentService;
+            this.productImageRepository = productImageRepository;
         }
 
         public async Task AddProductAsync(AddProductViewModel model)
@@ -90,7 +93,12 @@ namespace GHGHGym.Core.Services
 
             if (model.ImageUrls.Count() != 0)
             {
-                await imageService.SetDeletedRangeByUrls(product.ProductsImages.Select(x => x.Image.ImageUrl));
+                var imagesId = await imageService.SetDeletedRangeByUrls(product.ProductsImages.Select(x => x.Image.ImageUrl));
+                foreach (var id in imagesId)
+                {
+                    var productImageToDelete = await productImageRepository.GetByIdsAsync(new object[] {model.Id, id});
+                    productImageRepository.SetDeleted(productImageToDelete);
+                }
                 List<Image> images = await imageService.AddImages(model.ImageUrls);
                 List<ProductImage> productsImages = new List<ProductImage>();
                 foreach (var image in images)

@@ -32,14 +32,14 @@ namespace GHGHGym.Core.Services
             Trainer trainer = new Trainer()
             {
                 ApplicationUserId = userId,
-                Description = sanitizer.Sanitize(model.Description),
-                EmailAddress = sanitizer.Sanitize(model.EmailAddress),
-                FirstName = sanitizer.Sanitize(model.FirstName),
-                LastName = sanitizer.Sanitize(model.LastName),
-                InstagramLink = sanitizer.Sanitize(model.InstagramLink ?? ""),
-                FacebookLink = sanitizer.Sanitize(model.FacebookLink ?? ""),
-                PhoneNumber = sanitizer.Sanitize(model.PhoneNumber ?? ""),
-                TwitterLink = sanitizer.Sanitize(model.TwitterLink ?? ""),
+                Description = Sanitize(model.Description),
+                EmailAddress = Sanitize(model.EmailAddress),
+                FirstName = Sanitize(model.FirstName),
+                LastName = Sanitize(model.LastName),
+                InstagramLink = Sanitize(model.InstagramLink ?? ""),
+                FacebookLink = Sanitize(model.FacebookLink ?? ""),
+                PhoneNumber = Sanitize(model.PhoneNumber ?? ""),
+                TwitterLink = Sanitize(model.TwitterLink ?? ""),
             };
 
             List<Image> images = await imageService.AddImages(model.ImageUrls);
@@ -71,6 +71,11 @@ namespace GHGHGym.Core.Services
                 return trainer.Id.ToString();
             }
             return null;
+        }
+
+        private string Sanitize(string input)
+        {
+            return sanitizer.Sanitize(input);
         }
     }
 }

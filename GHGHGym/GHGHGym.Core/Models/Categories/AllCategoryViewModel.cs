@@ -2,7 +2,7 @@
 
 namespace GHGHGym.Core.Models.Categories
 {
-    public class ParentCategoryViewModel
+    public class AllCategoryViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
