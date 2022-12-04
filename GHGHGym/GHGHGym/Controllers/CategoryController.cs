@@ -15,29 +15,10 @@ namespace GHGHGym.Controllers
         {
             this.categoryService = categoryService;
         }
-
-        [HttpGet]
-        public IActionResult Create()
+        public IActionResult All()
         {
-            var categoryList = categoryService.AllCategories()
-                .Where(x => x.Type != SubCategory);
-            var model = new CategoryViewModel()
-            {
-                ParentCategories = categoryList
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CategoryViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            await categoryService.AddCategoryAsync(model);
-            return RedirectToAction("Index", "Home");
+            var categories = categoryService.AllCategories();
+            return View(categories);
         }
     }
 }

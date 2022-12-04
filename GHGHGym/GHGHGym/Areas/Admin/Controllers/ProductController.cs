@@ -61,7 +61,7 @@ namespace GHGHGym.Areas.Admin.Controllers
         }
         public IActionResult All()
         {
-            var entities = productService.All();
+            var entities = productService.AllWithDeleted();
             if (entities == null)
             {
                 return View();
@@ -103,14 +103,14 @@ namespace GHGHGym.Areas.Admin.Controllers
                 }
             }
             model.ImageUrls = imageUrls;
-            await productService.Edit(model);
+            await productService.EditAsync(model);
             return RedirectToAction(nameof(All));
         }
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                await productService.SetDeleted(id);
+                await productService.SetDeletedAsync(id);
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
@@ -118,6 +118,11 @@ namespace GHGHGym.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Invalid Id");
                 return RedirectToAction(nameof(All));
             }
+        }
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            await productService.RestoreAsync(id);
+            return RedirectToAction(nameof(All));
         }
     }
 }

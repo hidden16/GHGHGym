@@ -1,6 +1,5 @@
 ﻿using Ganss.Xss;
 using GHGHGym.Core.Contracts;
-using GHGHGym.Core.Models.Comments;
 using GHGHGym.Core.Models.Product;
 using GHGHGym.Core.MultiModels;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
@@ -83,7 +82,7 @@ namespace GHGHGym.Core.Services
             return productsDto;
         }
 
-        public async Task Edit(AddProductViewModel model)
+        public async Task EditAsync(AddProductViewModel model)
         {
             var product = productRepository.AllReadonly()
                 .Where(x => x.Id == model.Id)
@@ -117,6 +116,7 @@ namespace GHGHGym.Core.Services
             product.Price = model.Price;
             product.Description = sanitizer.Sanitize(model.Description);
             product.CategoryId = model.CategoryId;
+            product.ModifiedOn = DateTime.UtcNow;
 
             productRepository.Update(product);
             await productRepository.SaveChangesAsync();
@@ -180,7 +180,7 @@ namespace GHGHGym.Core.Services
             }
         }
 
-        public async Task Purchase(ProductMultiModel model, Guid userId)
+        public async Task PurchaseAsync(ProductMultiModel model, Guid userId)
         {
             var user = await userRepository.GetByIdAsync(userId);
             var product = await productRepository.GetByIdAsync(model.ProductDto.Id);
@@ -195,9 +195,45 @@ namespace GHGHGym.Core.Services
             await userRepository.SaveChangesAsync();
         }
 
-        public async Task SetDeleted(Guid productId)
+        public async Task SetDeletedAsync(Guid productId)
         {
             await productRepository.SetDeletedByIdAsync(productId);
+            await productRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<ProductWithDeletedViewModel> AllWithDeleted()
+        {
+            var products = productRepository.AllWithDeleted()
+                .Include(x => x.ProductsImages)
+                .ThenInclude(x => x.Image)
+                .ToList();
+            if (products == null)
+            {
+                return null;
+            }
+            List<ProductWithDeletedViewModel> productsDto = new List<ProductWithDeletedViewModel>();
+            List<string> imageUrls = new List<string>();
+            foreach (var product in products)
+            {
+                productsDto.Add(new ProductWithDeletedViewModel()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    ImageUrls = product.ProductsImages
+                    .Where(x => !x.IsDeleted)
+                    .Select(x => x.Image.ImageUrl)
+                    .ToList(),
+                    IsDeleted = product.IsDeleted.ToString()
+                });
+            }
+            return productsDto;
+        }
+
+        public async Task RestoreAsync(Guid productId)
+        {
+            var product = await productRepository.GetByIdAsync(productId);
+            productRepository.Undelete(product);
             await productRepository.SaveChangesAsync();
         }
     }

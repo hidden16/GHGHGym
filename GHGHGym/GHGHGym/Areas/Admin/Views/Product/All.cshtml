@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@model IEnumerable<ProductWithDeletedViewModel>
 @{
     ViewBag.Title = "All Products";
 }
@@ -24,9 +24,13 @@
                     <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">
                         <i class="fa-solid fa-trash"></i>
                     </a>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Restore" asp-route-id="@product.Id">
+                        <i class="fa-solid fa-trash-can-arrow-up"></i>
+                    </a>
                 }
                 <h5 class="card-title mt-1">@product.Name</h5>
                 <p class="mb-0">Price: €@product.Price</p>
+                <p class="mb-0">IsDeleted: @product.IsDeleted</p>
             </div>
         </div>
     }

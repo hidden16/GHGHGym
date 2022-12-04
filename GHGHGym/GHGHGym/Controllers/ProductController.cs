@@ -46,7 +46,7 @@ namespace GHGHGym.Controllers
             try
             {
                 var userId = User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-                await productService.Purchase(model, Guid.Parse(userId));
+                await productService.PurchaseAsync(model, Guid.Parse(userId));
                 if (model?.PurchaseProductDto?.Quantity > 1)
                 {
                     TempData[SuccessMessage] = "Successfully purchased products!";

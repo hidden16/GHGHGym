@@ -1,4 +1,22 @@
-﻿@model IEnumerable<CategoryViewModel>
+﻿@model IEnumerable<CategoryListViewModel>
 <ul class="list-group">
-    @foreach()
+    @foreach (var category in Model)
+    {
+        <li class="list-group-item">
+            @category.Name - @category.Type - @category.IsDeleted
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Category" asp-action="Restore" asp-route-id="@category.Id">
+                    <i class="fa-solid fa-trash-can-arrow-up"></i>
+                </a>
+            }
+        </li>
+
+    }
 </ul>
