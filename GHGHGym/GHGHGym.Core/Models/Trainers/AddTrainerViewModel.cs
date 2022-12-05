@@ -6,6 +6,7 @@ namespace GHGHGym.Core.Models.Trainers
 {
     public class AddTrainerViewModel
     {
+        public Guid Id { get; set; }
         [Required]
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;

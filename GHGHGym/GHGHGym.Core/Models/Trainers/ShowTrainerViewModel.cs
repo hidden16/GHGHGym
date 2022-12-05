@@ -7,5 +7,7 @@
         public string LastName { get; set; } = null!;
         public List<string> ImageUrls { get; set; }
         public int TrainingProgramsCount { get; set; }
+
+        public Guid? UserTrainerId { get; set; }
     }
 }

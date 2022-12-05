@@ -9,7 +9,7 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 @if (User.IsInRole("Trainer"))
 {
-    <a asp-controller="TrainingProgram" asp-action="Add" asp-route-trainerId=>
+    <a asp-controller="TrainingProgram" asp-action="Create" asp-route-trainerId=>
         <h4>Add Training Program</h4>
     </a>
 }
@@ -23,13 +23,10 @@
             <img class="card-img-top" style="width: 18rem;"
              src="@trainer.ImageUrls.FirstOrDefault()" height="380" alt="Product Image">
             <div class="card-body">
-                @if (User.IsInRole("Administrator"))
+                @if (User.IsInRole("Administrator") || @trainer.Id == @trainer.UserTrainerId)
                 {
                     <a asp-controller="Trainer" asp-action="Edit" asp-route-id="@trainer.Id">
                         <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <a asp-controller="Trainer" asp-action="Delete" asp-route-id="@trainer.Id">
-                        <i class="fa-solid fa-trash"></i>
                     </a>
                 }
                 <h5 class="card-title mt-1">@trainer.FirstName @trainer.LastName</h5>

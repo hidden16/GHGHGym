@@ -86,10 +86,18 @@ namespace GHGHGym.Controllers
         }
 
         [HttpGet]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            var model = trainerService.AllTrainers();
-            return View(model);
+            try
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var model = await trainerService.AllTrainers(Guid.Parse(userId));
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -102,19 +110,13 @@ namespace GHGHGym.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await productService.GetForEditAsync(id);
-            model.Categories = categoryService.AllCategories()
-               .Where(x => x.Type == SubCategory)
-               .ToList();
+            var model = await trainerService.GetForEditAsync(id);
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(AddProductViewModel model)
+        public async Task<IActionResult> Edit(AddTrainerViewModel model)
         {
-            model.Categories = categoryService.AllCategories()
-               .Where(x => x.Type == SubCategory)
-               .ToList();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -134,7 +136,7 @@ namespace GHGHGym.Controllers
                 }
             }
             model.ImageUrls = imageUrls;
-            await productService.EditAsync(model);
+            await trainerService.EditAsync(model);
             return RedirectToAction(nameof(All));
         }
     }

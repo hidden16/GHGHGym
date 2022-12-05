@@ -49,7 +49,7 @@ namespace GHGHGym.Controllers
             model.ImageUrls = imageUrls;
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             await trainingProgramService.AddProgramAsync(model, Guid.Parse(userId));
-            return Ok();
+            return RedirectToAction("All", "Trainer");
         }
     }
 }

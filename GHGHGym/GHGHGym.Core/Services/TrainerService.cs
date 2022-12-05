@@ -20,6 +20,7 @@ namespace GHGHGym.Core.Services
         private readonly ICommentService commentService;
         private readonly ISubscriptionService subscriptionService;
         private readonly IRepository<ApplicationUser> userRepository;
+        private readonly IRepository<TrainerImage> trainerImageRepository;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TrainerService(IRepository<Trainer> trainerRepository,
@@ -27,7 +28,8 @@ namespace GHGHGym.Core.Services
             ISubscriptionService subscriptionService,
             UserManager<ApplicationUser> userManager,
             IRepository<ApplicationUser> userRepository,
-            ICommentService commentService)
+            ICommentService commentService,
+            IRepository<TrainerImage> trainerImageRepository)
         {
             this.trainerRepository = trainerRepository;
             this.imageService = imageService;
@@ -35,6 +37,7 @@ namespace GHGHGym.Core.Services
             this.userRepository = userRepository;
             this.commentService = commentService;
             this.subscriptionService = subscriptionService;
+            this.trainerImageRepository = trainerImageRepository;
         }
         public async Task BecomeTrainerAsync(AddTrainerViewModel model, Guid userId)
         {
@@ -83,13 +86,9 @@ namespace GHGHGym.Core.Services
             return null;
         }
 
-        private string Sanitize(string input)
+        public async Task<IEnumerable<ShowTrainerViewModel>> AllTrainers(Guid userId)
         {
-            return sanitizer.Sanitize(input);
-        }
-
-        public IEnumerable<ShowTrainerViewModel> AllTrainers()
-        {
+            var user = await userRepository.GetByIdAsync(userId);
             var trainers = trainerRepository.All()
                 .Include(x => x.TrainerPrograms)
                 .Include(x => x.TrainersImages)
@@ -100,7 +99,8 @@ namespace GHGHGym.Core.Services
                     LastName = x.LastName,
                     Id = x.Id,
                     ImageUrls = x.TrainersImages.Select(x => x.Image.ImageUrl).ToList(),
-                    TrainingProgramsCount = x.TrainerPrograms.Count()
+                    TrainingProgramsCount = x.TrainerPrograms.Count(),
+                    UserTrainerId = user.TrainerId
                 });
             return trainers;
         }
@@ -138,6 +138,80 @@ namespace GHGHGym.Core.Services
             };
 
             return model;
+        }
+
+        public async Task<AddTrainerViewModel> GetForEditAsync(Guid trainerId)
+        {
+            try
+            {
+                var product = await trainerRepository.GetByIdAsync(trainerId);
+
+                var productToReturn = new AddTrainerViewModel()
+                {
+                    Id = product.Id,
+                    EmailAddress = product.EmailAddress,
+                    FirstName = product.FirstName,
+                    LastName = product.LastName,
+                    FacebookLink = product.FacebookLink,
+                    InstagramLink = product.InstagramLink,
+                    PhoneNumber = product.PhoneNumber,
+                    TwitterLink = product.TwitterLink,
+                    Description = product.Description
+                };
+
+                return productToReturn;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task EditAsync(AddTrainerViewModel model)
+        {
+            var trainer = trainerRepository.AllReadonly()
+                .Where(x => x.Id == model.Id)
+                .Include(x => x.TrainersImages)
+                .ThenInclude(x => x.Image)
+                .FirstOrDefault();
+
+            if (model.ImageUrls.Count() != 0)
+            {
+                var imagesId = await imageService.SetDeletedRangeByUrls(trainer.TrainersImages.Select(x => x.Image.ImageUrl));
+                foreach (var id in imagesId)
+                {
+                    var trainerImageToDelete = await trainerImageRepository.GetByIdsAsync(new object[] { model.Id, id });
+                    trainerImageRepository.SetDeleted(trainerImageToDelete);
+                }
+                List<Image> images = await imageService.AddImages(model.ImageUrls);
+                List<TrainerImage> trainerImages = new List<TrainerImage>();
+                foreach (var image in images)
+                {
+                    trainerImages.Add(new TrainerImage()
+                    {
+                        Trainer = trainer,
+                        Image = image
+                    });
+                }
+                trainer.TrainersImages = trainerImages;
+            }
+
+            trainer.FirstName = Sanitize(model.FirstName);
+            trainer.LastName = Sanitize(model.LastName);
+            trainer.PhoneNumber = Sanitize(model.PhoneNumber);
+            trainer.InstagramLink = Sanitize(model.InstagramLink);
+            trainer.FacebookLink = Sanitize(model.FacebookLink);
+            trainer.TwitterLink = Sanitize(model.TwitterLink);
+            trainer.EmailAddress = Sanitize(model.EmailAddress);
+            trainer.Description = Sanitize(model.Description);
+            trainer.ModifiedOn = DateTime.UtcNow;
+
+            trainerRepository.Update(trainer);
+            await trainerRepository.SaveChangesAsync();
+        }
+        private string Sanitize(string input)
+        {
+            return sanitizer.Sanitize(input);
         }
     }
 }
