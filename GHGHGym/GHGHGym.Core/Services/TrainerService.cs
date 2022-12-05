@@ -1,6 +1,8 @@
 ﻿using Ganss.Xss;
 using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Models.Subscriptions;
 using GHGHGym.Core.Models.Trainers;
+using GHGHGym.Core.MultiModels;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
 using GHGHGym.Infrastructure.Data.Models.Account;
@@ -15,18 +17,24 @@ namespace GHGHGym.Core.Services
         private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly IRepository<Trainer> trainerRepository;
         private readonly IImageService imageService;
+        private readonly ICommentService commentService;
+        private readonly ISubscriptionService subscriptionService;
         private readonly IRepository<ApplicationUser> userRepository;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TrainerService(IRepository<Trainer> trainerRepository,
             IImageService imageService,
+            ISubscriptionService subscriptionService,
             UserManager<ApplicationUser> userManager,
-            IRepository<ApplicationUser> userRepository)
+            IRepository<ApplicationUser> userRepository,
+            ICommentService commentService)
         {
             this.trainerRepository = trainerRepository;
             this.imageService = imageService;
             this.userManager = userManager;
             this.userRepository = userRepository;
+            this.commentService = commentService;
+            this.subscriptionService = subscriptionService;
         }
         public async Task BecomeTrainerAsync(AddTrainerViewModel model, Guid userId)
         {
@@ -59,6 +67,7 @@ namespace GHGHGym.Core.Services
             await userManager.AddToRoleAsync(user, "Trainer");
 
             await trainerRepository.AddAsync(trainer);
+            user.TrainerId = trainer.Id;
             await trainerRepository.SaveChangesAsync();
         }
 
@@ -94,6 +103,41 @@ namespace GHGHGym.Core.Services
                     TrainingProgramsCount = x.TrainerPrograms.Count()
                 });
             return trainers;
+        }
+
+        public TrainerMultiModel GetTrainerById(Guid trainerId)
+        {
+            var trainer = trainerRepository.All()
+                .Where(x => x.Id == trainerId)
+                .Include(x => x.TrainersImages)
+                .ThenInclude(x => x.Image)
+                .Include(x => x.TrainerPrograms)
+                .FirstOrDefault();
+
+            TrainerViewModel trainerModel = new TrainerViewModel()
+            {
+                Id = trainer.Id,
+                FirstName = trainer.FirstName,
+                LastName = trainer.LastName,
+                Description = trainer.Description,
+                EmailAddress = trainer.EmailAddress,
+                FacebookLink = trainer.FacebookLink,
+                InstagramLink = trainer.InstagramLink,
+                TwitterLink = trainer.TwitterLink,
+                ImageUrls = trainer.TrainersImages
+                            .Where(x => !x.Image.IsDeleted)
+                            .Select(x => x.Image.ImageUrl)
+                            .ToList()
+            };
+
+            TrainerMultiModel model = new TrainerMultiModel()
+            {
+                TrainerDto = trainerModel,
+                SubscriptionTypesDto = subscriptionService.AllWithTrainerSubscriptionTypes(),
+                Comments = commentService.GetCommentByTrainerId(trainer.Id)
+            };
+
+            return model;
         }
     }
 }

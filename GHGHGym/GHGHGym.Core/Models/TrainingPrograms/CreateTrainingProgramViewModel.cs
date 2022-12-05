@@ -5,6 +5,7 @@ namespace GHGHGym.Core.Models.TrainingPrograms
 {
     public class CreateTrainingProgramViewModel
     {
+        public Guid TrainerId { get; set; }
         [Required]
         public string Name { get; set; } = null!;
 

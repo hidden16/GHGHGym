@@ -11,12 +11,9 @@ namespace GHGHGym.Core.Services
     {
         private HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly IRepository<Comment> commentRepository;
-        private readonly IRepository<ApplicationUser> userRepository;
-        public CommentService(IRepository<Comment> commentRepository,
-            IRepository<ApplicationUser> userRepository)
+        public CommentService(IRepository<Comment> commentRepository)
         {
             this.commentRepository = commentRepository;
-            this.userRepository = userRepository;
         }
         public void AddComment(string commentText, Guid userId, Guid productId)
         {
@@ -71,6 +68,24 @@ namespace GHGHGym.Core.Services
                 return true;
             }
             return false;
+        }
+
+        public IEnumerable<CommentViewModel> GetCommentByTrainerId(Guid trainerId)
+        {
+            var trainer = commentRepository.All()
+                .Where(x => x.Id == trainerId)
+                .Select(x => new CommentViewModel()
+                {
+                    Id = x.Id,
+                    TrainerId = x.TrainerId,
+                    Text = x.Text,
+                    UserName = $"{x.ApplicationUser.FirstName} {x.ApplicationUser.LastName}",
+                    CreatedOn = x.CreatedOn,
+                    UserId = x.ApplicationUserId.ToString()
+                })
+                .ToList();
+
+            return trainer;
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace GHGHGym.Core.Contracts
+﻿using GHGHGym.Core.Models.Subscriptions;
+
+namespace GHGHGym.Core.Contracts
 {
     public interface ISubscriptionService
     {
-        public void All();
+        public IEnumerable<SubscriptionTypeViewModel> AllWithTrainerSubscriptionTypes();
     }
 }

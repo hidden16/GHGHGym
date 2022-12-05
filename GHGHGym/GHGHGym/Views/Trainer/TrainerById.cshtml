@@ -1,0 +1,95 @@
+﻿@using System.Security.Claims
+@model TrainerMultiModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animate</title>
+    <link rel="stylesheet" href="~/css/product.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-5">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="@Model.TrainerDto.ImageUrls.FirstOrDefault()" class="d-block w-100" alt="...">
+                        </div>
+                        @if (@Model.TrainerDto.ImageUrls.Count() != 1)
+                        {
+                            @foreach (var imageUrl in @Model.TrainerDto.ImageUrls.Skip(1))
+                            {
+                                <div class="carousel-item">
+                                    <img src="@imageUrl" class="d-block w-100" alt="...">
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <form class="col-md-12" id="CreateCommentForm">
+                    <div class="bg-light p-2">
+                        <h4>Comment</h4>
+                        <div class="d-flex flex-row align-items-start">
+                            @*<img src="" alt="User image" class="rounded-circle" width="40">*@
+                            <textarea class="form-control ml-1 shadow-none textarea" id="CommentText"></textarea>
+                            <input type="hidden" value="@Model.TrainerDto.Id" id="TrainerId" />
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-success btn-sm shadow-none" type="button" id="SubmitComment">Comment</button>
+                        </div>
+                    </div>
+                </form>
+                <partial name="GetAllCommentsByProductId" model=@Model.Comments />
+            </div>
+
+            <div class="col-md-7">
+                <div class="box">
+                    <h2>@Model.TrainerDto.FirstName - @Model.TrainerDto.LastName</h2>
+                    <p><b>Availability:</b> In Stock</p>
+                    @*<form asp-action="Purchase" asp-controller="Product">
+                        <label asp-for="@Model.SubscriptionTypeDto.Name">Quantity: </label>
+                        <input asp-for="@Model.SubscriptionTypeDto.Name" type="number" value="1" max="9" min="1">
+                        <input asp-for="@Model.SubscriptionTypeDto.Name" type="hidden">
+                        <button type="submit" class="btn btn-success" id="purchaseProduct">Purchase</button>
+                    </form>*@
+                    <h4>Description</h4>
+                    <p class="pbox">@Model.TrainerDto.Description</p>
+                    <a href="javascript:void();" class="readmore-btn">Read More</a>
+                    <p></p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        $(".readmore-btn").on('click', function(){
+            $(this).parent().toggleClass("showContent")
+        });
+
+    </script>
+
+
+</body>
+
+</html>

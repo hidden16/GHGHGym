@@ -95,7 +95,47 @@ namespace GHGHGym.Controllers
         [HttpGet]
         public IActionResult TrainerById(Guid trainerId)
         {
-            return Ok();
+            var model = trainerService.GetTrainerById(trainerId);
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var model = await productService.GetForEditAsync(id);
+            model.Categories = categoryService.AllCategories()
+               .Where(x => x.Type == SubCategory)
+               .ToList();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(AddProductViewModel model)
+        {
+            model.Categories = categoryService.AllCategories()
+               .Where(x => x.Type == SubCategory)
+               .ToList();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            List<string> imageUrls = new List<string>();
+            foreach (var file in model.Files)
+            {
+                if (file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg"))
+                {
+                    var result = await cloudinaryService.UploadPhotoAsync(file, file.FileName.ToString());
+                    imageUrls.Add(result);
+                }
+                else
+                {
+                    ModelState.AddModelError("Files", "Files are invalid");
+                    return View(model);
+                }
+            }
+            model.ImageUrls = imageUrls;
+            await productService.EditAsync(model);
+            return RedirectToAction(nameof(All));
         }
     }
 }

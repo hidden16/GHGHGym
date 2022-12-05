@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<ICommentService, CommentService>();
             services.AddScoped<ITrainerService, TrainerService>();
             services.AddScoped<ITrainingProgramService, TrainingProgramService>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
 
             return services;
         }
