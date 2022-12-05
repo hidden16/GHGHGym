@@ -80,7 +80,7 @@ namespace GHGHGym.Controllers
             model.ImageUrls = imageUrls;
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             await trainerService.BecomeTrainerAsync(model, Guid.Parse(userId));
-            TempData[SuccessMessage] = "You are now a Trainer!\r\nPlease RELOG to apply changes!";
+            TempData[SuccessMessage] = "You are now a Trainer!\r\nPlease Sign In to apply changes!";
             await signManager.SignOutAsync();
             return RedirectToAction("Login", "User");
         }
@@ -88,7 +88,8 @@ namespace GHGHGym.Controllers
         [HttpGet]
         public IActionResult All()
         {
-            return Ok();
+            var model = trainerService.AllTrainers();
+            return View(model);
         }
 
         [HttpGet]

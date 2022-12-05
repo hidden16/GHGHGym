@@ -1,5 +1,6 @@
 ﻿using GHGHGym.Infrastructure.Abstractions.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.SubscriptionType;
 namespace GHGHGym.Infrastructure.Data.Models
 {
@@ -11,5 +12,9 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Required]
         [StringLength(NameMaxLength)]
         public string Name { get; set; } = null!;
+
+        [Required]
+        [Column(TypeName = "decimal(7,2)")]
+        public decimal Price { get; set; }
     }
 }

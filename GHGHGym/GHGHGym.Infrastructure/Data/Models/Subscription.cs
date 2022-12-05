@@ -14,10 +14,6 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Required]
         public SubscriptionType SubscriptionType { get; set; } = null!;
 
-        [Required]
-        [Column(TypeName = "decimal(7,2)")]
-        public decimal Price { get; set; }
-
         public List<UserSubscription> UsersSubscriptions { get; set; } = new List<UserSubscription>();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using GHGHGym.Infrastructure.Abstractions.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Enums;
-using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.ApplicationUserConstant;
@@ -21,7 +20,6 @@ namespace GHGHGym.Infrastructure.Data.Models.Account
 
         [Required]
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
-
 
         [Required]
         public bool IsDeleted { get; set; } = false;

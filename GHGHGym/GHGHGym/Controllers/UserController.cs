@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Models.User;
+﻿using Ganss.Xss;
+using GHGHGym.Core.Models.User;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using static GHGHGym.Core.Constants.MessageConstant;
 
 namespace GHGHGym.Controllers
 {
@@ -15,6 +17,7 @@ namespace GHGHGym.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private IUserService userService;
+        private HtmlSanitizer sanitizer = new HtmlSanitizer();
         public UserController(IUserService userService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -95,9 +98,9 @@ namespace GHGHGym.Controllers
 
             var user = new ApplicationUser()
             {
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                Email = Sanitize(model.Email),
+                FirstName = Sanitize(model.FirstName),
+                LastName = Sanitize(model.LastName),
                 Gender = model.GenderType,
                 BirthDate = model.BirthDate,
                 UserName = $"{model.FirstName}{model.LastName}",
@@ -119,6 +122,7 @@ namespace GHGHGym.Controllers
                 //await userService.SendEmailConfirmationAsync(user, generatedToken, callbackAction);
 
                 //return RedirectToAction(nameof(PreConfirm));
+                TempData[SuccessMessage] = "You succesfully registered! Please Sign In!";
                 return RedirectToAction(nameof(Login));
             }
 
@@ -176,6 +180,10 @@ namespace GHGHGym.Controllers
             var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
             encodedToken = encodedToken.Replace(' ', '+');
             return encodedToken;
+        }
+        private string Sanitize(string element)
+        {
+            return sanitizer.Sanitize(element);
         }
     }
 }

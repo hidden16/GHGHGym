@@ -4,6 +4,7 @@ using GHGHGym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GHGHGym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205170013_ChangesInSubscription")]
+    partial class ChangesInSubscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Comment", b =>
@@ -197,7 +199,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Image", b =>
@@ -224,7 +226,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.ProductImage", b =>
@@ -245,7 +247,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("ProductsImages", (string)null);
+                    b.ToTable("ProductsImages");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.TrainerImage", b =>
@@ -266,7 +268,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("TrainersImages", (string)null);
+                    b.ToTable("TrainersImages");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.ImageMapping.TrainingProgramImage", b =>
@@ -287,7 +289,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainingProgramId");
 
-                    b.ToTable("TrainingProgramImages", (string)null);
+                    b.ToTable("TrainingProgramImages");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Product", b =>
@@ -328,7 +330,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Subscription", b =>
@@ -356,7 +358,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("SubscriptionTypeId");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.SubscriptionType", b =>
@@ -388,7 +390,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionTypes", (string)null);
+                    b.ToTable("SubscriptionTypes");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.Trainer", b =>
@@ -450,7 +452,7 @@ namespace GHGHGym.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[ApplicationUserId] IS NOT NULL");
 
-                    b.ToTable("Trainers", (string)null);
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.TrainingProgram", b =>
@@ -486,7 +488,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("TrainerPrograms", (string)null);
+                    b.ToTable("TrainerPrograms");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserProduct", b =>
@@ -521,7 +523,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("UserProduct", (string)null);
+                    b.ToTable("UserProduct");
                 });
 
             modelBuilder.Entity("GHGHGym.Infrastructure.Data.Models.UserSubscription", b =>
@@ -542,7 +544,7 @@ namespace GHGHGym.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersSubscriptions", (string)null);
+                    b.ToTable("UsersSubscriptions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

@@ -6,5 +6,6 @@ namespace GHGHGym.Core.Contracts
     {
         public Task BecomeTrainerAsync(AddTrainerViewModel model, Guid userId);
         public string GetTrainerIdByUserId(Guid userId);
+        public IEnumerable<ShowTrainerViewModel> AllTrainers();
     }
 }

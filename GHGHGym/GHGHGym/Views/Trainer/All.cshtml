@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrainerViewModel>
+﻿@model IEnumerable<ShowTrainerViewModel>
 @{
     ViewBag.Title = "All Trainers";
 }
@@ -15,7 +15,7 @@
     {
         <div class="card col-4" style="width: 20rem; ">
             <img class="card-img-top" style="width: 18rem;"
-             src="@trainer.ImageUrls.FirstOrDefault()" alt="Product Image">
+             src="@trainer.ImageUrls.FirstOrDefault()" height="380" alt="Product Image">
             <div class="card-body">
                 @if (User.IsInRole("Administrator"))
                 {
@@ -26,8 +26,9 @@
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 }
-                <h5 class="card-title mt-1">@trainer.Name</h5>
-                <a asp-controller="Trainer" asp-action="TrainerById" asp-route-productId="@trainer.Id" >
+                <h5 class="card-title mt-1">@trainer.FirstName @trainer.LastName</h5>
+                <p>Training Programs: @trainer.TrainingProgramsCount</p>
+                <a asp-controller="Trainer" asp-action="TrainerById" asp-route-trainerId="@trainer.Id" >
                     <input type="submit" value="Details" class="fs-6 btn btn-success mb-3 p-2" />
                 </a>
             </div>

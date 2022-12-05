@@ -6,6 +6,7 @@ using GHGHGym.Infrastructure.Data.Models;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace GHGHGym.Core.Services
 {
@@ -64,7 +65,7 @@ namespace GHGHGym.Core.Services
         public string GetTrainerIdByUserId(Guid userId)
         {
             var trainer = trainerRepository.All()
-                .Where(x=>x.ApplicationUserId == userId)
+                .Where(x => x.ApplicationUserId == userId)
                 .FirstOrDefault();
             if (trainer != null)
             {
@@ -76,6 +77,23 @@ namespace GHGHGym.Core.Services
         private string Sanitize(string input)
         {
             return sanitizer.Sanitize(input);
+        }
+
+        public IEnumerable<ShowTrainerViewModel> AllTrainers()
+        {
+            var trainers = trainerRepository.All()
+                .Include(x => x.TrainerPrograms)
+                .Include(x => x.TrainersImages)
+                .ThenInclude(x => x.Image)
+                .Select(x => new ShowTrainerViewModel()
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Id = x.Id,
+                    ImageUrls = x.TrainersImages.Select(x => x.Image.ImageUrl).ToList(),
+                    TrainingProgramsCount = x.TrainerPrograms.Count()
+                });
+            return trainers;
         }
     }
 }
