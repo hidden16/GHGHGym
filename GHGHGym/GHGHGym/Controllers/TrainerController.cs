@@ -86,6 +86,7 @@ namespace GHGHGym.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             try
@@ -101,19 +102,28 @@ namespace GHGHGym.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult TrainerById(Guid trainerId)
         {
             var model = trainerService.GetTrainerById(trainerId);
             return View(model);
         }
 
+        [Authorize(Roles = "Trainer, Administrator")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await trainerService.GetForEditAsync(id);
-            return View(model);
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await userService.GetUserInformationAsync(Guid.Parse(userId));
+            if (user.TrainerId == id.ToString())
+            {
+                var model = await trainerService.GetForEditAsync(id);
+                return View(model);
+            }
+            return RedirectToAction(nameof(All));
         }
 
+        [Authorize(Roles = "Trainer, Administrator")]
         [HttpPost]
         public async Task<IActionResult> Edit(AddTrainerViewModel model)
         {

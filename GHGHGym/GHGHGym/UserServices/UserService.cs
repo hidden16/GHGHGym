@@ -53,7 +53,8 @@ namespace GHGHGym.UserServices
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    EmailAddress = user.Email
+                    EmailAddress = user.Email,
+                    TrainerId = user.TrainerId.ToString() ?? ""
                 };
             }
             return null;
