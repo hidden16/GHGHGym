@@ -92,7 +92,7 @@ namespace GHGHGym.Controllers
             try
             {
                 var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-                var model = await trainerService.AllTrainers(Guid.Parse(userId));
+                var model = await trainerService.AllTrainersAsync(Guid.Parse(userId));
                 return View(model);
             }
             catch (Exception)

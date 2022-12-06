@@ -6,9 +6,9 @@ namespace GHGHGym.Core.Contracts
     public interface ITrainerService
     {
         public Task BecomeTrainerAsync(AddTrainerViewModel model, Guid userId);
-        public string GetTrainerIdByUserId(Guid userId);
+        public Task<string> GetTrainerIdByUserIdAsync(Guid userId);
         public TrainerMultiModel GetTrainerById(Guid trainerId);
-        public Task<IEnumerable<ShowTrainerViewModel>> AllTrainers(Guid userId);
+        public Task<IEnumerable<ShowTrainerViewModel>> AllTrainersAsync(Guid userId);
         public Task<AddTrainerViewModel> GetForEditAsync(Guid trainerId);
         public Task EditAsync(AddTrainerViewModel model);
 

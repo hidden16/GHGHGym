@@ -3,6 +3,7 @@ using GHGHGym.Core.Models.Subscriptions;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
 using GHGHGym.Infrastructure.Data.Models.Account;
+using Microsoft.EntityFrameworkCore;
 
 namespace GHGHGym.Core.Services
 {
@@ -39,7 +40,11 @@ namespace GHGHGym.Core.Services
 
         public async Task<bool> IsUserSubscribedAsync(Guid userId)
         {
-            var user = await appUserRepository.GetByIdAsync(userId);
+            var user = await appUserRepository.All()
+                .Where(x=>x.Id == userId)
+                .Include(x=>x.UsersSubscriptions)
+                .ThenInclude(x=>x.Subscription)
+                .FirstOrDefaultAsync();
             if (user.UsersSubscriptions.Any(x=>!x.IsDeleted))
             {
                 return true;

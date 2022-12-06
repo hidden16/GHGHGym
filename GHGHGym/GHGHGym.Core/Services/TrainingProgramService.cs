@@ -40,7 +40,7 @@ namespace GHGHGym.Core.Services
                 });
             }
             program.TrainingProgramImages = programImages;
-            var trainerId = trainerService.GetTrainerIdByUserId(userId);
+            var trainerId = await trainerService.GetTrainerIdByUserIdAsync(userId);
             if (trainerId == null)
             {
                 throw new ArgumentException();

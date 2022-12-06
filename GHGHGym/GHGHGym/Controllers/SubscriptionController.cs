@@ -17,8 +17,19 @@ namespace GHGHGym.Controllers
             this.subscriptionService = subscriptionService;
         }
         [HttpGet]
-        public IActionResult SubscribeToTrainer(Guid trainerId, string trainerName)
+        public async Task<IActionResult> SubscribeToTrainer(Guid trainerId, string trainerName)
         {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (await subscriptionService.IsUserSubscribedAsync(Guid.Parse(userId)))
+            {
+                TempData[ErrorMessage] = "You are already subscribed";
+                return RedirectToAction("All", "Trainer");
+            }
+            if (User.IsInRole("Administrator") || User.IsInRole("Trainer"))
+            {
+                TempData[ErrorMessage] = "Administrators and trainers can't subscribe!";
+                return RedirectToAction("All", "Trainer");
+            }
             var model = new SubscriptionMultiModel()
             {
                 SubscriptionDto = new SubscriptionViewModel()

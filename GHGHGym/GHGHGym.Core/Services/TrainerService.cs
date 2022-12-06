@@ -74,11 +74,11 @@ namespace GHGHGym.Core.Services
             await trainerRepository.SaveChangesAsync();
         }
 
-        public string GetTrainerIdByUserId(Guid userId)
+        public async Task<string> GetTrainerIdByUserIdAsync(Guid userId)
         {
-            var trainer = trainerRepository.All()
+            var trainer = await trainerRepository.All()
                 .Where(x => x.ApplicationUserId == userId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             if (trainer != null)
             {
                 return trainer.Id.ToString();
@@ -86,10 +86,10 @@ namespace GHGHGym.Core.Services
             return null;
         }
 
-        public async Task<IEnumerable<ShowTrainerViewModel>> AllTrainers(Guid userId)
+        public async Task<IEnumerable<ShowTrainerViewModel>> AllTrainersAsync(Guid userId)
         {
             var user = await userRepository.GetByIdAsync(userId);
-            var trainers = trainerRepository.All()
+            var trainers = await trainerRepository.All()
                 .Include(x => x.TrainerPrograms)
                 .Include(x => x.TrainersImages)
                 .ThenInclude(x => x.Image)
@@ -101,7 +101,7 @@ namespace GHGHGym.Core.Services
                     ImageUrls = x.TrainersImages.Select(x => x.Image.ImageUrl).ToList(),
                     TrainingProgramsCount = x.TrainerPrograms.Count(),
                     UserTrainerId = user.TrainerId
-                });
+                }).ToListAsync();
             return trainers;
         }
 
@@ -168,11 +168,11 @@ namespace GHGHGym.Core.Services
 
         public async Task EditAsync(AddTrainerViewModel model)
         {
-            var trainer = trainerRepository.AllReadonly()
+            var trainer = await trainerRepository.AllReadonly()
                 .Where(x => x.Id == model.Id)
                 .Include(x => x.TrainersImages)
                 .ThenInclude(x => x.Image)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (model.ImageUrls.Count() != 0)
             {
