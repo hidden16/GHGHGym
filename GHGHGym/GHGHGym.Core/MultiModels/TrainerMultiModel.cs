@@ -6,8 +6,7 @@ namespace GHGHGym.Core.MultiModels
 {
     public class TrainerMultiModel
     {
-        public TrainerViewModel? TrainerDto { get; set; }
-        public IEnumerable<SubscriptionTypeViewModel>? SubscriptionTypesDto { get; set; }
-        public IEnumerable<CommentViewModel>? Comments { get; set; }
+        public TrainerViewModel TrainerDto { get; set; } = null!;
+        public IEnumerable<CommentViewModel> Comments { get; set; } = null!;
     }
 }

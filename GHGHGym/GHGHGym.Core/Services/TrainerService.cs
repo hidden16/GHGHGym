@@ -133,7 +133,6 @@ namespace GHGHGym.Core.Services
             TrainerMultiModel model = new TrainerMultiModel()
             {
                 TrainerDto = trainerModel,
-                SubscriptionTypesDto = subscriptionService.AllWithTrainerSubscriptionTypes(),
                 Comments = commentService.GetCommentByTrainerId(trainer.Id)
             };
 

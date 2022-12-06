@@ -1,0 +1,42 @@
+﻿@model SubscriptionMultiModel
+@{
+    ViewBag.Title = $"Subscribe to";
+    ViewBag.Name = @Model.SubscriptionDto.TrainerName;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/bootstrap.css" />
+
+<h2 class="text-center">@ViewBag.Title @ViewBag.Name</h2>
+<hr />
+<div class="col-md-4 offset-md-4">
+    <form asp-controller="Subscription" asp-action="SubscribeToTrainer" method="post">
+        <div class="text-center mb-3">
+            <label asp-for="@Model.SubscriptionDto.SubscriptionTypeId">Subscription List</label>
+            <i class="fa-solid fa-caret-down" data-fa-transform="down-32 right-138"></i>
+            <select asp-for="@Model.SubscriptionDto.SubscriptionTypeId" class="form-control">
+                @foreach (var program in @Model.SubscriptionTypesDto)
+                {
+                    <option value="@program.Id">@program.Name - EUR @program.Price</option>
+                }
+            </select>
+            <span asp-validation-for="@Model.SubscriptionDto.SubscriptionTypeId" class="text-danger"></span>
+        </div>
+        <div class="text-center mb-3">
+            <label asp-for="@Model.SubscriptionDto.StartDate">Subscription Start Date</label>
+            <input asp-for="@Model.SubscriptionDto.StartDate" type="date" class="form-control datepicker" value=""
+                   min="@DateTime.UtcNow">
+            <span asp-validation-for="@Model.SubscriptionDto.StartDate" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="@Model.SubscriptionDto.TrainerId" value="@Model.SubscriptionDto.TrainerId" />
+        <input type="hidden" asp-for="@Model.SubscriptionDto.TrainerName" value="@Model.SubscriptionDto.TrainerName" />
+        <div class="text-center mb-3">
+            <button type="submit" class="btn btn-success">Subscribe</button>
+        </div>
+    </form>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+<script src="~/lib~/lib/bootstrap/js/boostrap.js"></script>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+    }

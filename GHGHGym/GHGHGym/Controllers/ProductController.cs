@@ -1,13 +1,10 @@
-﻿using GHGHGym.Core.Models.Product;
-using static GHGHGym.Infrastructure.Constants.RoleConstants;
-using static GHGHGym.Infrastructure.Constants.InfrastructureConstants.Category;
-using static GHGHGym.Core.Constants.MessageConstant;
+﻿using GHGHGym.Core.Contracts;
+using GHGHGym.Core.MultiModels;
+using GHGHGym.Core.Services.CloudinaryService.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using GHGHGym.Core.Contracts;
-using GHGHGym.Core.Services.CloudinaryService.Contracts;
 using System.Security.Claims;
-using GHGHGym.Core.MultiModels;
+using static GHGHGym.Core.Constants.MessageConstant;
 
 namespace GHGHGym.Controllers
 {

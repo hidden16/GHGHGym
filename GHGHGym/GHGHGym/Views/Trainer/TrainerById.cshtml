@@ -60,13 +60,18 @@
 
             <div class="col-md-7">
                 <div class="box">
-                    <h2>@Model.TrainerDto.FirstName @Model.TrainerDto.LastName</h2>
-                    @*<form asp-action="Purchase" asp-controller="Product">
-                        <label asp-for="@Model.SubscriptionTypeDto.Name">Quantity: </label>
-                        <input asp-for="@Model.SubscriptionTypeDto.Name" type="number" value="1" max="9" min="1">
-                        <input asp-for="@Model.SubscriptionTypeDto.Name" type="hidden">
-                        <button type="submit" class="btn btn-success" id="purchaseProduct">Purchase</button>
-                    </form>*@
+                    <h2> @Model.TrainerDto.FirstName @Model.TrainerDto.LastName </h2>
+                    <a class="btn btn-dark" href="https://@Model.TrainerDto.FacebookLink" target="_blank">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a class="btn btn-dark" href="https://@Model.TrainerDto.InstagramLink" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a class="btn btn-dark" href="https://@Model.TrainerDto.TwitterLink" target="_blank">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <p></p>
+                    <a type="text/asp" class="btn btn-success" asp-controller="Subscription" asp-action="SubscribeToTrainer" asp-route-trainerId="@Model.TrainerDto.Id" asp-route-trainerName="@Model.TrainerDto.FirstName" method="get">Subscribe</a>
                     <h4>Description</h4>
                     <p class="pbox">@Model.TrainerDto.Description</p>
                     <a href="javascript:void();" class="readmore-btn">Read More</a>
