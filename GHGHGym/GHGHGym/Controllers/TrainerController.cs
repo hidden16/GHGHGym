@@ -115,7 +115,7 @@ namespace GHGHGym.Controllers
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var user = await userService.GetUserInformationAsync(Guid.Parse(userId));
-            if (user.TrainerId == id.ToString())
+            if (user.TrainerId == id.ToString() || User.IsInRole("Administrator"))
             {
                 var model = await trainerService.GetForEditAsync(id);
                 return View(model);

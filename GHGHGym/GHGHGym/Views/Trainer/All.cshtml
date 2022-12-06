@@ -9,7 +9,7 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 @if (User.IsInRole("Trainer"))
 {
-    <a asp-controller="TrainingProgram" asp-action="Create" asp-route-trainerId=>
+    <a asp-controller="TrainingProgram" asp-action="Create">
         <h4>Add Training Program</h4>
     </a>
 }

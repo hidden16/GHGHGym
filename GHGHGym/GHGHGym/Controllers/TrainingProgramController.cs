@@ -4,6 +4,7 @@ using GHGHGym.Core.Services.CloudinaryService.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static GHGHGym.Core.Constants.MessageConstant;
 
 namespace GHGHGym.Controllers
 {
@@ -28,28 +29,37 @@ namespace GHGHGym.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTrainingProgramViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(model);
-            }
-            List<string> imageUrls = new List<string>();
-            foreach (var file in model.Files)
-            {
-                if (file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg"))
+                if (!ModelState.IsValid)
                 {
-                    var result = await cloudinaryService.UploadPhotoAsync(file, file.FileName.ToString());
-                    imageUrls.Add(result);
-                }
-                else
-                {
-                    ModelState.AddModelError("Files", "Files are invalid");
                     return View(model);
                 }
+                List<string> imageUrls = new List<string>();
+                foreach (var file in model.Files)
+                {
+                    if (file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg"))
+                    {
+                        var result = await cloudinaryService.UploadPhotoAsync(file, file.FileName.ToString());
+                        imageUrls.Add(result);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Files", "Files are invalid");
+                        return View(model);
+                    }
+                }
+                model.ImageUrls = imageUrls;
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                await trainingProgramService.AddProgramAsync(model, Guid.Parse(userId));
+                TempData[SuccessMessage] = "You succesfully added a training program!";
+                return RedirectToAction("All", "Trainer");
             }
-            model.ImageUrls = imageUrls;
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            await trainingProgramService.AddProgramAsync(model, Guid.Parse(userId));
-            return RedirectToAction("All", "Trainer");
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = "You are not a trainer!";
+                return RedirectToAction("All", "Trainer");
+            }
         }
     }
 }
