@@ -1,5 +1,7 @@
 # GHGHGym
 ## :point_right: Project Introduction :point_left:
+**Go Hard or Go Home Gym** is my defense project for **ASP.NET Core** course at [SoftUni]https://softuni.bg.
+GHGHGym is my own web application for the SoftUni web project defense, where the user can become a trainer, purchase products, and choose a subscription type between weekly, monthly, yearly with or without a trainer and write comments.
 
 # 🛠 Built with:
 * ASP.NET Core MVC
