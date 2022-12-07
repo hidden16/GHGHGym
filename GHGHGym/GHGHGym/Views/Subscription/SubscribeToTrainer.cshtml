@@ -4,10 +4,13 @@
     ViewBag.Name = @Model.SubscriptionDto.TrainerName;
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+<link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/bootstrap.css" />
 
 <h2 class="text-center">@ViewBag.Title @ViewBag.Name</h2>
 <hr />
+<partial name="_UserMessages" />
 <div class="col-md-4 offset-md-4">
     <form asp-controller="Subscription" asp-action="SubscribeToTrainer" method="post">
         <div class="text-center mb-3">
@@ -23,8 +26,7 @@
         </div>
         <div class="text-center mb-3">
             <label asp-for="@Model.SubscriptionDto.StartDate">Subscription Start Date</label>
-            <input asp-for="@Model.SubscriptionDto.StartDate" type="date" class="form-control datepicker" value=""
-                   min="@DateTime.UtcNow">
+            <input asp-for="@Model.SubscriptionDto.StartDate" type="date" class="form-control datepicker" value="">
             <span asp-validation-for="@Model.SubscriptionDto.StartDate" class="text-danger"></span>
         </div>
         <input type="hidden" asp-for="@Model.SubscriptionDto.TrainerId" value="@Model.SubscriptionDto.TrainerId" />
@@ -36,6 +38,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
 <script src="~/lib~/lib/bootstrap/js/boostrap.js"></script>
+<script src="~/lib/toastr/toastr.min.js"></script>
 
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />

@@ -20,17 +20,16 @@
             <div class="col-md-5">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="@Model.ProductDto.ImageUrls.FirstOrDefault()" class="d-block w-100" alt="...">
-                        </div>
-                        @if (@Model.ProductDto.ImageUrls.Count() != 1)
+                        @{
+                            int i = 0;
+                        }
+                        @foreach (var imageUrl in @Model.ProductDto.ImageUrls)
                         {
-                            @foreach (var imageUrl in @Model.ProductDto.ImageUrls.Skip(1))
-                            {
-                                <div class="carousel-item">
-                                    <img src="@imageUrl" class="d-block w-100" alt="...">
-                                </div>
-                            }
+                            i++;
+                            var active = i == 1 ? "active" : "";  
+                            <div class="carousel-item @active">
+                                <img src="@imageUrl" class="d-block w-100" alt="...">
+                            </div>
                         }
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

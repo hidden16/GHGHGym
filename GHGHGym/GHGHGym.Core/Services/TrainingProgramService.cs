@@ -59,6 +59,7 @@ namespace GHGHGym.Core.Services
                 .ThenInclude(x => x.Image)
                 .Select(x => new TrainingProgramViewModel()
                 {
+                    TrainerId = x.TrainerId,
                     Name = x.Name,
                     ProgramDescription = x.ProgramDescription,
                     ImageUrls = x.TrainingProgramImages

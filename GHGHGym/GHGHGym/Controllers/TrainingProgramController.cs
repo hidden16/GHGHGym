@@ -8,16 +8,18 @@ using static GHGHGym.Core.Constants.MessageConstant;
 
 namespace GHGHGym.Controllers
 {
-    // TODO: Make a list of all programs for a trainer
     [Authorize(Roles = "Trainer, Administrator")]
     public class TrainingProgramController : Controller
     {
         private readonly ITrainingProgramService trainingProgramService;
+        private readonly ITrainerService trainerService;
         private readonly ICloudinaryService cloudinaryService;
         public TrainingProgramController(ITrainingProgramService trainingProgramService,
+            ITrainerService trainerService,
             ICloudinaryService cloudinaryService)
         {
             this.trainingProgramService = trainingProgramService;
+            this.trainerService = trainerService;
             this.cloudinaryService = cloudinaryService;
         }
 
@@ -25,6 +27,8 @@ namespace GHGHGym.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AllTrainerProgram(Guid trainerId, string trainerName)
         {
+            // todo make multimodel and add trainer id to compare
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             ViewBag.TrainerName = trainerName;
             var model = await trainingProgramService.GetProgramsByTrainerIdAsync(trainerId);
             return View(model);

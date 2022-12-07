@@ -55,6 +55,7 @@ namespace GHGHGym.Controllers
                 if (model.SubscriptionDto.StartDate.Date < DateTime.Now.Date)
                 {
                     ModelState.AddModelError("", "Invalid date");
+                    TempData[ErrorMessage] = "The date you entered is invalid!";
                     return RedirectToAction(nameof(SubscribeToTrainer), new { trainerId = model.SubscriptionDto.TrainerId, trainerName = model.SubscriptionDto.TrainerName });
                 }
                 var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
