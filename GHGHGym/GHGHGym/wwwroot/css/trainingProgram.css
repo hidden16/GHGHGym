@@ -1,0 +1,48 @@
+.container{
+    margin-top:100px;
+}
+.col-md-7 h2{
+    color: #555;
+}
+.carousel-item{
+    height: 500px;
+    color: white;
+    position:relative;
+}
+
+.box{
+    width:100%;
+    margin: 10px 5px;
+    background-color: #fff;
+    width: 538px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.15);
+}
+.box h4{
+margin-bottom: 10px;
+}
+.pbox{
+    font-size: 15px;
+     line-height: 28px;
+     height: 90px;
+     overflow: hidden;
+}
+.box a{
+    display: inline-block;
+    color: #fff;
+    background-color: #2196f3;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+.box a:hover{
+    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+}
+.box.showContent p{
+    height:auto;
+}
+.box.showContent a.readmore-btn{
+    background-color: red;
+}

@@ -71,6 +71,8 @@
                         <i class="fa-brands fa-twitter"></i>
                     </a>
                     <p></p>
+                    <a class="btn btn-success" asp-controller="TrainingProgram" asp-action="AllTrainerProgram" asp-route-trainerId="@Model.TrainerDto.Id" asp-route-trainerName="@Model.TrainerDto.FirstName">Training Programs</a>
+                    <p></p>
                     <a type="text/asp" class="btn btn-success" asp-controller="Subscription" asp-action="SubscribeToTrainer" asp-route-trainerId="@Model.TrainerDto.Id" asp-route-trainerName="@Model.TrainerDto.FirstName" method="get">Subscribe</a>
                     <h4>Description</h4>
                     <p class="pbox">@Model.TrainerDto.Description</p>

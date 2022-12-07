@@ -4,6 +4,7 @@ using GHGHGym.Core.Models.TrainingPrograms;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace GHGHGym.Core.Services
 {
@@ -48,6 +49,23 @@ namespace GHGHGym.Core.Services
             program.TrainerId = Guid.Parse(trainerId);
             trainingProgramRepository.Add(program);
             await trainingProgramRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TrainingProgramViewModel>> GetProgramsByTrainerIdAsync(Guid trainerId)
+        {
+            return await trainingProgramRepository.All()
+                .Where(x => x.TrainerId == trainerId)
+                .Include(x => x.TrainingProgramImages)
+                .ThenInclude(x => x.Image)
+                .Select(x => new TrainingProgramViewModel()
+                {
+                    Name = x.Name,
+                    ProgramDescription = x.ProgramDescription,
+                    ImageUrls = x.TrainingProgramImages
+                    .Select(x => x.Image.ImageUrl.ToString())
+                    .ToList()
+                })
+                .ToListAsync();
         }
     }
 }

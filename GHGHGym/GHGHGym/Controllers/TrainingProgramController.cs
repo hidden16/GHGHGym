@@ -8,6 +8,7 @@ using static GHGHGym.Core.Constants.MessageConstant;
 
 namespace GHGHGym.Controllers
 {
+    // TODO: Make a list of all programs for a trainer
     [Authorize(Roles = "Trainer, Administrator")]
     public class TrainingProgramController : Controller
     {
@@ -19,6 +20,16 @@ namespace GHGHGym.Controllers
             this.trainingProgramService = trainingProgramService;
             this.cloudinaryService = cloudinaryService;
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> AllTrainerProgram(Guid trainerId, string trainerName)
+        {
+            ViewBag.TrainerName = trainerName;
+            var model = await trainingProgramService.GetProgramsByTrainerIdAsync(trainerId);
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {

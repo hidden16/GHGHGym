@@ -1,0 +1,74 @@
+﻿@model IEnumerable<TrainingProgramViewModel>
+@{
+    ViewBag.Title = "Programs";
+}
+<h2 class="text-center">@ViewBag.TrainerName's @ViewBag.Title</h2>
+<hr />
+<link rel="stylesheet" href="~/css/trainingProgram.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<body>
+    @{
+        int idItem = 1;
+    }
+    @foreach (var program in Model)
+    {
+
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div id="carouselExample-@idItem" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var imageUrl in @program.ImageUrls)
+                            {
+                                i++;
+                                var active = i == 1 ? "active" : "";
+                                <div class="carousel-item @active">
+                                    <img src="@imageUrl" class="d-block w-100" alt="...">
+                                </div>
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample-@idItem" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample-@idItem" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="box">
+                        <h2> @program.Name</h2>
+                        <h4>Description</h4>
+                        <p class="pbox">@program.ProgramDescription</p>
+                        <a href="javascript:void();" class="readmore-btn">Read More</a>
+                        <p></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <script>
+
+                $(".readmore-btn").on('click', function(){
+                    $(this).parent().toggleClass("showContent")
+                });
+
+            </script>
+        </div>
+        idItem++;
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    }
+</body>
