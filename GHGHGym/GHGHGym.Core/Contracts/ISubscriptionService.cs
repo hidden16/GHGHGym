@@ -6,6 +6,7 @@ namespace GHGHGym.Core.Contracts
     {
         public IEnumerable<SubscriptionTypeViewModel> AllWithTrainerSubscriptionTypes();
         public Task SubscribeAsync(SubscriptionViewModel model, Guid userId);
+        public Task UnsubscribeAsync(Guid subscriptionId, string userId);
         public Task<bool> IsUserSubscribedAsync(Guid userId);
     }
 }

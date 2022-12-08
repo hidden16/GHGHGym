@@ -1,5 +1,8 @@
 ﻿@using System.Security.Claims
+@using GHGHGym.Infrastructure.Data.Models.Account
+@using Microsoft.AspNetCore.Identity
 @model TrainerMultiModel
+@inject SignInManager<ApplicationUser> signInManager
 
 <!DOCTYPE html>
 <html>
@@ -44,15 +47,18 @@
                 </div>
                 <form class="col-md-12" id="CreateCommentForm">
                     <div class="bg-light p-2">
-                        <h4>Comment</h4>
-                        <div class="d-flex flex-row align-items-start">
-                            @*<img src="" alt="User image" class="rounded-circle" width="40">*@
-                            <textarea class="form-control ml-1 shadow-none textarea" id="CommentText"></textarea>
-                            <input type="hidden" value="@Model.TrainerDto.Id" id="TrainerId" />
-                        </div>
-                        <div class="mt-2">
-                            <button class="btn btn-success btn-sm shadow-none" type="button" id="SubmitComment">Comment</button>
-                        </div>
+                        <h4>Comments</h4>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <div class="d-flex flex-row align-items-start">
+                                @*<img src="" alt="User image" class="rounded-circle" width="40">*@
+                                <textarea class="form-control ml-1 shadow-none textarea" id="CommentText"></textarea>
+                                <input type="hidden" value="@Model.TrainerDto.Id" id="TrainerId" />
+                            </div>
+                            <div class="mt-2">
+                                <button class="btn btn-success btn-sm shadow-none" type="button" id="SubmitComment">Comment</button>
+                            </div>
+                        }
                     </div>
                 </form>
                 <partial name="GetAllCommentsByProductId" model=@Model.Comments />

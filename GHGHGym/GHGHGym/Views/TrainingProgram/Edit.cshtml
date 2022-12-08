@@ -1,4 +1,4 @@
-﻿@model CreateTrainingProgramViewModel
+﻿@model EditTrainingProgramViewModel
 @{
     ViewBag.Title = "Create a Training Program";
 }
@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="Create" asp-controller="TrainingProgram" method="post" enctype="multipart/form-data">
+        <form asp-action="Edit" asp-controller="TrainingProgram" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label asp-for="@Model.Name" class="form-label">Name</label>
                 <input asp-for="@Model.Name" class="form-control" aria-required="true" />
@@ -25,7 +25,7 @@
                     <span asp-validation-for="@Model.Files" class="text-danger"></span>
                 </div>
             </div>
-            <input type="hidden" asp-for="@Model.TrainerId" value="@Model.TrainerId" />
+            <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Create Program" />
             </div>

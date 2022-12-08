@@ -1,0 +1,41 @@
+﻿@model IEnumerable<UserSubscriptionViewModel>
+<ul class="list-group">
+    @if (Model.Any())
+    {
+        @foreach (var subscription in Model)
+        {
+            <li class="list-group-item">
+                <p>Name: @subscription.FirstName @subscription.LastName</p>
+                <p>Start Date:  @subscription.StartDate.ToString("MM/dd/yyyy")</p>
+                <p>End Date: @subscription.EndDate.ToString("MM/dd/yyyy")</p>
+                @if (subscription.TrainerFirstName != null)
+                {
+                    <p>Trainer: @subscription.TrainerFirstName @subscription.TrainerLastName</p>
+                }
+                else
+                {
+                    <p>Trainer: None</p>
+                }
+                @if (subscription.IsDeleted == true)
+                {
+                    <p><b>Unsubscribed</b></p>
+                }
+                else if(subscription.EndDate < DateTime.UtcNow)
+                {
+                   <p><b>Expired</b></p> 
+                }
+                else
+                {
+                    <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-subscriptionId="@subscription.SubscriptionId">
+                        Unsubscribe
+                    </a>
+                }
+            </li>
+
+        }
+    }
+    else
+    {
+        <p>You don't have a subscription yet!</p>
+    }
+</ul>

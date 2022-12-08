@@ -1,6 +1,7 @@
 ﻿using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Subscriptions;
 using GHGHGym.Core.MultiModels;
+using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,9 +13,12 @@ namespace GHGHGym.Controllers
     public class SubscriptionController : Controller
     {
         private readonly ISubscriptionService subscriptionService;
-        public SubscriptionController(ISubscriptionService subscriptionService)
+        private readonly IUserService userService;
+        public SubscriptionController(ISubscriptionService subscriptionService,
+            IUserService userService)
         {
             this.subscriptionService = subscriptionService;
+            this.userService = userService;
         }
         [HttpGet]
         public async Task<IActionResult> SubscribeToTrainer(Guid trainerId, string trainerName)
@@ -66,6 +70,36 @@ namespace GHGHGym.Controllers
             catch (Exception)
             {
                 return RedirectToAction("All", "Trainer");
+            }
+        }
+
+        public async Task<IActionResult> MySubscriptions()
+        {
+            try
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var model = await userService.GetMySubscriptionsAsync(Guid.Parse(userId));
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public async Task<IActionResult> Unsubscribe(Guid subscriptionId)
+        {
+            try
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                await subscriptionService.UnsubscribeAsync(subscriptionId, userId);
+                TempData[SuccessMessage] = "Successfully unsubscribed!";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = "Something went wrong!";
+                return RedirectToAction("Index", "Home");
             }
         }
     }

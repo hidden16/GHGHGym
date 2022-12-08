@@ -86,22 +86,42 @@ namespace GHGHGym.Core.Services
             return null;
         }
 
-        public async Task<IEnumerable<ShowTrainerViewModel>> AllTrainersAsync(Guid userId)
+        public async Task<IEnumerable<ShowTrainerViewModel>> AllTrainersAsync(string? userId)
         {
-            var user = await userRepository.GetByIdAsync(userId);
-            var trainers = await trainerRepository.All()
-                .Include(x => x.TrainerPrograms)
-                .Include(x => x.TrainersImages)
-                .ThenInclude(x => x.Image)
-                .Select(x => new ShowTrainerViewModel()
-                {
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Id = x.Id,
-                    ImageUrls = x.TrainersImages.Select(x => x.Image.ImageUrl).ToList(),
-                    TrainingProgramsCount = x.TrainerPrograms.Count(),
-                    UserTrainerId = user.TrainerId
-                }).ToListAsync();
+            ApplicationUser user = null;
+            List<ShowTrainerViewModel> trainers;
+            if (userId != null)
+            {
+                user = await userRepository.GetByIdAsync(Guid.Parse(userId));
+                trainers = await trainerRepository.All()
+                    .Include(x => x.TrainerPrograms)
+                    .Include(x => x.TrainersImages)
+                    .ThenInclude(x => x.Image)
+                    .Select(x => new ShowTrainerViewModel()
+                    {
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        Id = x.Id,
+                        ImageUrls = x.TrainersImages.Select(x => x.Image.ImageUrl).ToList(),
+                        TrainingProgramsCount = x.TrainerPrograms.Where(x => !x.IsDeleted).Count(),
+                        UserTrainerId = user.TrainerId ?? null
+                    }).ToListAsync();
+            }
+            else
+            {
+                trainers = await trainerRepository.All()
+               .Include(x => x.TrainerPrograms)
+               .Include(x => x.TrainersImages)
+               .ThenInclude(x => x.Image)
+               .Select(x => new ShowTrainerViewModel()
+               {
+                   FirstName = x.FirstName,
+                   LastName = x.LastName,
+                   Id = x.Id,
+                   ImageUrls = x.TrainersImages.Select(x => x.Image.ImageUrl).ToList(),
+                   TrainingProgramsCount = x.TrainerPrograms.Where(x => !x.IsDeleted).Count(),
+               }).ToListAsync();
+            }
             return trainers;
         }
 

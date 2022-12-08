@@ -94,5 +94,16 @@ namespace GHGHGym.Core.Services
 
             await subscriptionRepository.SaveChangesAsync();
         }
+
+        public async Task UnsubscribeAsync(Guid subscriptionId, string userId)
+        {
+            if (userId == null)
+            {
+                throw new ArgumentNullException();
+            }
+            var userSubscription = await userSubscriptionRepository.GetByIdsAsync(new object[] { subscriptionId, Guid.Parse(userId) });
+            userSubscriptionRepository.SetDeleted(userSubscription);
+            await userSubscriptionRepository.SaveChangesAsync();
+        }
     }
 }

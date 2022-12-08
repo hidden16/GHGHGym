@@ -4,6 +4,7 @@ using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Encodings.Web;
 using static Microsoft.AspNetCore.WebUtilities.WebEncoders;
@@ -54,10 +55,40 @@ namespace GHGHGym.UserServices
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     EmailAddress = user.Email,
-                    TrainerId = user.TrainerId.ToString() ?? ""
+                    TrainerId = user.TrainerId ?? null
                 };
             }
             return null;
+        }
+
+        public async Task<IEnumerable<UserSubscriptionViewModel>> GetMySubscriptionsAsync(Guid userId)
+        {
+            var user = await userRepository.All()
+                .Where(x => x.Id == userId)
+                .Include(x => x.UsersSubscriptions)
+                .ThenInclude(x => x.Subscription)
+                .ThenInclude(x=>x.SubscriptionType)
+                .Include(x=>x.UsersSubscriptions)
+                .ThenInclude(x=>x.Trainer)
+                .FirstOrDefaultAsync();
+
+            List<UserSubscriptionViewModel> userSub = new List<UserSubscriptionViewModel>();
+            foreach (var item in user.UsersSubscriptions)
+            {
+                userSub.Add(new UserSubscriptionViewModel()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    StartDate = item.SubscriptionStartDate.Date,
+                    EndDate = item.SubscriptionEndDate.Date,
+                    SubscriptionType = item.Subscription.SubscriptionType.Name,
+                    TrainerFirstName = item.Trainer.FirstName,
+                    TrainerLastName = item.Trainer.LastName,
+                    SubscriptionId = item.SubscriptionId,
+                    IsDeleted = item.IsDeleted
+                });
+            }
+            return userSub;
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿@using System.Security.Claims
 @model IEnumerable<TrainingProgramViewModel>
-@{
-    ViewBag.Title = "Programs";
-}
-<h2 class="text-center">@ViewBag.TrainerName's @ViewBag.Title</h2>
 <hr />
 <link rel="stylesheet" href="~/css/trainingProgram.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -53,7 +49,7 @@
                         @{
                             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
                         }
-                        @if (User.IsInRole("Administrator") || @program.TrainerUserId.ToString() == userId)
+                        @if (User.IsInRole("Administrator") || @program.TrainerUserId == Guid.Parse(userId))
                         {
                             <a asp-controller="TrainingProgram" asp-action="Edit" asp-route-programId="@program.ProgramId">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -61,7 +57,11 @@
                             <a asp-controller="TrainingProgram" asp-action="Delete" asp-route-trainerId="@program.TrainerId" asp-route-programId="@program.ProgramId">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
+                            <a asp-controller="TrainingProgram" asp-action="Restore" asp-route-programId="@program.ProgramId">
+                                <i class="fa-solid fa-trash-can-arrow-up"></i>
+                            </a>
                         }
+                        <p>Is Deleted: @program.IsDeleted</p>
                         <h2> @program.Name</h2>
                         <h4>Description</h4>
                         <p class="pbox">@program.ProgramDescription</p>

@@ -30,7 +30,7 @@ namespace GHGHGym.Controllers
             if (userId == null)
             {
                 ModelState.AddModelError("", "Something went wrong");
-                return View();
+                return this.Redirect($"/Comment/GetAllCommentsByProductId?productId={productId}");
             }
             commentService.AddComment(commentText, Guid.Parse(userId), productId);
             return this.Redirect($"/Comment/GetAllCommentsByProductId?productId={productId}");

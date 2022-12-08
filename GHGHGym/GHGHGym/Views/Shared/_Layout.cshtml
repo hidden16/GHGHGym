@@ -35,6 +35,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Trainer" asp-action="All">Trainers</a>
                         </li>
+                        @if (!User.IsInRole("Trainer") && !User.IsInRole("Administrator") && SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subscription" asp-action="MySubscriptions">My Subscriptions</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Trainer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TrainingProgram" asp-action="MyPrograms" style="color:#FF0000;">My Programs</a>
+                            </li>
+                        }
                     </ul>
                     @if (SignInManager.IsSignedIn(User))
                     {
