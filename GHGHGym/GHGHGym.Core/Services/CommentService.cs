@@ -15,7 +15,7 @@ namespace GHGHGym.Core.Services
         {
             this.commentRepository = commentRepository;
         }
-        public void AddComment(string commentText, Guid userId, Guid productId)
+        public void AddProductComment(string commentText, Guid userId, Guid productId)
         {
             var comment = new Comment()
             {
@@ -73,7 +73,7 @@ namespace GHGHGym.Core.Services
         public IEnumerable<CommentViewModel> GetCommentByTrainerId(Guid trainerId)
         {
             var trainer = commentRepository.All()
-                .Where(x => x.Id == trainerId)
+                .Where(x => x.TrainerId == trainerId)
                 .Select(x => new CommentViewModel()
                 {
                     Id = x.Id,
@@ -86,6 +86,18 @@ namespace GHGHGym.Core.Services
                 .ToList();
 
             return trainer;
+        }
+
+        public void AddTrainerComment(string commentText, Guid userId, Guid trainerId)
+        {
+            var comment = new Comment()
+            {
+                ApplicationUserId = userId,
+                TrainerId = trainerId,
+                Text = sanitizer.Sanitize(commentText)
+            };
+            commentRepository.Add(comment);
+            commentRepository.SaveChanges();
         }
     }
 }

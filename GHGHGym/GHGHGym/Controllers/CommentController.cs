@@ -24,16 +24,29 @@ namespace GHGHGym.Controllers
         /// <returns>Returns redirect to the method that gets all comments by id of the product</returns>
         [IgnoreAntiforgeryToken]
         [HttpPost]
-        public IActionResult AddComment(Guid productId, string commentText)
+        public IActionResult AddProductComment(Guid productId, string commentText)
         {
             var userId = User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
             {
                 ModelState.AddModelError("", "Something went wrong");
-                return this.Redirect($"/Comment/GetAllCommentsByProductId?productId={productId}");
+                return this.RedirectToAction(nameof(GetAllCommentsByProductId), new { productId = productId });
             }
-            commentService.AddComment(commentText, Guid.Parse(userId), productId);
-            return this.Redirect($"/Comment/GetAllCommentsByProductId?productId={productId}");
+            commentService.AddProductComment(commentText, Guid.Parse(userId), productId);
+            return this.RedirectToAction(nameof(GetAllCommentsByProductId), new { productId = productId });
+        }
+        [IgnoreAntiforgeryToken]
+        [HttpPost]
+        public IActionResult AddTrainerComment(Guid trainerId, string commentText)
+        {
+            var userId = User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                ModelState.AddModelError("", "Something went wrong");
+                return this.RedirectToAction(nameof(GetAllCommentsByTrainerId), new { trainerId = trainerId });
+            }
+            commentService.AddTrainerComment(commentText, Guid.Parse(userId), trainerId);
+            return this.RedirectToAction(nameof(GetAllCommentsByTrainerId), new { trainerId = trainerId });
         }
 
         [IgnoreAntiforgeryToken]
@@ -42,8 +55,14 @@ namespace GHGHGym.Controllers
             var comments = commentService.GetCommentByProductId(productId);
             return PartialView(comments);
         }
+        [IgnoreAntiforgeryToken]
+        public IActionResult GetAllCommentsByTrainerId(Guid trainerId)
+        {
+            var comments = commentService.GetCommentByTrainerId(trainerId);
+            return PartialView(comments);
+        }
 
-        public async Task<IActionResult> Delete(Guid commentId, Guid productId)
+        public async Task<IActionResult> DeleteProduct(Guid commentId, Guid productId)
         {
             try
             {
@@ -55,7 +74,36 @@ namespace GHGHGym.Controllers
                 return RedirectToAction("All", "Product");
             }
         }
+         public async Task<IActionResult> DeleteTrainer(Guid commentId, Guid trainerId)
+        {
+            try
+            {
+                await commentService.DeleteCommentAsync(commentId);
+                return RedirectToAction("TrainerById", "Trainer", new { trainerId = trainerId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("All", "Trainer");
+            }
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> EditTrainerComment(Guid commentId, Guid postId, string text, Guid userId)
+        {
+            if (await commentService.CheckCommentUserBeforeEditAsync(commentId, userId))
+            {
+
+                var model = new EditCommentViewModel()
+                {
+                    Text = text,
+                    CommentId = commentId,
+                    PostId = postId
+                };
+                return View(model);
+            }
+            TempData[ErrorMessage] = "You do not own this comment!";
+            return RedirectToAction("All", "Product");
+        }
         [HttpGet]
         public async Task<IActionResult> EditProductComment(Guid commentId, Guid postId, string text, Guid userId)
         {
@@ -87,7 +135,5 @@ namespace GHGHGym.Controllers
                 return RedirectToAction("All", "Product");
             }
         }
-
-        //for trainers GetAllCommentsByTrainerId(Guid trainerId)
     }
 }
