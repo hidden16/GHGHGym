@@ -105,8 +105,15 @@ namespace GHGHGym.Controllers
         [AllowAnonymous]
         public IActionResult TrainerById(Guid trainerId)
         {
-            var model = trainerService.GetTrainerById(trainerId);
-            return View(model);
+            try
+            {
+                var model = trainerService.GetTrainerById(trainerId);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(All));
+            }
         }
 
         [Authorize(Roles = "Trainer, Administrator")]

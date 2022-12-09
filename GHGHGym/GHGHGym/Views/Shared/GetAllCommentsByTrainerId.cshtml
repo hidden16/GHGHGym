@@ -21,7 +21,7 @@
                                 <a asp-controller="Comment" asp-action="EditTrainerComment" asp-route-commentId="@comment.Id" asp-route-text="@comment.Text" asp-route-postId="@comment.TrainerId" asp-route-userId="@comment.UserId" asp-route-returnUrl="@Context.Request">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a asp-controller="Comment" asp-action="DeleteTrainer" asp-route-commentId="@comment.Id" asp-route-productId="@comment.ProductId">
+                                <a asp-controller="Comment" asp-action="DeleteTrainer" asp-route-commentId="@comment.Id" asp-route-trainerId="@comment.TrainerId">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
