@@ -102,7 +102,20 @@ namespace GHGHGym.Controllers
                 return View(model);
             }
             TempData[ErrorMessage] = "You do not own this comment!";
-            return RedirectToAction("All", "Product");
+            return RedirectToAction("All", "Trainer");
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditTrainerComment(EditCommentViewModel model)
+        {
+            try
+            {
+                await commentService.Edit(model);
+                return RedirectToAction("TrainerById", "Trainer", new { trainerId = model.PostId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("All", "Trainer");
+            }
         }
         [HttpGet]
         public async Task<IActionResult> EditProductComment(Guid commentId, Guid postId, string text, Guid userId)

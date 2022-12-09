@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Contracts;
+﻿using Ganss.Xss;
+using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Subscriptions;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;

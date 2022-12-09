@@ -32,8 +32,8 @@ namespace GHGHGym.Core.Services
         {
             TrainingProgram program = new TrainingProgram()
             {
-                Name = sanitizer.Sanitize(model.Name),
-                ProgramDescription = sanitizer.Sanitize(model.ProgramDescription)
+                Name = Sanitize(model.Name),
+                ProgramDescription = Sanitize(model.ProgramDescription)
             };
 
             List<Image> images = await imageService.AddImages(model.ImageUrls);
@@ -100,8 +100,8 @@ namespace GHGHGym.Core.Services
                 .Include(x=>x.TrainingProgramImages)
                 .ThenInclude(x=>x.Image)
                 .FirstOrDefaultAsync();
-            program.Name = model.Name;
-            program.ProgramDescription = model.ProgramDescription;
+            program.Name = Sanitize(model.Name);
+            program.ProgramDescription = Sanitize(model.ProgramDescription);
             program.ModifiedOn = DateTime.UtcNow;
             if (model.ImageUrls.Count() != 0)
             {
@@ -161,6 +161,11 @@ namespace GHGHGym.Core.Services
             var program = await trainingProgramRepository.GetByIdAsync(programId);
             trainingProgramRepository.Undelete(program);
             await trainingProgramRepository.SaveChangesAsync();
+        }
+
+        private string Sanitize(string text)
+        {
+            return sanitizer.Sanitize(text);
         }
     }
 }
