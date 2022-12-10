@@ -17,6 +17,7 @@ GHGHGym is my own web application for the SoftUni web project defense, where the
 * SendGrid
 * HTML
 * CSS
+* ReSharper for test coverage
 
 ## :floppy_disk: Database Diagram
 ![image](https://user-images.githubusercontent.com/86330813/206267005-245e5527-d86c-47d4-9e3e-995201ff642c.png)
