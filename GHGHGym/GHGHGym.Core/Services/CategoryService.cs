@@ -9,8 +9,8 @@ namespace GHGHGym.Core.Services
 {
     public class CategoryService : ICategoryService
     {
-        private HtmlSanitizer sanitizer = new HtmlSanitizer();
-        private IRepository<Category> categoryRepo;
+        private readonly HtmlSanitizer sanitizer = new HtmlSanitizer();
+        private readonly IRepository<Category> categoryRepo;
 
         public CategoryService(IRepository<Category> categoryRepo)
         {

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHGHGym.Core", "..\GHGHGym.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHGHGym.Infrastructure", "..\GHGHGym.Infrastructure\GHGHGym.Infrastructure.csproj", "{95743F10-07DB-4458-A954-A6F5D3BF558A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHGHGym.Tests", "..\GHGHGym.Tests\GHGHGym.Tests.csproj", "{E67FD29B-6A57-4FC9-8EBD-B3E070EAD7EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{95743F10-07DB-4458-A954-A6F5D3BF558A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95743F10-07DB-4458-A954-A6F5D3BF558A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95743F10-07DB-4458-A954-A6F5D3BF558A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E67FD29B-6A57-4FC9-8EBD-B3E070EAD7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E67FD29B-6A57-4FC9-8EBD-B3E070EAD7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E67FD29B-6A57-4FC9-8EBD-B3E070EAD7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E67FD29B-6A57-4FC9-8EBD-B3E070EAD7EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
