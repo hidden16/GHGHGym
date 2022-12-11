@@ -1,6 +1,5 @@
 ﻿using GHGHGym.Core.Contracts;
 using GHGHGym.Core.MultiModels;
-using GHGHGym.Core.Services.CloudinaryService.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,15 +11,9 @@ namespace GHGHGym.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService productService;
-        private readonly ICategoryService categoryService;
-        private readonly ICloudinaryService cloudinaryService;
-        public ProductController(IProductService productService,
-            ICategoryService categoryService,
-            ICloudinaryService cloudinaryService)
+        public ProductController(IProductService productService)
         {
             this.productService = productService;
-            this.categoryService = categoryService;
-            this.cloudinaryService = cloudinaryService;
         }
         [HttpGet]
         [AllowAnonymous]

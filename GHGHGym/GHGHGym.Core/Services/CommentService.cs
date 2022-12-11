@@ -3,7 +3,6 @@ using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Comments;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
-using GHGHGym.Infrastructure.Data.Models.Account;
 
 namespace GHGHGym.Core.Services
 {
