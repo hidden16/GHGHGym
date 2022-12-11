@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Models.Comments;
 using GHGHGym.Core.Services;
 using GHGHGym.Infrastructure.Data;
 using GHGHGym.Infrastructure.Data.Common.Repositories;
@@ -121,6 +122,42 @@ namespace GHGHGym.Tests
             var model = await repo.GetByIdAsync(Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"));
 
             Assert.AreEqual(true, model.IsDeleted);
+        }
+        [Test]
+        public async Task Test_Edit()
+        {
+            var commentText = "test";
+            var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
+            var productId = Guid.Parse("3290f6d6-c887-4924-9713-4c18c6dc6475");
+           
+            Comment comment = new Comment()
+            {
+                Id = Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"),
+                Text = commentText,
+                ApplicationUserId = userId,
+                ProductId = productId
+            };
+
+            await repo.AddAsync(comment);
+            await repo.SaveChangesAsync();
+
+            EditCommentViewModel editModel = new EditCommentViewModel()
+            {
+                Text = "Edited test",
+                CommentId = comment.Id
+            };
+
+            await commentService.Edit(editModel);
+
+            var model = await repo.GetByIdAsync(Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"));
+
+            Assert.AreEqual("Edited test", model.Text);
+
+            editModel.CommentId = Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991444");
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                await commentService.Edit(editModel);
+            });
         }
 
         [TearDown]
