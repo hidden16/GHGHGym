@@ -18,13 +18,11 @@ namespace GHGHGym.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserSubscriptionConfiguration());
-            /* Already seeded
-            builder.ApplyConfiguration(new SeedSubscriptionTypeConfiguration());*/
+            builder.ApplyConfiguration(new SeedSubscriptionTypeConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new TrainerImageConfiguration());
             builder.ApplyConfiguration(new TrainingProgramImageConfiguration());
-            /* Already seeded
-             builder.ApplyConfiguration(new SeedCategoryConfiguration());*/
+            builder.ApplyConfiguration(new SeedCategoryConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new TrainerConfiguration());
 
