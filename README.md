@@ -23,4 +23,4 @@ GHGHGym is my own web application for the SoftUni web project defense, where the
 ![image](https://user-images.githubusercontent.com/86330813/206267005-245e5527-d86c-47d4-9e3e-995201ff642c.png)
 
 ## :point_right: Unit Test Business Logic Coverage: :point_left:
-![image](![image](https://user-images.githubusercontent.com/86330813/207153007-beb07992-f67d-4488-b2b1-385d8572c600.png)
+![image](https://user-images.githubusercontent.com/86330813/207153007-beb07992-f67d-4488-b2b1-385d8572c600.png)
