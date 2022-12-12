@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GHGHGym.Core.Contracts;
@@ -15,6 +16,7 @@ using NUnit.Framework;
 
 namespace GHGHGym.Tests
 {
+    [TestFixture]
     public class SubscriptionServiceTest
     {
         private ApplicationDbContext context;
@@ -80,7 +82,7 @@ namespace GHGHGym.Tests
         public async Task Test_IsUserSubscribedAsync()
         {
             var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
-
+           
             var user = new ApplicationUser()
             {
                 Id = userId,

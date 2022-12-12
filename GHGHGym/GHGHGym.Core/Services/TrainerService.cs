@@ -50,17 +50,20 @@ namespace GHGHGym.Core.Services
                 TwitterLink = Sanitize(model.TwitterLink ?? ""),
             };
 
-            List<Image> images = await imageService.AddImages(model.ImageUrls);
-            List<TrainerImage> trainerImages = new List<TrainerImage>();
-            foreach (var image in images)
+            if (model.ImageUrls.Count != 0)
             {
-                trainerImages.Add(new TrainerImage()
+                List<Image> images = await imageService.AddImages(model.ImageUrls);
+                List<TrainerImage> trainerImages = new List<TrainerImage>();
+                foreach (var image in images)
                 {
-                    Trainer = trainer,
-                    Image = image
-                });
+                    trainerImages.Add(new TrainerImage()
+                    {
+                        Trainer = trainer,
+                        Image = image
+                    });
+                }
+                trainer.TrainersImages = trainerImages;
             }
-            trainer.TrainersImages = trainerImages;
 
             var user = await userRepository.GetByIdAsync(userId);
             await userManager.AddToRoleAsync(user, "Trainer");
@@ -184,7 +187,7 @@ namespace GHGHGym.Core.Services
 
         public async Task EditAsync(AddTrainerViewModel model)
         {
-            var trainer = await trainerRepository.AllReadonly()
+            var trainer = await trainerRepository.All()
                 .Where(x => x.Id == model.Id)
                 .Include(x => x.TrainersImages)
                 .ThenInclude(x => x.Image)

@@ -21,6 +21,7 @@ using NUnit.Framework;
 
 namespace GHGHGym.Tests
 {
+    [TestFixture]
     public class ProductServiceTest
     {
         private ApplicationDbContext context;
