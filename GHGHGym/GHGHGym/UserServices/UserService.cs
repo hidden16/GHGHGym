@@ -32,7 +32,7 @@ namespace GHGHGym.UserServices
         {
             var code = token;
             var html = new StringBuilder();
-            html.AppendLine($"<h1>Hello, mr. {user.LastName}</h1>");
+            html.AppendLine($"<h1>Hello, {user.LastName}</h1>");
             html.AppendLine($"<h3>To confirm your email click here => <a href=\"{HtmlEncoder.Default.Encode(callbackUrl)}\"> Confirm </a> <=</h3>");
             await emailSender.SendEmailAsync(from, fromName, user.Email, subject, html.ToString());
         }

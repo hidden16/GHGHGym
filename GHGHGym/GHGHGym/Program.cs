@@ -1,13 +1,7 @@
 using CloudinaryDotNet;
-using GHGHGym.Core.Contracts;
-using GHGHGym.Core.Services;
-using GHGHGym.Core.Services.CloudinaryService.Contracts;
-using GHGHGym.Core.Services.CloudinaryService.Models;
 using GHGHGym.Core.Services.EmailSender.Contracts;
 using GHGHGym.Core.Services.EmailSender.Models;
 using GHGHGym.Infrastructure.Data;
-using GHGHGym.Infrastructure.Data.Common.Repositories;
-using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.ModelBinders;
 using GHGHGym.UserServices;
@@ -25,9 +19,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-    //Changes will occur here when we finish using temporary test data objects.
     options.SignIn.RequireConfirmedAccount = false;
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
     options.SignIn.RequireConfirmedPhoneNumber = false;
 
     options.Password.RequireDigit = true;

@@ -109,21 +109,15 @@ namespace GHGHGym.Controllers
             var createResult = await userManager.CreateAsync(user, model.Password);
             if (createResult.Succeeded)
             {
-                // UNCOMMENT CODE WHEN FINISHED WITH PROJECT
-                // WORKING EMAIL SENDER WITH CONFIRMATION
-
-                //var generatedToken = GenerateToken(user);
-                //var callbackAction = Url.Action(
-                //    action: "ConfirmEmail",
-                //    controller: "User",
-                //    values: new { userId = user.Id, code = generatedToken.Result },
-                //    protocol: Request.Scheme
-                //    );
-                //await userService.SendEmailConfirmationAsync(user, generatedToken, callbackAction);
-
-                //return RedirectToAction(nameof(PreConfirm));
-                TempData[SuccessMessage] = "You succesfully registered! Please Sign In!";
-                return RedirectToAction(nameof(Login));
+                var generatedToken = GenerateToken(user);
+                var callbackAction = Url.Action(
+                    action: "ConfirmEmail",
+                    controller: "User",
+                    values: new { userId = user.Id, code = generatedToken.Result },
+                    protocol: Request.Scheme
+                    );
+                await userService.SendEmailConfirmationAsync(user, generatedToken, callbackAction);
+                return RedirectToAction(nameof(PreConfirm));
             }
 
             foreach (var error in createResult.Errors)
@@ -161,6 +155,8 @@ namespace GHGHGym.Controllers
                 }
                 ViewBag.Result = result;
                 ViewBag.Success = success;
+                TempData[SuccessMessage] = "You succesfully registered! Please Sign In!";
+
                 return View();
             }
             catch (Exception)
