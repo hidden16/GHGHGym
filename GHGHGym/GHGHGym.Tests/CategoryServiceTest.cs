@@ -49,7 +49,7 @@ namespace GHGHGym.Tests
             await categoryService.AddCategoryAsync(model);
 
             var categoryCount = repo.All();
-            Assert.That(categoryCount.Count() == 1);
+            Assert.That(categoryCount.Count() == 3);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace GHGHGym.Tests
             await categoryService.AddCategoryAsync(model2);
 
             var categoryCount = categoryService.AllCategories();
-            Assert.That(2, Is.EqualTo(categoryCount.Count()));
+            Assert.That(4, Is.EqualTo(categoryCount.Count()));
         }
         [Test]
         public async Task Test_AllWithDeletedCategories()
@@ -97,7 +97,7 @@ namespace GHGHGym.Tests
             await repo.SaveChangesAsync();
 
             var categoryCount = categoryService.AllWithDeletedCategories();
-            Assert.That(2, Is.EqualTo(categoryCount.Count()));
+            Assert.That(4, Is.EqualTo(categoryCount.Count()));
         }
         [Test]
         public async Task Test_EditAsync()

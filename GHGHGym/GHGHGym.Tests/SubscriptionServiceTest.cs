@@ -75,7 +75,7 @@ namespace GHGHGym.Tests
 
             var subTypes = subscriptionService.AllWithTrainerSubscriptionTypes();
 
-            Assert.AreEqual(2, subTypes.Count());
+            Assert.AreEqual(5, subTypes.Count());
         }
 
         [Test]
