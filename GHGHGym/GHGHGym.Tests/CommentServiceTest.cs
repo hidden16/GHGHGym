@@ -105,7 +105,7 @@ namespace GHGHGym.Tests
             var commentText = "test";
             var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
             var productId = Guid.Parse("3290f6d6-c887-4924-9713-4c18c6dc6475");
-           
+
             Comment comment = new Comment()
             {
                 Id = Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"),
@@ -129,7 +129,7 @@ namespace GHGHGym.Tests
             var commentText = "test";
             var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
             var productId = Guid.Parse("3290f6d6-c887-4924-9713-4c18c6dc6475");
-           
+
             Comment comment = new Comment()
             {
                 Id = Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"),
@@ -158,6 +158,81 @@ namespace GHGHGym.Tests
             {
                 await commentService.Edit(editModel);
             });
+        }
+        [Test]
+        public async Task Test_CheckCommentUserBeforeEditAsync()
+        {
+            var commentText = "test";
+            var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
+            var productId = Guid.Parse("3290f6d6-c887-4924-9713-4c18c6dc6475");
+
+            Comment comment = new Comment()
+            {
+                Id = Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"),
+                Text = commentText,
+                ApplicationUserId = userId,
+                ProductId = productId
+            };
+
+            await repo.AddAsync(comment);
+            await repo.SaveChangesAsync();
+
+            var isUserTrue = await commentService.CheckCommentUserBeforeEditAsync(Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"), userId);
+
+            Assert.That(true, Is.EqualTo(isUserTrue));
+
+            var userIdFalse = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de9");
+            var isUserFalse = await commentService.CheckCommentUserBeforeEditAsync(Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"), userIdFalse);
+
+            Assert.That(false, Is.EqualTo(isUserFalse));
+        }
+        [Test]
+        public void Test_GetCommentByTrainerId()
+        {
+            var commentText = "test";
+            var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
+            var trainerId = Guid.Parse("4fbea684-a34e-4f5b-9838-058853196a68");
+
+            IRepository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
+            var user = new ApplicationUser()
+            {
+                Id = userId,
+                Email = "test@abv.bg",
+                FirstName = "Ivan",
+                LastName = "Ivan",
+                Gender = GenderType.Male,
+                BirthDate = DateTime.UtcNow,
+                UserName = "IvanIvan",
+            };
+            userRepository.Add(user);
+            userRepository.SaveChanges();
+
+            Comment comment = new Comment()
+            {
+                Id = Guid.Parse("f68a8af3-ec4a-4e69-9307-881cf7991888"),
+                Text = commentText,
+                ApplicationUserId = userId,
+                TrainerId = trainerId
+            };
+            repo.Add(comment);
+            repo.SaveChanges();
+
+            var commentByTrainer = commentService.GetCommentByTrainerId(trainerId);
+
+            Assert.AreEqual(1, commentByTrainer.Count());
+        }
+        [Test]
+        public void Test_AddTrainerComment()
+        {
+            var commentText = "test";
+            var userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
+            var trainerId = Guid.Parse("4fbea684-a34e-4f5b-9838-058853196a68");
+
+            commentService.AddTrainerComment(commentText, userId, trainerId);
+
+            var comments = repo.All();
+
+            Assert.AreEqual(1, comments.Count());
         }
 
         [TearDown]

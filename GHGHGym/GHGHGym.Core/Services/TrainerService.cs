@@ -1,6 +1,5 @@
 ﻿using Ganss.Xss;
 using GHGHGym.Core.Contracts;
-using GHGHGym.Core.Models.Subscriptions;
 using GHGHGym.Core.Models.Trainers;
 using GHGHGym.Core.MultiModels;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
@@ -18,14 +17,12 @@ namespace GHGHGym.Core.Services
         private readonly IRepository<Trainer> trainerRepository;
         private readonly IImageService imageService;
         private readonly ICommentService commentService;
-        private readonly ISubscriptionService subscriptionService;
         private readonly IRepository<ApplicationUser> userRepository;
         private readonly IRepository<TrainerImage> trainerImageRepository;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TrainerService(IRepository<Trainer> trainerRepository,
             IImageService imageService,
-            ISubscriptionService subscriptionService,
             UserManager<ApplicationUser> userManager,
             IRepository<ApplicationUser> userRepository,
             ICommentService commentService,
@@ -36,7 +33,6 @@ namespace GHGHGym.Core.Services
             this.userManager = userManager;
             this.userRepository = userRepository;
             this.commentService = commentService;
-            this.subscriptionService = subscriptionService;
             this.trainerImageRepository = trainerImageRepository;
         }
         public async Task BecomeTrainerAsync(AddTrainerViewModel model, Guid userId)

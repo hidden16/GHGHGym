@@ -60,12 +60,11 @@ namespace GHGHGym.Core.Services
                 .Include(x => x.ProductsImages)
                 .ThenInclude(x => x.Image)
                 .ToList();
-            if (products == null)
+            if (products == null || products.Count == 0)
             {
                 return null;
             }
             List<ProductViewModel> productsDto = new List<ProductViewModel>();
-            List<string> imageUrls = new List<string>();
             foreach (var product in products.Where(x=>x.IsDeleted == false))
             {
                 productsDto.Add(new ProductViewModel()
@@ -84,11 +83,11 @@ namespace GHGHGym.Core.Services
 
         public async Task EditAsync(AddProductViewModel model)
         {
-            var product = productRepository.AllReadonly()
+            var product = await productRepository.All()
                 .Where(x => x.Id == model.Id)
                 .Include(x => x.ProductsImages)
                 .ThenInclude(x => x.Image)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (model.ImageUrls.Count() != 0)
             {
@@ -146,13 +145,16 @@ namespace GHGHGym.Core.Services
 
         public ProductMultiModel GetProductById(Guid productId)
         {
-            try
-            {
                 var product = productRepository.AllReadonly()
                     .Where(x => x.Id == productId)
                     .Include(x => x.ProductsImages)
                     .ThenInclude(x => x.Image)
                     .FirstOrDefault();
+
+                if (product == null)
+                {
+                    return null;
+                }
 
                 var productToReturn = new ProductViewModel()
                 {
@@ -173,11 +175,6 @@ namespace GHGHGym.Core.Services
                     Comments = commentService.GetCommentByProductId(product.Id),
                 };
                 return multiModel;
-            }
-            catch (ArgumentNullException)
-            {
-                return null;
-            }
         }
 
         public async Task PurchaseAsync(ProductMultiModel model, Guid userId)
@@ -207,12 +204,11 @@ namespace GHGHGym.Core.Services
                 .Include(x => x.ProductsImages)
                 .ThenInclude(x => x.Image)
                 .ToList();
-            if (products == null)
+            if (products == null || products.Count == 0)
             {
                 return null;
             }
             List<ProductWithDeletedViewModel> productsDto = new List<ProductWithDeletedViewModel>();
-            List<string> imageUrls = new List<string>();
             foreach (var product in products)
             {
                 productsDto.Add(new ProductWithDeletedViewModel()

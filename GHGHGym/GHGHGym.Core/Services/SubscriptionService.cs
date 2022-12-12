@@ -1,5 +1,4 @@
-﻿using Ganss.Xss;
-using GHGHGym.Core.Contracts;
+﻿using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Subscriptions;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models;
@@ -46,6 +45,10 @@ namespace GHGHGym.Core.Services
                 .Include(x=>x.UsersSubscriptions)
                 .ThenInclude(x=>x.Subscription)
                 .FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
             if (user.UsersSubscriptions.Any(x=>!x.IsDeleted))
             {
                 return true;
@@ -74,7 +77,7 @@ namespace GHGHGym.Core.Services
 
             Subscription subscription = new Subscription()
             {
-                SubscriptionTypeId = model.SubscriptionTypeId,
+                SubscriptionTypeId = model.SubscriptionTypeId
             };
 
             UserSubscription userSub = new UserSubscription()
@@ -82,7 +85,7 @@ namespace GHGHGym.Core.Services
                 Subscription = subscription,
                 User = user,
                 SubscriptionStartDate = model.StartDate,
-                SubscriptionEndDate = endDate,
+                SubscriptionEndDate = endDate
             };
             if (model.TrainerId != null)
             {
