@@ -220,7 +220,7 @@ namespace GHGHGym.Tests
             user.TrainerId = Guid.Parse("1efe68c3-a80c-418b-b22d-91ab43c85c12");
             await userRepository.SaveChangesAsync();
 
-            await trainerService.QuitBeingTrainer(user.Id.ToString());
+            await trainerService.QuitBeingTrainerAsync(user.Id.ToString());
 
             Assert.AreEqual(null, trainer.FirstName);
             Assert.AreEqual(null, trainer.LastName);

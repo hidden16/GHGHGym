@@ -1,4 +1,5 @@
-﻿using GHGHGym.Core.Models.User;
+﻿using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Models.User;
 using GHGHGym.Core.Services.EmailSender.Contracts;
 using GHGHGym.Infrastructure.Data.Common.Repositories.Contracts;
 using GHGHGym.Infrastructure.Data.Models.Account;
@@ -7,8 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Encodings.Web;
-using GHGHGym.Core.Contracts;
-using GHGHGym.Core.Services;
 using static Microsoft.AspNetCore.WebUtilities.WebEncoders;
 
 namespace GHGHGym.UserServices
