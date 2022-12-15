@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Encodings.Web;
+using GHGHGym.Core.Contracts;
+using GHGHGym.Core.Services;
 using static Microsoft.AspNetCore.WebUtilities.WebEncoders;
 
 namespace GHGHGym.UserServices
@@ -20,14 +22,41 @@ namespace GHGHGym.UserServices
         private IEmailSender emailSender;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRepository<ApplicationUser> userRepository;
+        private readonly ITrainerService trainerService;
         public UserService(IEmailSender emailSender,
             UserManager<ApplicationUser> userManager,
-            IRepository<ApplicationUser> userRepository)
+            IRepository<ApplicationUser> userRepository,
+            ITrainerService trainerService)
         {
             this.emailSender = emailSender;
             this.userManager = userManager;
             this.userRepository = userRepository;
+            this.trainerService = trainerService;
         }
+
+        public async Task DeleteAccount(Guid userId)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            userRepository.SetDeleted(user);
+            user.FirstName = null;
+            user.LastName = null;
+            user.Email = null;
+            user.NormalizedEmail = null;
+            user.BirthDate = null;
+            if (user.TrainerId != null)
+            {
+                await trainerService.QuitBeingTrainerAsync(userId.ToString());
+            }
+            user.TrainerId = null;
+            user.UserName = null;
+            user.NormalizedUserName = null;
+            user.PhoneNumber = null;
+            user.ImageId = null;
+
+            userRepository.Update(user);
+            await userRepository.SaveChangesAsync();
+        }
+
         public async Task SendEmailConfirmationAsync(ApplicationUser user, Task<string> token, string callbackUrl)
         {
             var code = token;
@@ -67,9 +96,9 @@ namespace GHGHGym.UserServices
                 .Where(x => x.Id == userId)
                 .Include(x => x.UsersSubscriptions)
                 .ThenInclude(x => x.Subscription)
-                .ThenInclude(x=>x.SubscriptionType)
-                .Include(x=>x.UsersSubscriptions)
-                .ThenInclude(x=>x.Trainer)
+                .ThenInclude(x => x.SubscriptionType)
+                .Include(x => x.UsersSubscriptions)
+                .ThenInclude(x => x.Trainer)
                 .FirstOrDefaultAsync();
 
             List<UserSubscriptionViewModel> userSub = new List<UserSubscriptionViewModel>();

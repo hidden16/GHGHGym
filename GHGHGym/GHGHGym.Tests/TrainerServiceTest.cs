@@ -60,10 +60,11 @@ namespace GHGHGym.Tests
             var userManagerMock = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
             userManagerMock.Setup(t => t.AddToRoleAsync(It.IsAny<ApplicationUser>(), "Trainer"))
                 .ReturnsAsync(IdentityResult.Success);
+            userManagerMock.Setup(t => t.RemoveFromRoleAsync(It.IsAny<ApplicationUser>(), "Trainer"))
+                .ReturnsAsync(IdentityResult.Success);
 
             imageService = new ImageService(imageRepository);
             commentService = new CommentService(commentRepository);
-            trainerService = new TrainerService(trainerRepository, imageService, userManagerMock.Object, userRepository, commentService, trainerImageRepository);
 
             // user creation
             userId = Guid.Parse("ff524168-c8de-41a8-9d0c-5d1c69741de2");
@@ -80,6 +81,11 @@ namespace GHGHGym.Tests
             await userRepository.AddAsync(user);
             await userRepository.SaveChangesAsync();
 
+            //FindByIdAsync method mock (UserManager)
+
+            userManagerMock.Setup(t => t.FindByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(user);
+            trainerService = new TrainerService(trainerRepository, imageService, userManagerMock.Object, userRepository, commentService, trainerImageRepository);
             // trainer creation
             trainer = new Trainer
             {
@@ -208,6 +214,18 @@ namespace GHGHGym.Tests
             Assert.AreEqual(model.Description, editedTrainer.Description);
         }
 
+        [Test]
+        public async Task Test_QuitBeingTrainer()
+        {
+            user.TrainerId = Guid.Parse("1efe68c3-a80c-418b-b22d-91ab43c85c12");
+            await userRepository.SaveChangesAsync();
+
+            await trainerService.QuitBeingTrainer(user.Id.ToString());
+
+            Assert.AreEqual(null, trainer.FirstName);
+            Assert.AreEqual(null, trainer.LastName);
+            Assert.AreEqual(null, trainer.EmailAddress);
+        }
         [TearDown]
         public void TearDown()
         {

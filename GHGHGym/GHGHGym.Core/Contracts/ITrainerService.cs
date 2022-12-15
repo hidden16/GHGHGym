@@ -11,6 +11,7 @@ namespace GHGHGym.Core.Contracts
         public Task<IEnumerable<ShowTrainerViewModel>> AllTrainersAsync(string? userId);
         public Task<AddTrainerViewModel> GetForEditAsync(Guid trainerId);
         public Task EditAsync(AddTrainerViewModel model);
+        public Task QuitBeingTrainerAsync(string userId);
 
     }
 }

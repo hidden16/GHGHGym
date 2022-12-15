@@ -156,5 +156,14 @@ namespace GHGHGym.Controllers
             await trainerService.EditAsync(model);
             return RedirectToAction(nameof(All));
         }
+        [Authorize(Roles = "Trainer")]
+        public async Task<IActionResult> QuitBeingTrainer()
+        {
+            var userId = User.Claims.FirstOrDefault(u=>u.Type == ClaimTypes.NameIdentifier)?.Value;
+            await trainerService.QuitBeingTrainerAsync(userId);
+            await signManager.SignOutAsync();
+            TempData[SuccessMessage] = "You successfully quit being a trainer! Please sign in again!";
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

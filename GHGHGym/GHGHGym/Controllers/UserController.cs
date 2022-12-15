@@ -1,4 +1,5 @@
-﻿using Ganss.Xss;
+﻿using System.Security.Claims;
+using Ganss.Xss;
 using GHGHGym.Core.Models.User;
 using GHGHGym.Infrastructure.Data.Models.Account;
 using GHGHGym.UserServices.Contracts;
@@ -170,6 +171,15 @@ namespace GHGHGym.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            await userService.DeleteAccount(Guid.Parse(userId));
+            await signInManager.SignOutAsync();
+            TempData[SuccessMessage] = "You succesfully deleted your account!";
+            return RedirectToAction("Index", "Home");
+        }
+        
         private async Task<string> GenerateToken(ApplicationUser user)
         {
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);

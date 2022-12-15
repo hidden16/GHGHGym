@@ -68,6 +68,11 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item">Profile</a>
+                                        <a class="dropdown-item" asp-controller="User" asp-action="DeleteAccount">Delete Account</a>
+                                        @if (User.IsInRole("Trainer"))
+                                        {
+                                            <a class="dropdown-item" asp-controller="Trainer" asp-action="QuitBeingTrainer">Quit being a trainer</a>
+                                        }
                                         <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                                     </div>
                                 </li>

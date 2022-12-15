@@ -12,19 +12,17 @@ namespace GHGHGym.Infrastructure.Data.Models
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
         [MaxLength(FirstNameMaxLength)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
         [MaxLength(LastNameMaxLength)]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
 
-        [Required]
-        public string PhoneNumber { get; set; } = null!;
+        [Phone]
+        public string? PhoneNumber { get; set; }
 
-        [Required]
         [EmailAddress]
-        public string EmailAddress { get; set; } = null!;
+        public string? EmailAddress { get; set; }
 
         [Required]
         [MaxLength(DescriptionMaxLength)]

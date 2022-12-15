@@ -227,6 +227,32 @@ namespace GHGHGym.Core.Services
             trainerRepository.Update(trainer);
             await trainerRepository.SaveChangesAsync();
         }
+
+        public async Task QuitBeingTrainerAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            var trainer = await trainerRepository.All()
+                .Where(x => x.ApplicationUserId == user.Id)
+                .FirstOrDefaultAsync();
+
+            user.TrainerId = null;
+            userRepository.Update(user);
+            trainer.FirstName = null;
+            trainer.LastName = null;
+            trainer.EmailAddress = null;
+            trainer.PhoneNumber = null;
+            trainer.Description = "";
+            trainer.FacebookLink = null;
+            trainer.InstagramLink = null;
+            trainer.TwitterLink = null;
+            trainer.ApplicationUserId = null;
+            trainerRepository.SetDeleted(trainer);
+            trainerRepository.Update(trainer);
+            await trainerRepository.SaveChangesAsync();
+            await userManager.RemoveFromRoleAsync(user, "Trainer");
+        }
+
         private string Sanitize(string input)
         {
             return sanitizer.Sanitize(input);
