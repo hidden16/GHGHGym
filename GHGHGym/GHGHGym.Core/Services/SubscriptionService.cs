@@ -24,6 +24,20 @@ namespace GHGHGym.Core.Services
             this.userSubscriptionRepository = userSubscriptionRepository;
             this.appUserRepository = appUserRepository;
         }
+
+        public IEnumerable<SubscriptionTypeViewModel> AllWithoutTrainerSubscriptionTypes()
+        {
+            return subscriptionTypeRepository.All()
+                .Where(x=>!x.Name.Contains(trainer))
+                .Select(x=> new SubscriptionTypeViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price
+                })
+                .ToList();
+        }
+
         public IEnumerable<SubscriptionTypeViewModel> AllWithTrainerSubscriptionTypes()
         {
             var model = subscriptionTypeRepository.All()

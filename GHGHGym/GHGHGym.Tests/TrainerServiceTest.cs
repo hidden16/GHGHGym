@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GHGHGym.Core.Contracts;
+﻿using GHGHGym.Core.Contracts;
 using GHGHGym.Core.Models.Trainers;
 using GHGHGym.Core.Services;
 using GHGHGym.Infrastructure.Data;
@@ -14,10 +10,12 @@ using GHGHGym.Infrastructure.Data.Models.Enums;
 using GHGHGym.Infrastructure.Data.Models.ImageMapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GHGHGym.Tests
 {
@@ -172,7 +170,7 @@ namespace GHGHGym.Tests
             Assert.AreEqual(2, trainers.Count());
         }
         [Test]
-        public async Task Test_GetTrainerById()
+        public void Test_GetTrainerById()
         {
             var trainerById = trainerService.GetTrainerById(Guid.Parse("1efe68c3-a80c-418b-b22d-91ab43c85c12"));
 

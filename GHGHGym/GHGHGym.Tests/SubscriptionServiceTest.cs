@@ -46,6 +46,31 @@ namespace GHGHGym.Tests
         }
 
         [Test]
+        public async Task Test_AllWithoutTrainerSubscriptionTypes()
+        {
+            SubscriptionType subType2 = new SubscriptionType
+            {
+                Id = Guid.Parse("1ced4e8c-0b55-4a56-9e55-da51701ec200"),
+                Name = "trainer",
+                Price = 50m
+            };
+            await subscriptionTypeRepository.AddAsync(subType2);
+
+            SubscriptionType subType3 = new SubscriptionType
+            {
+                Id = Guid.Parse("1ced4e8c-0b55-4a56-9e55-da51701ec201"),
+                Name = "Test",
+                Price = 50m
+            };
+            await subscriptionTypeRepository.AddAsync(subType3);
+            await subscriptionTypeRepository.SaveChangesAsync();
+
+            var subTypes = subscriptionService.AllWithoutTrainerSubscriptionTypes();
+
+            Assert.AreEqual(4, subTypes.Count());
+        }
+
+        [Test]
         public async Task Test_AllWithTrainerSubscriptionTypes()
         {
             SubscriptionType subType = new SubscriptionType

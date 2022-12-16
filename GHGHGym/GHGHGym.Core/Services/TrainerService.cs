@@ -123,7 +123,6 @@ namespace GHGHGym.Core.Services
             }
             return trainers;
         }
-
         public TrainerMultiModel GetTrainerById(Guid trainerId)
         {
             var trainer = trainerRepository.All()

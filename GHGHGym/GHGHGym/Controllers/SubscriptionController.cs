@@ -73,6 +73,56 @@ namespace GHGHGym.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Subscribe()
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (await subscriptionService.IsUserSubscribedAsync(Guid.Parse(userId)))
+            {
+                TempData[ErrorMessage] = "You are already subscribed";
+                return RedirectToAction("Index", "Home");
+            }
+            if (User.IsInRole("Administrator") || User.IsInRole("Trainer"))
+            {
+                TempData[ErrorMessage] = "Administrators and trainers can't subscribe!";
+                return RedirectToAction("Index", "Home");
+            }
+            var model = new SubscriptionMultiModel()
+            {
+                SubscriptionDto = new SubscriptionViewModel(),
+                SubscriptionTypesDto = subscriptionService.AllWithoutTrainerSubscriptionTypes()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Subscribe(SubscriptionMultiModel model)
+        {
+            try
+            {
+                model.SubscriptionTypesDto = subscriptionService.AllWithoutTrainerSubscriptionTypes();
+                if (!ModelState.IsValid)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                if (model.SubscriptionDto.StartDate.Date < DateTime.Now.Date)
+                {
+                    ModelState.AddModelError("", "Invalid date");
+                    TempData[ErrorMessage] = "The date you entered is invalid!";
+                    return RedirectToAction("Index", "Home");
+                }
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                await subscriptionService.SubscribeAsync(model.SubscriptionDto, Guid.Parse(userId));
+                TempData[SuccessMessage] = "Thank you for your subscription!";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         public async Task<IActionResult> MySubscriptions()
         {
             try

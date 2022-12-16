@@ -1,0 +1,24 @@
+﻿@model IEnumerable<UserViewModel>
+<ul class="list-group">
+    @foreach (var user in Model)
+    {
+        <li class="list-group-item">
+            <p>First Name: @user.FirstName</p>
+            <p>Last Name: @user.LastName</p>
+            <p>Email: @user.EmailAddress</p>
+            <p>Email-Confirmed: @user.EmailConfirmed</p>
+            <p>Birth Date: @user.BirthDate</p>
+            <p>Registration Date: @user.RegistrationDate</p>
+            <p>Trainer(User) Id: @user.TrainerId</p>
+            <p>Is Subscribed: @user.IsSubscribed</p>
+
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            }
+        </li>
+
+    }
+</ul>

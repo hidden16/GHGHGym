@@ -32,7 +32,6 @@ namespace GHGHGym.UserServices
             this.userRepository = userRepository;
             this.trainerService = trainerService;
         }
-
         public async Task DeleteAccount(Guid userId)
         {
             var user = await userManager.FindByIdAsync(userId.ToString());
@@ -89,6 +88,25 @@ namespace GHGHGym.UserServices
             return null;
         }
 
+        public async Task<IEnumerable<UserViewModel>> AllUsersAsync()
+        {
+            return await userRepository.All()
+                .Include(x=>x.UsersSubscriptions)
+                .ThenInclude(x=>x.Subscription)
+                .Select(x=> new UserViewModel
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    BirthDate = x.BirthDate,
+                    EmailAddress = x.Email,
+                    RegistrationDate = x.RegistrationDate,
+                    EmailConfirmed = x.EmailConfirmed,
+                    TrainerId = x.TrainerId,
+                    IsSubscribed = x.UsersSubscriptions.Any(x=>!x.IsDeleted)
+                }).ToListAsync();
+        }
+
         public async Task<IEnumerable<UserSubscriptionViewModel>> GetMySubscriptionsAsync(Guid userId)
         {
             var user = await userRepository.All()
@@ -103,18 +121,34 @@ namespace GHGHGym.UserServices
             List<UserSubscriptionViewModel> userSub = new List<UserSubscriptionViewModel>();
             foreach (var item in user.UsersSubscriptions)
             {
-                userSub.Add(new UserSubscriptionViewModel()
+                if (item.Trainer != null)
                 {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    StartDate = item.SubscriptionStartDate.Date,
-                    EndDate = item.SubscriptionEndDate.Date,
-                    SubscriptionType = item.Subscription.SubscriptionType.Name,
-                    TrainerFirstName = item.Trainer.FirstName,
-                    TrainerLastName = item.Trainer.LastName,
-                    SubscriptionId = item.SubscriptionId,
-                    IsDeleted = item.IsDeleted
-                });
+                    userSub.Add(new UserSubscriptionViewModel()
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        StartDate = item.SubscriptionStartDate.Date,
+                        EndDate = item.SubscriptionEndDate.Date,
+                        SubscriptionType = item.Subscription.SubscriptionType.Name,
+                        TrainerFirstName = item.Trainer.FirstName,
+                        TrainerLastName = item.Trainer.LastName,
+                        SubscriptionId = item.SubscriptionId,
+                        IsDeleted = item.IsDeleted
+                    });
+                }
+                else
+                {
+                    userSub.Add(new UserSubscriptionViewModel()
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        StartDate = item.SubscriptionStartDate.Date,
+                        EndDate = item.SubscriptionEndDate.Date,
+                        SubscriptionType = item.Subscription.SubscriptionType.Name,
+                        SubscriptionId = item.SubscriptionId,
+                        IsDeleted = item.IsDeleted
+                    });
+                }
             }
             return userSub;
         }

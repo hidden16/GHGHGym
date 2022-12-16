@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ShowTrainerViewModel>
+@{
+    ViewBag.Title = "All Trainers";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+<link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<div class="text-center row">
+    @foreach (var trainer in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <img class="card-img-top" style="width: 18rem;"
+             src="@trainer.ImageUrls.FirstOrDefault()" height="380" alt="Product Image">
+            <div class="card-body">
+                <a asp-area="Admin" asp-controller="Trainer" asp-action="Edit" asp-route-id="@trainer.Id">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <h5 class="card-title mt-1">@trainer.FirstName @trainer.LastName</h5>
+                <p>Training Programs: @trainer.TrainingProgramsCount</p>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+<script src="~/lib/toastr/toastr.min.js"></script>

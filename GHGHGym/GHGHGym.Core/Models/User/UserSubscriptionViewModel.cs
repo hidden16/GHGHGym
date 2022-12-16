@@ -9,7 +9,7 @@
         public string SubscriptionType { get; set; }
         public string? TrainerFirstName { get; set; }
         public string? TrainerLastName { get; set; }
-        public Guid SubscriptionId { get; set; }
+        public Guid? SubscriptionId { get; set; }
         public bool? IsDeleted { get; set; }
     }
 }
