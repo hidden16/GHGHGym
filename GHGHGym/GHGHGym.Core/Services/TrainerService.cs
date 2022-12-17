@@ -13,7 +13,9 @@ namespace GHGHGym.Core.Services
 {
     public class TrainerService : ITrainerService
     {
+        // anti xss
         private HtmlSanitizer sanitizer = new HtmlSanitizer();
+
         private readonly IRepository<Trainer> trainerRepository;
         private readonly IImageService imageService;
         private readonly ICommentService commentService;
