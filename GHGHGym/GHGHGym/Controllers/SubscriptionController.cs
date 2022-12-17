@@ -110,7 +110,7 @@ namespace GHGHGym.Controllers
                 {
                     ModelState.AddModelError("", "Invalid date");
                     TempData[ErrorMessage] = "The date you entered is invalid!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(nameof(Subscribe));
                 }
                 var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
                 await subscriptionService.SubscribeAsync(model.SubscriptionDto, Guid.Parse(userId));

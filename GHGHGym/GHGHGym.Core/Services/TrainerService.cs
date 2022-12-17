@@ -197,7 +197,7 @@ namespace GHGHGym.Core.Services
                 var imagesId = await imageService.SetDeletedRangeByUrls(trainer.TrainersImages.Select(x => x.Image.ImageUrl));
                 foreach (var id in imagesId)
                 {
-                    var trainerImageToDelete = await trainerImageRepository.GetByIdsAsync(new object[] { model.Id, id });
+                    var trainerImageToDelete = await trainerImageRepository.GetByIdsAsync(new object[] { id, trainer.Id });
                     trainerImageRepository.SetDeleted(trainerImageToDelete);
                 }
                 List<Image> images = await imageService.AddImages(model.ImageUrls);

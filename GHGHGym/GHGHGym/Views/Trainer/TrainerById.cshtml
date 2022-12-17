@@ -67,15 +67,24 @@
             <div class="col-md-7">
                 <div class="box">
                     <h2> @Model.TrainerDto.FirstName @Model.TrainerDto.LastName </h2>
-                    <a class="btn btn-dark" href="https://@Model.TrainerDto.FacebookLink" target="_blank">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a class="btn btn-dark" href="https://@Model.TrainerDto.InstagramLink" target="_blank">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a class="btn btn-dark" href="https://@Model.TrainerDto.TwitterLink" target="_blank">
-                        <i class="fa-brands fa-twitter"></i>
-                    </a>
+                    @if (!String.IsNullOrEmpty(Model.TrainerDto.FacebookLink))
+                    {
+                        <a class="btn btn-dark" href="https://@Model.TrainerDto.FacebookLink" target="_blank">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.TrainerDto.InstagramLink))
+                    {
+                        <a class="btn btn-dark" href="https://@Model.TrainerDto.InstagramLink" target="_blank">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.TrainerDto.TwitterLink))
+                    {
+                        <a class="btn btn-dark" href="https://@Model.TrainerDto.TwitterLink" target="_blank">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    }
                     <p></p>
                     <a class="btn btn-success" asp-controller="TrainingProgram" asp-action="AllTrainerProgram" asp-route-trainerId="@Model.TrainerDto.Id" asp-route-trainerName="@Model.TrainerDto.FirstName">Training Programs</a>
                     <p></p>

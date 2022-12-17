@@ -138,28 +138,36 @@ namespace GHGHGym.Controllers
             {
                 return View(model);
             }
-            List<string> imageUrls = new List<string>();
-            foreach (var file in model.Files)
+            try
             {
-                if (file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg"))
+                List<string> imageUrls = new List<string>();
+                foreach (var file in model.Files)
                 {
-                    var result = await cloudinaryService.UploadPhotoAsync(file, file.FileName.ToString());
-                    imageUrls.Add(result);
+                    if (file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg"))
+                    {
+                        var result = await cloudinaryService.UploadPhotoAsync(file, file.FileName.ToString());
+                        imageUrls.Add(result);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Files", "Files are invalid");
+                        return View(model);
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("Files", "Files are invalid");
-                    return View(model);
-                }
+                model.ImageUrls = imageUrls;
+                await trainerService.EditAsync(model);
+                return RedirectToAction(nameof(All));
             }
-            model.ImageUrls = imageUrls;
-            await trainerService.EditAsync(model);
-            return RedirectToAction(nameof(All));
+            catch (Exception )
+            {
+                TempData[ErrorMessage] = "Something went wrong! Try again!";
+                return RedirectToAction("Index", "Home");
+            }
         }
         [Authorize(Roles = "Trainer")]
         public async Task<IActionResult> QuitBeingTrainer()
         {
-            var userId = User.Claims.FirstOrDefault(u=>u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             await trainerService.QuitBeingTrainerAsync(userId);
             await signManager.SignOutAsync();
             TempData[SuccessMessage] = "You successfully quit being a trainer! Please sign in again!";
